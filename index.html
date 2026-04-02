@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="version" content="1.0.0">
+<title>汪汪队 HQ — AI 助理指挥中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#2979FF;--red:#FF5252;--yellow:#FFD740;--green:#00E676;
+  --bg:#F0F4FF;--card:#FFFFFF;--text:#1A1A2E;--muted:#7B8BB2;
+  --sidebar-w:220px;--radius:16px;--shadow:0 4px 20px rgba(41,121,255,.10)
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:linear-gradient(160deg,#1565C0 0%,#2979FF 60%,#42A5F5 100%);display:flex;flex-direction:column;padding:28px 0 24px;position:fixed;left:0;top:0;bottom:0;z-index:100}
+.logo-area{padding:0 20px 28px;border-bottom:1px solid rgba(255,255,255,.15)}
+.logo-emoji{font-size:36px;display:block;margin-bottom:6px}
+.logo-title{color:#fff;font-size:17px;font-weight:900;line-height:1.2}
+.logo-sub{color:rgba(255,255,255,.7);font-size:11px;font-weight:600;margin-top:2px}
+.nav{margin-top:20px;flex:1}
+.nav-item{display:flex;align-items:center;gap:10px;padding:12px 20px;color:rgba(255,255,255,.75);font-size:14px;font-weight:700;cursor:pointer;border-radius:0 24px 24px 0;margin-right:16px;transition:all .2s;text-decoration:none}
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,.18);color:#fff}
+.nav-icon{font-size:18px}
+.sidebar-footer{padding:16px 20px 0;border-top:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);font-size:11px;font-weight:600}
+
+/* MAIN */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* TOPBAR */
+.topbar{background:#fff;border-bottom:2px solid #E8EFFF;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.topbar-title{font-size:20px;font-weight:900;color:var(--blue)}
+.topbar-title span{color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.update-badge{background:#E8EFFF;color:var(--blue);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px}
+.health-badge{background:#E0FFF0;color:#00897B;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px}
+.avatar{width:38px;height:38px;background:linear-gradient(135deg,#FF5252,#FF9800);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 2px 8px rgba(255,82,82,.3)}
+
+/* CONTENT */
+.content{padding:28px 32px 40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+
+/* CARD */
+.card{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);border:1.5px solid #E8EFFF}
+.card-wide{grid-column:span 3}
+.card-2col{grid-column:span 2}
+.card-1col{grid-column:span 1}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.card-icon.blue{background:#E3EEFF}
+.card-icon.red{background:#FFE8E8}
+.card-icon.yellow{background:#FFF8E1}
+.card-icon.green{background:#E0FFF0}
+.card-icon.purple{background:#F0E8FF}
+.card-title{font-size:16px;font-weight:900;color:var(--text)}
+.card-sub{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
+
+/* MEMBERS */
+.member-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.member-card{background:var(--bg);border-radius:14px;padding:16px 12px;text-align:center;border:2px solid transparent;transition:all .2s}
+.member-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(41,121,255,.12)}
+.member-card.blue-b{border-color:#B3D1FF}
+.member-card.yellow-b{border-color:#FFE082}
+.member-emoji{font-size:32px;display:block;margin-bottom:8px}
+.member-name{font-size:15px;font-weight:900;color:var(--text)}
+.member-role{font-size:11px;color:var(--muted);font-weight:600;margin:3px 0 8px}
+.sbadge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.sbadge.on{background:#E0FFF0;color:#00897B}
+.sbadge.wait{background:#FFF8E1;color:#F57F17}
+.sdot{width:6px;height:6px;border-radius:50%}
+.sdot.on{background:#00E676}
+.sdot.wait{background:#FFD740}
+
+/* TASKS */
+.task-list{display:flex;flex-direction:column;gap:12px}
+.task-item{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg);border-radius:12px;border-left:4px solid var(--green)}
+.task-item.yl{border-left-color:var(--yellow)}
+.task-info{flex:1}
+.task-name{font-size:14px;font-weight:800;color:var(--text)}
+.task-meta{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
+.tstatus{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.tstatus.run{background:#E0FFF0;color:#00897B}
+.tstatus.pend{background:#FFF8E1;color:#F57F17}
+
+/* CAP BADGES */
+.cap-grid{display:flex;flex-wrap:wrap;gap:8px}
+.cap{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;transition:transform .15s;cursor:default}
+.cap:hover{transform:scale(1.05)}
+.cap.done{background:#E0FFF0;color:#00695C;border:1.5px solid #B2DFDB}
+.cap.ready{background:#E3EEFF;color:#1565C0;border:1.5px solid #BBDEFB}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl{display:flex;gap:12px;padding-bottom:14px}
+.tl:last-child{padding-bottom:0}
+.tl-dc{display:flex;flex-direction:column;align-items:center}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.tl-dot.b{background:var(--blue)}
+.tl-dot.g{background:var(--green)}
+.tl-dot.y{background:var(--yellow)}
+.tl-dot.r{background:var(--red)}
+.tl-line{width:2px;flex:1;background:#E8EFFF;margin-top:4px}
+.tl:last-child .tl-line{display:none}
+.tl-c{flex:1}
+.tl-time{font-size:11px;color:var(--muted);font-weight:700}
+.tl-text{font-size:13px;font-weight:700;color:var(--text);margin-top:2px}
+.tl-sub{font-size:12px;color:var(--muted);font-weight:600;margin-top:1px}
+
+/* PROFILE */
+.profile-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.profile-av{width:56px;height:56px;background:linear-gradient(135deg,#FF5252,#FF9800);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.profile-name{font-size:18px;font-weight:900;color:var(--text)}
+.profile-role{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
+.pstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.stat-box{background:var(--bg);border-radius:10px;padding:10px 12px;text-align:center}
+.stat-num{font-size:22px;font-weight:900;color:var(--blue)}
+.stat-label{font-size:11px;color:var(--muted);font-weight:700}
+.team-list{display:flex;flex-direction:column;gap:6px}
+.team-m{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text)}
+.team-m::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0}
+
+/* LINKS */
+.link-list{display:flex;flex-direction:column;gap:10px}
+.link-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border-radius:12px;text-decoration:none;color:var(--text);font-size:13px;font-weight:700;transition:all .2s;border:1.5px solid transparent}
+.link-item:hover{border-color:var(--blue);background:#E3EEFF}
+.link-icon{font-size:20px}
+.link-info{flex:1}
+.link-name{font-size:13px;font-weight:800}
+.link-url{font-size:11px;color:var(--muted);font-weight:600;margin-top:1px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{width:64px}
+  .logo-title,.logo-sub,.nav-item span,.sidebar-footer{display:none}
+  .logo-emoji{font-size:28px}
+  .main{margin-left:64px}
+  .content{grid-template-columns:1fr 1fr;padding:16px;gap:14px}
+  .card-wide{grid-column:span 2}
+  .card-2col{grid-column:span 2}
+  .member-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  .content{grid-template-columns:1fr}
+  .card-wide,.card-2col{grid-column:span 1}
+  .member-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo-area">
+    <span class="logo-emoji">🐾</span>
+    <div class="logo-title">汪汪队 HQ</div>
+    <div class="logo-sub">AI COMMAND CENTER</div>
+  </div>
+  <nav class="nav">
+    <a class="nav-item active" href="#team"><span class="nav-icon">🤖</span><span>AI 团队</span></a>
+    <a class="nav-item" href="#tasks"><span class="nav-icon">⏰</span><span>定时任务</span></a>
+    <a class="nav-item" href="#caps"><span class="nav-icon">🗂️</span><span>原生能力</span></a>
+    <a class="nav-item" href="#log"><span class="nav-icon">📋</span><span>今日日志</span></a>
+    <a class="nav-item" href="#profile"><span class="nav-icon">👤</span><span>个人中心</span></a>
+    <a class="nav-item" href="#links"><span class="nav-icon">🔗</span><span>快捷链接</span></a>
+  </nav>
+  <div class="sidebar-footer">v1.0 · 2026-04-03</div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-title">🐾 <span>汪汪队指挥中心</span></div>
+    </div>
+    <div class="topbar-right">
+      <div class="health-badge">🟢 系统正常</div>
+      <div class="update-badge">🕐 2026-04-03 02:00 BRT</div>
+      <div class="avatar">👨‍💼</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 汪汪队成员 -->
+    <div class="card card-wide" id="team">
+      <div class="card-header">
+        <div class="card-icon blue">🤖</div>
+        <div>
+          <div class="card-title">汪汪队 AI 团队</div>
+          <div class="card-sub">5名成员 · 3名在线 · 2名直联待通</div>
+        </div>
+      </div>
+      <div class="member-grid">
+        <div class="member-card blue-b">
+          <span class="member-emoji">🐾</span>
+          <div class="member-name">阿奇</div>
+          <div class="member-role">总控大管家</div>
+          <span class="sbadge on"><span class="sdot on"></span>在线</span>
+        </div>
+        <div class="member-card blue-b">
+          <span class="member-emoji">🚜</span>
+          <div class="member-name">砾石</div>
+          <div class="member-role">执行官</div>
+          <span class="sbadge on"><span class="sdot on"></span>在线</span>
+        </div>
+        <div class="member-card blue-b">
+          <span class="member-emoji">✈️</span>
+          <div class="member-name">毛毛</div>
+          <div class="member-role">学习教练</div>
+          <span class="sbadge on"><span class="sdot on"></span>在线</span>
+        </div>
+        <div class="member-card yellow-b">
+          <span class="member-emoji">🏥</span>
+          <div class="member-name">天天</div>
+          <div class="member-role">私人助理</div>
+          <span class="sbadge wait"><span class="sdot wait"></span>直联待通</span>
+        </div>
+        <div class="member-card yellow-b">
+          <span class="member-emoji">🔍</span>
+          <div class="member-name">灰灰</div>
+          <div class="member-role">情报官</div>
+          <span class="sbadge wait"><span class="sdot wait"></span>直联待通</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 定时任务 -->
+    <div class="card card-1col" id="tasks">
+      <div class="card-header">
+        <div class="card-icon yellow">⏰</div>
+        <div>
+          <div class="card-title">定时任务</div>
+          <div class="card-sub">自动化任务监控</div>
+        </div>
+      </div>
+      <div class="task-list">
+        <div class="task-item">
+          <div class="task-info">
+            <div class="task-name">📊 DBR 日报自动播报</div>
+            <div class="task-meta">每天 07:00 BRT · 砾石执行 · 发 SP Metro CM 群</div>
+          </div>
+          <span class="tstatus run">🟢 运行中</span>
+        </div>
+        <div class="task-item yl">
+          <div class="task-info">
+            <div class="task-name">🔍 灰灰情报简报</div>
+            <div class="task-meta">每天 08:00 BRT · 直联通后启用</div>
+          </div>
+          <span class="tstatus pend">🟡 待启用</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 今日日志 -->
+    <div class="card card-2col" id="log">
+      <div class="card-header">
+        <div class="card-icon green">📋</div>
+        <div>
+          <div class="card-title">今日日志</div>
+          <div class="card-sub">2026-04-03 · 工作流水</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl">
+          <div class="tl-dc"><div class="tl-dot g"></div><div class="tl-line"></div></div>
+          <div class="tl-c">
+            <div class="tl-time">01:52 BRT</div>
+            <div class="tl-text">✅ 砾石 &amp; 毛毛连通性测试通过</div>
+            <div class="tl-sub">A2A 通信稳定，两人均正常响应</div>
+          </div>
+        </div>
+        <div class="tl">
+          <div class="tl-dc"><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-c">
+            <div class="tl-time">02:00 BRT</div>
+            <div class="tl-text">🚀 汪汪队 HQ 指挥中心上线</div>
+            <div class="tl-sub">GitHub Pages 部署，v1.0 正式发布</div>
+          </div>
+        </div>
+        <div class="tl">
+          <div class="tl-dc"><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-c">
+            <div class="tl-time">01:07 BRT</div>
+            <div class="tl-text">📋 学城看板 &amp; 存档全量更新</div>
+            <div class="tl-sub">汪汪队 Bot 档案定版，A2A 通信表完善</div>
+          </div>
+        </div>
+        <div class="tl">
+          <div class="tl-dc"><div class="tl-dot y"></div><div class="tl-line"></div></div>
+          <div class="tl-c">
+            <div class="tl-time">00:14 BRT</div>
+            <div class="tl-text">🟡 天天/灰灰直联排查</div>
+            <div class="tl-sub">事件订阅 APPKEY 已填，待保存生效</div>
+          </div>
+        </div>
+        <div class="tl">
+          <div class="tl-dc"><div class="tl-dot g"></div><div class="tl-line"></div></div>
+          <div class="tl-c">
+            <div class="tl-time">昨日 11:43 BRT</div>
+            <div class="tl-text">✅ 汪汪队全员 A2A 通信打通</div>
+            <div class="tl-sub">天天首次成功发消息给 jaylin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 原生能力 -->
+    <div class="card card-2col" id="caps">
+      <div class="card-header">
+        <div class="card-icon purple">🗂️</div>
+        <div>
+          <div class="card-title">原生能力目录</div>
+          <div class="card-sub">CAP-001 ~ CAP-011 · 10已验证 · 1方案就绪</div>
+        </div>
+      </div>
+      <div class="cap-grid">
+        <span class="cap done">✅ CAP-001 大象群消息</span>
+        <span class="cap done">✅ CAP-002 Must Have CRM</span>
+        <span class="cap done">✅ CAP-003 作战任务看板</span>
+        <span class="cap done">✅ CAP-004 BEC 英语网站</span>
+        <span class="cap ready">📋 CAP-005 BEC PWA App</span>
+        <span class="cap done">✅ CAP-006 Fortaleza 旅行</span>
+        <span class="cap done">✅ CAP-007 葡语学习 APP</span>
+        <span class="cap done">✅ CAP-008 学城文章发布</span>
+        <span class="cap done">✅ CAP-009 Eric Talk 口语</span>
+        <span class="cap done">✅ CAP-010 SHL TEST 测试</span>
+        <span class="cap done">✅ CAP-011 SHL SVAR 练习</span>
+      </div>
+    </div>
+
+    <!-- 个人中心 -->
+    <div class="card card-1col" id="profile">
+      <div class="card-header">
+        <div class="card-icon red">👤</div>
+        <div>
+          <div class="card-title">个人中心</div>
+          <div class="card-sub">文乐的工作台</div>
+        </div>
+      </div>
+      <div class="profile-top">
+        <div class="profile-av">👨‍💼</div>
+        <div>
+          <div class="profile-name">张文乐</div>
+          <div class="profile-role">Keeta 圣保罗都市圈负责人</div>
+        </div>
+      </div>
+      <div class="pstats">
+        <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">AI 成员</div></div>
+        <div class="stat-box"><div class="stat-num">11</div><div class="stat-label">原生能力</div></div>
+        <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">城市经理</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:#00897B;font-size:18px">🟢</div><div class="stat-label">系统健康</div></div>
+      </div>
+      <div class="team-list">
+        <div class="team-m">danielalbuquerque</div>
+        <div class="team-m">fengmenglong</div>
+        <div class="team-m">jaylin</div>
+        <div class="team-m">tianjie</div>
+      </div>
+    </div>
+
+    <!-- 快捷链接 -->
+    <div class="card card-1col" id="links">
+      <div class="card-header">
+        <div class="card-icon blue">🔗</div>
+        <div>
+          <div class="card-title">快捷链接</div>
+          <div class="card-sub">常用工具直达</div>
+        </div>
+      </div>
+      <div class="link-list">
+        <a class="link-item" href="https://km.sankuai.com/collabpage/2754982053" target="_blank">
+          <span class="link-icon">📋</span>
+          <div class="link-info">
+            <div class="link-name">汪汪队学城看板</div>
+            <div class="link-url">km.sankuai.com</div>
+          </div>
+          <span>→</span>
+        </a>
+        <a class="link-item" href="https://bi.keetapp.com/v2/dashboard/300001446" target="_blank">
+          <span class="link-icon">📊</span>
+          <div class="link-info">
+            <div class="link-name">DBR BI 看板</div>
+            <div class="link-url">bi.keetapp.com</div>
+          </div>
+          <span>→</span>
+        </a>
+        <a class="link-item" href="https://zhangwenle2026.github.io/bec-english/" target="_blank">
+          <span class="link-icon">📚</span>
+          <div class="link-info">
+            <div class="link-name">BEC 英语学习网站</div>
+            <div class="link-url">zhangwenle2026.github.io</div>
+          </div>
+          <span>→</span>
+        </a>
+        <a class="link-item" href="https://zhangwenle2026.github.io/eric-talk/" target="_blank">
+          <span class="link-icon">🗣️</span>
+          <div class="link-info">
+            <div class="link-name">Eric Talk 口语练习</div>
+            <div class="link-url">zhangwenle2026.github.io</div>
+          </div>
+          <span>→</span>
+        </a>
+        <a class="link-item" href="https://dxopen.sankuai.com/home" target="_blank">
+          <span class="link-icon">🐘</span>
+          <div class="link-info">
+            <div class="link-name">大象开放平台</div>
+            <div class="link-url">dxopen.sankuai.com</div>
+          </div>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+</body>
+</html>
