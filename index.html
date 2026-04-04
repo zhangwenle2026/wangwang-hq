@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="4.0.2">
+<meta name="version" content="4.0.3">
 <title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -1042,7 +1042,16 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       .sidebar .tl-dot { width: 7px !important; height: 7px !important; }
       .sidebar .timeline { gap: 0 !important; }
       .sidebar .hq-col-log { background: transparent !important; border: none !important; box-shadow: none !important; }
-      .sidebar .hq-timeline-mini { max-height: calc(100vh - 220px); overflow-y: auto; }
+      .sidebar .hq-timeline-mini { max-height: calc(100vh - 420px); overflow-y: auto; min-height: 80px; }
+      /* ====== 侧边栏定时任务 ====== */
+      .sidebar-cron { padding: 10px 12px; border-top: 1px solid rgba(0,212,255,0.15); margin-top: 6px; }
+      .sidebar-cron-title { font-size: 11px; font-weight: 700; color: #ff9c40; margin-bottom: 6px; letter-spacing: 0.5px; }
+      .sidebar-cron-list { display: flex; flex-direction: column; gap: 5px; }
+      .scron-item { display: flex; align-items: center; gap: 6px; background: rgba(255,107,53,0.07); border-radius: 6px; padding: 5px 8px; }
+      .scron-name { flex: 1; font-size: 11px; color: #e8f4ff; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .scron-meta { font-size: 10px; color: #8bacc8; white-space: nowrap; }
+      .scron-status { font-size: 12px; }
+
 
       /* 队友卡片升级 */
       .tm-card { flex-direction: column !important; align-items: center !important; padding: 12px 8px !important; transition: transform 0.25s ease, box-shadow 0.25s ease !important; }
@@ -1828,7 +1837,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="logo-sub">AI COMMAND CENTER</div>
   </div>
         <div class="hq-col-log">
-                  <div class="hq-col-title">📋 今日日志</div>
+                  <div class="hq-col-title">📋 本周日志</div>
                   <div class="hq-timeline-mini">
                     <div class="timeline">
                       <div class="tl">
@@ -1882,7 +1891,28 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
                     </div>
                   </div>
                 </div>
-  <div class="sidebar-footer">v4.0.0 · 2026-04-04</div>
+
+  <div class="sidebar-cron">
+    <div class="sidebar-cron-title">⏰ 定时任务</div>
+    <div class="sidebar-cron-list">
+      <div class="scron-item">
+        <div class="scron-name">📊 DBR 日报</div>
+        <div class="scron-meta">07:00 BRT · 砾石</div>
+        <span class="scron-status">🟢</span>
+      </div>
+      <div class="scron-item">
+        <div class="scron-name">🐾 汪汪队存档</div>
+        <div class="scron-meta">18:00 BRT · 阿奇</div>
+        <span class="scron-status">🟢</span>
+      </div>
+      <div class="scron-item">
+        <div class="scron-name">📋 访店日报</div>
+        <div class="scron-meta">18:30 BRT · 砾石</div>
+        <span class="scron-status">🟢</span>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-footer">v4.0.3 · 2026-04-04</div>
 </aside>
 
 <main class="main">
@@ -2073,42 +2103,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 </div>
 
-            <!-- 定时任务 -->
-    <div class="card card-wide" id="tasks-full">
-      <div class="card-header">
-        <div class="card-icon orange">⏰</div>
-        <div>
-          <div class="card-title">定时任务</div>
-          <div class="card-sub">自动化任务监控 · 3个运行中</div>
-        </div>
-      </div>
-      <div class="tasks-full-grid">
-<div class="tasks-full-list">
-          <div class="inline-task-item">
-            <div class="inline-task-left">
-              <div class="inline-task-name">📊 DBR 日报自动播报</div>
-              <div class="inline-task-meta">每天 07:00 BRT · 砾石执行 · 发 SP Metro CM 群</div>
-            </div>
-            <span class="tstatus run">🟢 运行中</span>
-          </div>
-          <div class="inline-task-item">
-            <div class="inline-task-left">
-              <div class="inline-task-name">🐾 汪汪队每日存档 &amp; 汇报</div>
-              <div class="inline-task-meta">每天 18:00 BRT · 阿奇执行 · DM 文乐</div>
-            </div>
-            <span class="tstatus run">🟢 运行中</span>
-          </div>
-          <div class="inline-task-item">
-            <div class="inline-task-left">
-              <div class="inline-task-name">📋 访店日报（Daily Visit Report）</div>
-              <div class="inline-task-meta">每天 18:30 BRT · 砾石执行 · 发 CM + Manager 群</div>
-            </div>
-            <span class="tstatus run">🟢 运行中</span>
-          </div>
-        
-          </div>
-      </div>
-    </div>
+            
 
 
   </div>
