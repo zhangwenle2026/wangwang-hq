@@ -1274,6 +1274,70 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         0%, 100% { opacity: 0.4; }
         50%       { opacity: 0.9; }
       }
+
+      /* ===== 阿奇卡片修复 v2.9.4 ===== */
+
+      /* 名字青色 neon */
+      .captain-name-main {
+        font-size: 22px !important;
+        font-weight: 900 !important;
+        color: #00d4ff !important;
+        text-shadow: 0 0 12px rgba(0,212,255,0.6) !important;
+        letter-spacing: 0.03em;
+      }
+
+      /* 整张阿奇卡片撑满左侧高度 */
+      .captain-hero-card {
+        height: 100%;
+        box-sizing: border-box;
+      }
+
+      /* 右栏撑满、语录不截断 */
+      .cap-right {
+        min-width: 0;
+        overflow: visible;
+      }
+      .cap-quote-box {
+        flex: 1;
+      }
+      .cap-quote-text {
+        font-size: 13px !important;
+        line-height: 1.7 !important;
+        white-space: normal !important;
+        word-break: break-all;
+        display: -webkit-box;
+        -webkit-line-clamp: unset !important;
+        overflow: visible !important;
+      }
+
+      /* 属性数字更大 */
+      .cap-attr-val {
+        font-size: 26px !important;
+      }
+      .cap-attr-icon {
+        font-size: 20px !important;
+      }
+      .cap-attr-item {
+        padding: 10px 6px !important;
+      }
+
+      /* 左栏间距优化 */
+      .cap-left {
+        gap: 6px !important;
+      }
+      .cap-lv-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 3px !important;
+      }
+      .cap-lv-badge {
+        font-size: 13px !important;
+      }
+
+      /* 队友右侧 2×2 撑满高度 */
+      .captain-hero-card + div {
+        align-self: stretch !important;
+      }
 </style>
 </head>
 <body>
