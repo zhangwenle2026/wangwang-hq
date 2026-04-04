@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="4.1.0">
+<meta name="version" content="4.0.4">
 <title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -1829,32 +1829,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         opacity: 1;
         transform: translateX(-50%) translateY(0) scale(1);
       }
-
-/* ===== 分享成就墙 ===== */
-.achv-wall { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(0,212,255,0.15); }
-.achv-wall-title { font-size: 13px; font-weight: 800; color: rgba(0,212,255,0.8); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-.achv-wall-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-.achv-badge { display: flex; flex-direction: column; align-items: center; gap: 4px; background: linear-gradient(135deg, #0d1b2a, #1a1040); border: 1.5px solid rgba(0,212,255,0.2); border-radius: 12px; padding: 10px 14px; min-width: 72px; cursor: pointer; transition: all 0.25s ease; }
-.achv-badge:hover { border-color: rgba(0,212,255,0.6); box-shadow: 0 0 16px rgba(0,212,255,0.25), 0 4px 12px rgba(0,0,0,0.3); transform: translateY(-3px) scale(1.04); }
-.achv-icon { font-size: 22px; line-height: 1; }
-.achv-name { font-size: 11px; font-weight: 800; color: #e8f4ff; text-align: center; white-space: nowrap; }
-.achv-date { font-size: 9px; color: #8bacc8; font-family: 'Courier New', monospace; }
-
-/* ===== 成长里程碑 ===== */
-.milestone-section { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(124,58,237,0.2); }
-.milestone-title { font-size: 13px; font-weight: 800; color: rgba(124,58,237,0.9); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
-.milestone-timeline { position: relative; display: flex; flex-direction: column; gap: 0; }
-.milestone-timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, rgba(0,212,255,0.5), rgba(124,58,237,0.5)); transform: translateX(-50%); z-index: 0; }
-.ms-item { display: flex; align-items: center; position: relative; z-index: 1; margin-bottom: 10px; }
-.ms-spacer { flex: 1; }
-.ms-content { flex: 1; background: linear-gradient(135deg, rgba(13,27,42,0.95), rgba(26,16,64,0.8)); border: 1.5px solid rgba(0,212,255,0.18); border-radius: 12px; padding: 10px 14px; transition: all 0.25s; }
-.ms-content:hover { border-color: rgba(124,58,237,0.5); box-shadow: 0 0 14px rgba(124,58,237,0.15); transform: scale(1.01); }
-.ms-left .ms-content { margin-right: 16px; text-align: right; }
-.ms-right .ms-content { margin-left: 16px; text-align: left; }
-.ms-dot { width: 14px; height: 14px; border-radius: 50%; background: linear-gradient(135deg, #00d4ff, #7c3aed); box-shadow: 0 0 10px rgba(0,212,255,0.5); flex-shrink: 0; z-index: 2; position: relative; }
-.ms-date { font-size: 10px; color: #8bacc8; font-family: 'Courier New', monospace; margin-bottom: 2px; }
-.ms-label { font-size: 13px; font-weight: 800; color: #00d4ff; margin-bottom: 3px; }
-.ms-desc { font-size: 11px; color: #8bacc8; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -1941,7 +1915,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       </div>
     </div>
   </div>
-  <div class="sidebar-footer">v4.1.0 · 2026-04-04</div>
+  <div class="sidebar-footer">v4.0.4 · 2026-04-04</div>
 </aside>
 
 <main class="main">
@@ -2128,50 +2102,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         </div>
           </div>
 
-      </div>
-
-      <!-- ===== 分享成就墙 ===== -->
-      <div class="achv-wall">
-        <div class="achv-wall-title">🏆 分享成就墙</div>
-        <div class="achv-wall-grid">
-          <div class="achv-badge"><div class="achv-icon">🐾</div><div class="achv-name">诞生</div><div class="achv-date">03-24</div></div>
-          <div class="achv-badge"><div class="achv-icon">📢</div><div class="achv-name">首次发群</div><div class="achv-date">03-25</div></div>
-          <div class="achv-badge"><div class="achv-icon">📊</div><div class="achv-name">DBR上线</div><div class="achv-date">03-26</div></div>
-          <div class="achv-badge"><div class="achv-icon">🔗</div><div class="achv-name">A2A打通</div><div class="achv-date">04-02</div></div>
-          <div class="achv-badge"><div class="achv-icon">🌐</div><div class="achv-name">HQ上线</div><div class="achv-date">04-03</div></div>
-          <div class="achv-badge"><div class="achv-icon">✍️</div><div class="achv-name">首次分享</div><div class="achv-date">04-04</div></div>
-        </div>
-      </div>
-
-      <!-- ===== 成长里程碑 ===== -->
-      <div class="milestone-section">
-        <div class="milestone-title">📅 成长里程碑</div>
-        <div class="milestone-timeline">
-          <div class="ms-item ms-left">
-            <div class="ms-content"><div class="ms-date">2026-03-24</div><div class="ms-label">🐾 阿奇诞生</div><div class="ms-desc">LingLing 正式上线，文乐为她命名，汪汪队 AI 养成计划启动</div></div>
-            <div class="ms-dot"></div><div class="ms-spacer"></div>
-          </div>
-          <div class="ms-item ms-right">
-            <div class="ms-spacer"></div><div class="ms-dot"></div>
-            <div class="ms-content"><div class="ms-date">2026-03-25</div><div class="ms-label">📢 首次自动发群</div><div class="ms-desc">CAP-001 打通，从沙箱自动向大象群发送 DBR 日报图片，无需人工介入</div></div>
-          </div>
-          <div class="ms-item ms-left">
-            <div class="ms-content"><div class="ms-date">2026-03-26</div><div class="ms-label">📊 DBR 自动日报</div><div class="ms-desc">每日 07:00 BRT 自动取数、生成卡片、发送 SP Metropolitan CM 群</div></div>
-            <div class="ms-dot"></div><div class="ms-spacer"></div>
-          </div>
-          <div class="ms-item ms-right">
-            <div class="ms-spacer"></div><div class="ms-dot"></div>
-            <div class="ms-content"><div class="ms-date">2026-04-02</div><div class="ms-label">🔗 A2A 全员通信打通</div><div class="ms-desc">砾石、毛毛、天天、灰灰全员可互相通信，汪汪队多 Agent 协作体系建立</div></div>
-          </div>
-          <div class="ms-item ms-left">
-            <div class="ms-content"><div class="ms-date">2026-04-03</div><div class="ms-label">🌐 汪汪队 HQ 上线</div><div class="ms-desc">AI 团队指挥中心正式发布，v1.0.0 存档，GitHub Pages 永久部署</div></div>
-            <div class="ms-dot"></div><div class="ms-spacer"></div>
-          </div>
-          <div class="ms-item ms-right">
-            <div class="ms-spacer"></div><div class="ms-dot"></div>
-            <div class="ms-content"><div class="ms-date">2026-04-04</div><div class="ms-label">✍️ 首次分享文章</div><div class="ms-desc">SHARE-002 发布学城，阿奇协助完成第一篇正式经验分享，「分享就是最好的成长」</div></div>
-          </div>
-        </div>
       </div>
 
 </div>
