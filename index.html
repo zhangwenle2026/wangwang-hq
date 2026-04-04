@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.3.0">
+<meta name="version" content="5.7.0">
 <title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -1950,7 +1950,57 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         0%{transform:translateY(-8px);opacity:0.4;}
         100%{transform:translateY(0);opacity:1;}
       }
-</style>
+
+      /* ── 指挥中枢指标卡片 ── */
+      .cmd-stat {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0,10,26,0.6);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 8px;
+        padding: 8px 10px;
+        position: relative;
+        overflow: hidden;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        cursor: default;
+      }
+      .cmd-stat:hover {
+        border-color: var(--clr, rgba(0,212,255,0.4));
+        box-shadow: 0 0 12px color-mix(in srgb, var(--clr, #00d4ff) 20%, transparent);
+      }
+      .cmd-stat-icon { font-size: 14px; flex-shrink: 0; }
+      .cmd-stat-body { flex: 1; min-width: 0; }
+      .cmd-stat-val {
+        font-size: 18px;
+        font-weight: 900;
+        font-family: 'Courier New', monospace;
+        line-height: 1;
+        margin-bottom: 1px;
+      }
+      .cmd-stat-lbl { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+      .cmd-stat-bar {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 2px;
+        background: rgba(255,255,255,0.05);
+      }
+      .cmd-stat-fill {
+        height: 100%;
+        background: var(--fill, #00d4ff);
+        border-radius: 1px;
+        width: 0%;
+        transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow: 0 0 6px var(--fill, #00d4ff);
+      }
+
+      /* ── 圆环旋转动画 ── */
+      @keyframes ring-cw  { from { transform: rotate(-90deg); } to { transform: rotate(270deg); } }
+      @keyframes ring-ccw { from { transform: rotate(90deg);  } to { transform: rotate(-270deg); } }
+      #ring-outer { animation: ring-cw  12s linear infinite; transform-origin: 100px 100px; }
+      #ring-inner { animation: ring-ccw  8s linear infinite; transform-origin: 100px 100px; }
+
+      </style>
 </head>
 <body>
 
@@ -2355,109 +2405,152 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== 卡2：汪汪队 AI 数据看板 ===== -->
 <div class="card card-wide" id="ai-dashboard" style="margin-top:20px;">
-  <div class="card-header">
-    <div class="card-icon" style="background:linear-gradient(135deg,#00d4ff22,#7c3aed22);border:1px solid rgba(0,212,255,0.3);">📊</div>
-    <div>
-      <div class="card-title">汪汪队 AI 数据看板</div>
-      <div class="card-sub">实时产出追踪 · 自动统计 · <span id="dash-update-time" style="color:#00d4ff;font-weight:600;">--</span></div>
+
+  <!-- 顶栏 -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#00d4ff22,#7c3aed22);border:1px solid rgba(0,212,255,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;">🛸</div>
+      <div>
+        <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:1px;">汪汪队 AI 指挥中枢</div>
+        <div style="font-size:10px;color:rgba(0,212,255,0.7);letter-spacing:0.5px;">COMMAND HQ · 实时产出追踪</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="display:flex;align-items:center;gap:5px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e;animation:pulse-green 2s ease-in-out infinite;"></div>
+        <span style="font-size:9px;font-weight:700;color:#22c55e;letter-spacing:1.5px;">LIVE</span>
+      </div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.4);">团队成立 <span id="team-days" style="color:#fbbf24;font-weight:700;">--</span> 天</div>
     </div>
   </div>
 
-  <!-- ── 任务数 ── -->
-  <div style="margin-bottom:18px;">
-    <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">🔢 任务完成数</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-      <div class="dash-stat-card" style="border-color:rgba(0,212,255,0.3);">
-        <div class="dash-stat-icon">📅</div>
-        <div class="dash-stat-val" id="tasks-today" style="color:#00d4ff;">0</div>
-        <div class="dash-stat-lbl">今日任务</div>
+  <!-- 主体：中央圆环 + 左右指标 -->
+  <div style="display:grid;grid-template-columns:1fr 200px 1fr;gap:12px;align-items:center;margin-bottom:18px;">
+
+    <!-- 左侧 4 个指标 -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="cmd-stat" style="--clr:#fb923c;">
+        <span class="cmd-stat-icon">🧠</span>
+        <div class="cmd-stat-body">
+          <div class="cmd-stat-val" id="cmd-token-today" style="color:#fb923c;">--</div>
+          <div class="cmd-stat-lbl">Token 今日</div>
+        </div>
+        <div class="cmd-stat-bar" style="--fill:#fb923c;"><div class="cmd-stat-fill" id="cmd-bar-token-today"></div></div>
       </div>
-      <div class="dash-stat-card" style="border-color:rgba(124,58,237,0.3);">
-        <div class="dash-stat-icon">📆</div>
-        <div class="dash-stat-val" id="tasks-week" style="color:#a78bfa;">0</div>
-        <div class="dash-stat-lbl">本周任务</div>
+      <div class="cmd-stat" style="--clr:#fdba74;">
+        <span class="cmd-stat-icon">🏦</span>
+        <div class="cmd-stat-body">
+          <div class="cmd-stat-val" id="cmd-token-total" style="color:#fdba74;">--</div>
+          <div class="cmd-stat-lbl">Token 累计</div>
+        </div>
+        <div class="cmd-stat-bar" style="--fill:#fdba74;"><div class="cmd-stat-fill" id="cmd-bar-token-total"></div></div>
       </div>
-      <div class="dash-stat-card" style="border-color:rgba(245,200,66,0.3);">
-        <div class="dash-stat-icon">🗓️</div>
-        <div class="dash-stat-val" id="tasks-month" style="color:#f5c842;">0</div>
-        <div class="dash-stat-lbl">本月任务</div>
+      <div class="cmd-stat" style="--clr:#a78bfa;">
+        <span class="cmd-stat-icon">📅</span>
+        <div class="cmd-stat-body">
+          <div class="cmd-stat-val" id="cmd-tasks-week" style="color:#a78bfa;">--</div>
+          <div class="cmd-stat-lbl">本周任务数</div>
+        </div>
+        <div class="cmd-stat-bar" style="--fill:#a78bfa;"><div class="cmd-stat-fill" id="cmd-bar-tasks-week"></div></div>
+      </div>
+      <div class="cmd-stat" style="--clr:#fbbf24;">
+        <span class="cmd-stat-icon">🎂</span>
+        <div class="cmd-stat-body">
+          <div class="cmd-stat-val" id="cmd-team-days" style="color:#fbbf24;">--</div>
+          <div class="cmd-stat-lbl">团队成立天数</div>
+        </div>
+        <div class="cmd-stat-bar" style="--fill:#fbbf24;"><div class="cmd-stat-fill" id="cmd-bar-team-days"></div></div>
+      </div>
+    </div>
+
+    <!-- 中央圆环 -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;">
+      <svg id="cmd-ring-svg" width="200" height="200" viewBox="0 0 200 200" style="display:block;">
+        <!-- 背景轨道 -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(0,212,255,0.08)" stroke-width="14"/>
+        <circle cx="100" cy="100" r="62" fill="none" stroke="rgba(124,58,237,0.08)" stroke-width="10"/>
+        <!-- 外环 - 青色慢转 -->
+        <circle id="ring-outer" cx="100" cy="100" r="80" fill="none"
+          stroke="url(#ringGradOuter)" stroke-width="14" stroke-linecap="round"
+          stroke-dasharray="420 83" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+        <!-- 内环 - 紫色快转反向 -->
+        <circle id="ring-inner" cx="100" cy="100" r="62" fill="none"
+          stroke="url(#ringGradInner)" stroke-width="10" stroke-linecap="round"
+          stroke-dasharray="280 109" stroke-dashoffset="0" transform="rotate(90 100 100)"/>
+        <!-- 中心发光点 -->
+        <circle cx="100" cy="100" r="42" fill="rgba(0,10,26,0.9)" stroke="rgba(0,212,255,0.15)" stroke-width="1"/>
+        <!-- 扫描线装饰 -->
+        <line x1="100" y1="58" x2="100" y2="66" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
+        <line x1="100" y1="134" x2="100" y2="142" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
+        <line x1="58" y1="100" x2="66" y2="100" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
+        <line x1="134" y1="100" x2="142" y2="100" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
+        <defs>
+          <linearGradient id="ringGradOuter" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.2"/>
+            <stop offset="60%" stop-color="#00d4ff"/>
+            <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.6"/>
+          </linearGradient>
+          <linearGradient id="ringGradInner" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.2"/>
+            <stop offset="60%" stop-color="#a78bfa"/>
+            <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.6"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <!-- 中心数字（absolute over svg） -->
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;">
+        <div id="cmd-tasks-today" style="font-size:52px;font-weight:900;color:#00d4ff;font-family:'Courier New',monospace;line-height:1;text-shadow:0 0 20px rgba(0,212,255,0.8),0 0 40px rgba(0,212,255,0.4);">--</div>
+        <div style="font-size:8px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2px;margin-top:4px;">MISSIONS TODAY</div>
+      </div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1px;text-align:center;">今日任务完成数</div>
+    </div>
+
+    <!-- 右侧 4 个指标 -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="cmd-stat" style="--clr:#22c55e;">
+        <span class="cmd-stat-icon">🔨</span>
+        <div class="cmd-stat-body">
+          <div class="cmd-stat-val" id="cmd-commits-today" style="color:#22c55e;">--</div>
+          <div class="cmd-stat-lbl">Commits 今日</div>
+        </div>
+        <div class="cmd-stat-bar" style="--fill:#22c55e;"><div class="cmd-stat-fill" id="cmd-bar-commits-today"></div></div>
+      </div>
+      <div class="cmd-stat" style="--clr:#4ade80;">
+        <span class="cmd-stat-icon">📦</span>
+        <div class="cmd-stat-body">
+          <div class="cmd-stat-val" id="cmd-commits-total" style="color:#4ade80;">--</div>
+          <div class="cmd-stat-lbl">Commits 累计</div>
+        </div>
+        <div class="cmd-stat-bar" style="--fill:#4ade80;"><div class="cmd-stat-fill" id="cmd-bar-commits-total"></div></div>
+      </div>
+      <div class="cmd-stat" style="--clr:#f472b6;">
+        <span class="cmd-stat-icon">🚀</span>
+        <div class="cmd-stat-body">
+          <div class="cmd-stat-val" id="cmd-dbr-rate" style="color:#f472b6;">--</div>
+          <div class="cmd-stat-lbl">DBR 播报率</div>
+        </div>
+        <div class="cmd-stat-bar" style="--fill:#f472b6;"><div class="cmd-stat-fill" id="cmd-bar-dbr-rate"></div></div>
+      </div>
+      <div class="cmd-stat" style="--clr:#67e8f9;">
+        <span class="cmd-stat-icon">🌐</span>
+        <div class="cmd-stat-body">
+          <div class="cmd-stat-val" id="cmd-tools-count" style="color:#67e8f9;">--</div>
+          <div class="cmd-stat-lbl">工具上线总数</div>
+        </div>
+        <div class="cmd-stat-bar" style="--fill:#67e8f9;"><div class="cmd-stat-fill" id="cmd-bar-tools"></div></div>
       </div>
     </div>
   </div>
 
-  <!-- ── 代码行数 ── -->
-  <div style="margin-bottom:18px;">
-    <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">💻 代码产出 (GitHub Commits)</div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-      <div class="dash-stat-card" style="border-color:rgba(34,197,94,0.3);">
-        <div class="dash-stat-icon">🔨</div>
-        <div class="dash-stat-val" id="code-today" style="color:#22c55e;">0</div>
-        <div class="dash-stat-lbl">今日 Commits</div>
-      </div>
-      <div class="dash-stat-card" style="border-color:rgba(34,197,94,0.25);">
-        <div class="dash-stat-icon">📦</div>
-        <div class="dash-stat-val" id="code-total" style="color:#4ade80;">0</div>
-        <div class="dash-stat-lbl">累计 Commits</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── Token 消耗 ── -->
-  <div style="margin-bottom:20px;">
-    <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">🪙 Token 消耗</div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-      <div class="dash-stat-card" style="border-color:rgba(251,146,60,0.3);">
-        <div class="dash-stat-icon">⚡</div>
-        <div class="dash-stat-val" id="token-today" style="color:#fb923c;">0</div>
-        <div class="dash-stat-lbl">今日 Token（估算）</div>
-      </div>
-      <div class="dash-stat-card" style="border-color:rgba(251,146,60,0.25);">
-        <div class="dash-stat-icon">🏦</div>
-        <div class="dash-stat-val" id="token-total" style="color:#fdba74;">0</div>
-        <div class="dash-stat-lbl">累计 Token（估算）</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── 成就墙 ── -->
-  <div>
-    <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;">🏆 成就墙</div>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;" id="achievement-wall">
-      <div class="achv-badge gold">
-        <span class="achv-icon">🚀</span>
-        <div class="achv-info">
-          <div class="achv-name">首次 DBR 自动播报</div>
-          <div class="achv-date">2026-03-25</div>
-        </div>
-      </div>
-      <div class="achv-badge cyan">
-        <span class="achv-icon">🌐</span>
-        <div class="achv-info">
-          <div class="achv-name">BEC 英语 APP 上线</div>
-          <div class="achv-date">2026-03-29</div>
-        </div>
-      </div>
-      <div class="achv-badge purple">
-        <span class="achv-icon">🤝</span>
-        <div class="achv-info">
-          <div class="achv-name">A2A 通信打通</div>
-          <div class="achv-date">2026-04-02</div>
-        </div>
-      </div>
-      <div class="achv-badge green">
-        <span class="achv-icon">👥</span>
-        <div class="achv-info">
-          <div class="achv-name">五名成员全员上线</div>
-          <div class="achv-date">2026-04-03</div>
-        </div>
-      </div>
-      <div class="achv-badge orange">
-        <span class="achv-icon">🏠</span>
-        <div class="achv-info">
-          <div class="achv-name">汪汪队 HQ 指挥中心</div>
-          <div class="achv-date">2026-04-03</div>
-        </div>
-      </div>
+  <!-- 成就墙 -->
+  <div style="border-top:1px solid rgba(0,212,255,0.1);padding-top:14px;">
+    <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">🏆 成就墙</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;" id="achievement-wall">
+      <div class="achv-badge gold"><span class="achv-icon">🚀</span><div class="achv-info"><div class="achv-name">首次 DBR 自动播报</div><div class="achv-date">2026-03-25</div></div></div>
+      <div class="achv-badge cyan"><span class="achv-icon">🌐</span><div class="achv-info"><div class="achv-name">BEC 英语 APP 上线</div><div class="achv-date">2026-03-29</div></div></div>
+      <div class="achv-badge purple"><span class="achv-icon">🤝</span><div class="achv-info"><div class="achv-name">A2A 通信打通</div><div class="achv-date">2026-04-02</div></div></div>
+      <div class="achv-badge green"><span class="achv-icon">👥</span><div class="achv-info"><div class="achv-name">五名成员全员上线</div><div class="achv-date">2026-04-03</div></div></div>
+      <div class="achv-badge orange"><span class="achv-icon">🏠</span><div class="achv-info"><div class="achv-name">汪汪队 HQ 指挥中心</div><div class="achv-date">2026-04-03</div></div></div>
     </div>
   </div>
 
@@ -2547,55 +2640,91 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 </script>
 <script>
 
-    // ===== 数据看板 JS =====
+    // ===== 指挥中枢 JS =====
     (function() {
-      // 初始化数据（由阿奇每日 cron 更新）
-      const DASH_DATA = {
-        tasks: { today: 3, week: 18, month: 47 },
+      // ===== 数据（手动更新这里）=====
+      const CMD_DATA = {
+        tasks:   { today: 3, week: 18, month: 47 },
         commits: { today: 5, total: 108 },
-        tokens: { today: 120000, total: 2850000 },
+        tokens:  { today: 287000, total: 2850000 },
+        dbr:     { rate: 92 },        // %
+        tools:   { count: 9 },        // 上线工具数
         updatedAt: "2026-04-04 18:30 BRT"
       };
 
-      // 数字格式化
+      // ── 格式化 ──
       function fmt(n) {
         if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
-        if (n >= 1000) return (n/1000).toFixed(0) + 'K';
+        if (n >= 1000)    return (n/1000).toFixed(0) + 'K';
         return String(n);
       }
 
-      // 数字滚动动效
-      function animateCount(el, target, duration) {
+      // ── 数字滚动 ──
+      function rollTo(elId, target, dur, fmtFn) {
+        const el = document.getElementById(elId);
         if (!el) return;
+        fmtFn = fmtFn || fmt;
         const start = Date.now();
-        const tick = () => {
-          const elapsed = Date.now() - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const current = Math.round(target * eased);
-          el.textContent = fmt(current);
-          if (progress < 1) requestAnimationFrame(tick);
-        };
+        function tick() {
+          const p = Math.min((Date.now()-start)/dur, 1);
+          const e = 1 - Math.pow(1-p, 3);
+          el.textContent = fmtFn(Math.round(target * e));
+          if (p < 1) requestAnimationFrame(tick);
+        }
         requestAnimationFrame(tick);
       }
 
-      // 渲染
-      function render() {
-        const d = DASH_DATA;
-        animateCount(document.getElementById('tasks-today'), d.tasks.today, 800);
-        animateCount(document.getElementById('tasks-week'), d.tasks.week, 900);
-        animateCount(document.getElementById('tasks-month'), d.tasks.month, 1000);
-        animateCount(document.getElementById('code-today'), d.commits.today, 800);
-        animateCount(document.getElementById('code-total'), d.commits.total, 900);
-        animateCount(document.getElementById('token-today'), d.tokens.today, 800);
-        animateCount(document.getElementById('token-total'), d.tokens.total, 1000);
-        const el = document.getElementById('dash-update-time');
-        if (el) el.textContent = '更新于 ' + d.updatedAt;
+      // ── 进度条 ──
+      function setBar(elId, pct) {
+        const el = document.getElementById(elId);
+        if (el) { el.style.width = '0%'; setTimeout(() => el.style.width = Math.min(pct,100)+'%', 200); }
       }
 
+      // ── 团队成立天数 ──
+      function teamDays() {
+        const born = new Date('2026-03-24T00:00:00+08:00');
+        return Math.floor((Date.now() - born) / 86400000);
+      }
 
+      function render() {
+        const d = CMD_DATA;
+        const days = teamDays();
 
-  // ===== 今日重要事项 =====
+        // 中央
+        rollTo('cmd-tasks-today', d.tasks.today, 900);
+
+        // 左侧
+        rollTo('cmd-token-today',  d.tokens.today,  900);
+        rollTo('cmd-token-total',  d.tokens.total,  1100);
+        rollTo('cmd-tasks-week',   d.tasks.week,    800);
+        rollTo('cmd-team-days',    days,            700, String);
+
+        // 右侧
+        rollTo('cmd-commits-today',  d.commits.today, 800);
+        rollTo('cmd-commits-total',  d.commits.total, 1000);
+        document.getElementById('cmd-dbr-rate') && (document.getElementById('cmd-dbr-rate').textContent = d.dbr.rate + '%');
+        document.getElementById('cmd-tools-count') && rollTo('cmd-tools-count', d.tools.count, 700, String);
+
+        // 顶部天数同步
+        const tds = document.getElementById('team-days');
+        if (tds) tds.textContent = days;
+        const tds2 = document.getElementById('cmd-team-days');
+
+        // 进度条（相对最大值的比例）
+        setBar('cmd-bar-token-today',  Math.min(d.tokens.today/500000*100, 100));
+        setBar('cmd-bar-token-total',  Math.min(d.tokens.total/5000000*100, 100));
+        setBar('cmd-bar-tasks-week',   Math.min(d.tasks.week/30*100, 100));
+        setBar('cmd-bar-team-days',    Math.min(days/90*100, 100));
+        setBar('cmd-bar-commits-today',Math.min(d.commits.today/20*100, 100));
+        setBar('cmd-bar-commits-total',Math.min(d.commits.total/200*100, 100));
+        setBar('cmd-bar-dbr-rate',     d.dbr.rate);
+        setBar('cmd-bar-tools',        Math.min(d.tools.count/15*100, 100));
+      }
+
+      window.addEventListener('load', () => setTimeout(render, 500));
+    })();
+
+      // ===== 今日重要事项 =====
   (function initFocus() {
     const FOCUS_DATA = [
       { status: 'urgent',   text: '取消率 WoW +50% 异常 — 排查原因', pct: 20 },
@@ -2630,9 +2759,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   })();
 
 
-      // 页面加载后 500ms 启动动效
-      window.addEventListener('load', () => setTimeout(render, 500));
-    })();
 
 </script>
 
