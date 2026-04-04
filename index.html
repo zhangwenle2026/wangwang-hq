@@ -1535,6 +1535,21 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         font-size: 10px;
         color: #8bacc8;
       }
+
+      .cap-captain-float {
+        position: absolute;
+        top: 10px; right: 10px;
+        background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,152,0,0.2));
+        border: 1px solid rgba(255,215,0,0.6);
+        color: #FFD700;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 20px;
+        z-index: 3;
+        letter-spacing: 0.05em;
+        box-shadow: 0 0 10px rgba(255,215,0,0.3);
+      }
 </style>
 </head>
 <body>
@@ -1688,6 +1703,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
             </div>
             <!-- 等级徽章浮层 -->
             <div class="cap-lv-float">Lv.<b>4</b></div>
+            <!-- 队长标签浮层 -->
+            <div class="cap-captain-float">⭐ CAPTAIN</div>
           </div>
 
           <!-- 属性区（右） -->
@@ -1697,7 +1714,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
             <div class="cap-status-row">
               <div class="companion-dot"></div>
               <span>系统在线 · 随时待命</span>
-              <span class="cap-badge-captain">⭐ CAPTAIN</span>
             </div>
 
             <!-- 核心属性 2×2 -->
