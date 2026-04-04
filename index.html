@@ -2092,7 +2092,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       </div>
     </div>
   </div>
-  <div class="sidebar-footer">v5.9.17 · 2026-04-05</div>
+  <div class="sidebar-footer">v5.9.18 · 2026-04-05</div>
 </aside>
 
 <main class="main">
@@ -2258,9 +2258,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
 </div>
 
-<!-- 队友行 + 成就勋章墙 -->
-<div style="display:grid;grid-template-columns:3fr 1fr;gap:14px;margin-bottom:18px;align-items:start;">
-<!-- 队友4列（左3fr）-->
+<!-- 队友行 -->
+<!-- 队友4列 -->
       <div>
       <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">👥 TEAM · 汪汪队成员</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
@@ -2403,6 +2402,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       </div>
     </div>
 
+</div>
+
+<!-- 成就勋章墙（独立行，full width）-->
+<div id="achievement-wall" style="background:rgba(5,10,20,0.95);border:1px solid rgba(0,212,255,0.25);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;margin-bottom:18px;">
+  <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;">🏆 ACHIEVEMENTS · 成就勋章</div>
+  <div id="badge-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;"></div>
 </div>
 
 <!-- ===== 卡2：汪汪队 AI 数据看板 ===== -->
@@ -2563,16 +2568,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       </div>
     </div>
   </div>
-
-  <!-- 成就墙（右1fr）-->
-</div><!-- /team-cols -->
-<div id="achievement-wall" style="background:rgba(5,10,20,0.95);border:1px solid rgba(0,212,255,0.25);border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:10px;">
-  <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:4px;">🏆 ACHIEVEMENTS · 成就勋章</div>
-  <div id="badge-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
-</div>
-</div><!-- /team+achievement outer grid -->
-
-  <!-- 旧成就墙占位结束 -->
   </div>
 
 </div>
