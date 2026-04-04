@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.6">
+<meta name="version" content="5.9.7">
 <title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -2933,7 +2933,19 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       }, 8000);
     }
 
-        function renderTaskHUD() {
+        const TASK_DATA = [
+      { id: 'T-001', name: 'DBR日报自动播报', status: 'done', agent: '砾石', urgent: false },
+      { id: 'T-002', name: 'HQ 立绘修复', status: 'done', agent: '阿奇', urgent: false },
+      { id: 'T-003', name: 'Process HUD 信息流', status: 'done', agent: '阿奇', urgent: false },
+      { id: 'T-004', name: 'Task HUD 任务状态', status: 'running', agent: '阿奇', urgent: false },
+      { id: 'T-005', name: 'BI取数脱离浏览器', status: 'pending', agent: '砾石', urgent: false },
+      { id: 'T-006', name: '天天/灰灰直联打通', status: 'pending', agent: '天天', urgent: true },
+      { id: 'T-007', name: 'BEC题库扩充·词汇', status: 'running', agent: '毛毛', urgent: false },
+      { id: 'T-008', name: 'SHL SVAR题库更新', status: 'done', agent: '毛毛', urgent: false },
+      { id: 'T-009', name: 'Santos竞品情报', status: 'running', agent: '灰灰', urgent: false },
+      { id: 'T-010', name: '用户反馈高优处理', status: 'pending', agent: '天天', urgent: false },
+    ];
+    function renderTaskHUD() {
         const feed = document.getElementById('task-feed');
         if (!feed) return;
         feed.innerHTML = '';
@@ -2942,7 +2954,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           const key = t.urgent ? 'urgent' : t.status;
           const st = statusCfg[key] || statusCfg.pending;
           const el = document.createElement('div');
-          el.style.cssText = 'display:flex;align-items:center;gap:6px;padding:5px 8px;background:' + st.bg + ';border-left:2px solid ' + st.color + ';border-radius:0 6px 6px 0;';
+          el.style.cssText = 'display:flex;align-items:center;gap:5px;padding:4px 8px;background:' + st.bg + ';border-left:2px solid ' + st.color + ';border-radius:0 5px 5px 0;margin-bottom:2px;';
           el.innerHTML = '<span style="font-size:9px;color:rgba(255,255,255,0.35);font-family:\'Courier New\',monospace;flex-shrink:0;">' + t.id + '</span><span style="font-size:10px;color:rgba(255,255,255,0.8);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + t.name + '</span><span style="font-size:9px;color:rgba(255,255,255,0.4);flex-shrink:0;">' + t.agent + '</span><span style="font-size:9px;color:' + st.color + ';font-weight:700;flex-shrink:0;min-width:36px;text-align:right;">' + st.label + '</span>';
           feed.appendChild(el);
         });
