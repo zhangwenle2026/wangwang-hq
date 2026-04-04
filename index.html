@@ -1938,6 +1938,28 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         transform: translateX(-50%) scale(1);
         opacity: 1;
       }
+
+      /* ====== HUD数字看板 ====== */
+      @keyframes hudPulse {
+        0%,100%{opacity:1;transform:scale(1);}
+        50%{opacity:0.3;transform:scale(0.6);}
+      }
+      @keyframes hudCounterGlow {
+        0%,100%{filter:brightness(1);}
+        50%{filter:brightness(1.4) drop-shadow(0 0 6px currentColor);}
+      }
+      .hud-counter {
+        animation: hudCounterGlow 2s ease-in-out infinite;
+        display:block;
+        transition: color 0.3s;
+      }
+      .hud-counter.rolling {
+        animation: hudRoll 0.15s ease-out;
+      }
+      @keyframes hudRoll {
+        0%{transform:translateY(-8px);opacity:0.4;}
+        100%{transform:translateY(0);opacity:1;}
+      }
 </style>
 </head>
 <body>
@@ -2111,10 +2133,62 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <!-- 右：简介信息 + 队友区 -->
 
   <!-- ② 能力雷达列 -->
-  <div style="background:rgba(13,27,42,0.7);border:1px solid rgba(0,212,255,0.15);border-radius:16px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;">
-    <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">⚡ ABILITY RADAR</div>
-    <canvas id="radarCanvas" width="240" height="250" style="display:block;max-width:100%;"></canvas>
-    <div id="radar-tooltip" style="font-size:11px;color:#00d4ff;margin-top:8px;min-height:16px;text-align:center;opacity:0;transition:opacity 0.2s;"></div>
+  <div style="background:rgba(5,10,20,0.95);border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:16px 14px;display:flex;flex-direction:column;gap:10px;min-height:320px;position:relative;overflow:hidden;">
+    <!-- 背景粒子网格 -->
+    <canvas id="hudBgCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.18;pointer-events:none;"></canvas>
+    <!-- 标题 -->
+    <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.7);letter-spacing:2.5px;text-transform:uppercase;position:relative;z-index:1;">⚡ DATA HUD · 实时看板</div>
+
+    <!-- Token 模块 -->
+    <div style="position:relative;z-index:1;background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.2);border-left:3px solid #00d4ff;border-radius:10px;padding:10px 12px;">
+      <div style="font-size:8px;color:rgba(0,212,255,0.6);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">🧠 TOKEN 消耗</div>
+      <div style="display:flex;gap:8px;align-items:flex-end;">
+        <div style="flex:1;text-align:center;">
+          <div style="font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:2px;">TODAY</div>
+          <div id="hud-token-today" class="hud-counter" style="font-family:'Courier New',monospace;font-size:26px;font-weight:900;color:#00d4ff;line-height:1;text-shadow:0 0 16px rgba(0,212,255,0.8),0 0 32px rgba(0,212,255,0.4);letter-spacing:-1px;">0</div>
+          <div style="font-size:7px;color:rgba(0,212,255,0.4);margin-top:2px;">K tokens</div>
+        </div>
+        <div style="width:1px;background:linear-gradient(180deg,transparent,rgba(0,212,255,0.4),transparent);align-self:stretch;"></div>
+        <div style="flex:1;text-align:center;">
+          <div style="font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:2px;">YESTERDAY</div>
+          <div id="hud-token-yest" class="hud-counter" style="font-family:'Courier New',monospace;font-size:26px;font-weight:900;color:#7c3aed;line-height:1;text-shadow:0 0 16px rgba(124,58,237,0.8),0 0 32px rgba(124,58,237,0.4);letter-spacing:-1px;">0</div>
+          <div style="font-size:7px;color:rgba(124,58,237,0.4);margin-top:2px;">K tokens</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 代码行数模块 -->
+    <div style="position:relative;z-index:1;background:rgba(124,58,237,0.04);border:1px solid rgba(124,58,237,0.2);border-left:3px solid #7c3aed;border-radius:10px;padding:10px 12px;">
+      <div style="font-size:8px;color:rgba(124,58,237,0.7);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">💻 CODE LINES</div>
+      <div style="display:flex;gap:8px;align-items:flex-end;">
+        <div style="flex:1;text-align:center;">
+          <div style="font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:2px;">TODAY</div>
+          <div id="hud-code-today" class="hud-counter" style="font-family:'Courier New',monospace;font-size:26px;font-weight:900;color:#7c3aed;line-height:1;text-shadow:0 0 16px rgba(124,58,237,0.8),0 0 32px rgba(124,58,237,0.4);letter-spacing:-1px;">0</div>
+          <div style="font-size:7px;color:rgba(124,58,237,0.4);margin-top:2px;">lines</div>
+        </div>
+        <div style="width:1px;background:linear-gradient(180deg,transparent,rgba(124,58,237,0.4),transparent);align-self:stretch;"></div>
+        <div style="flex:1;text-align:center;">
+          <div style="font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:2px;">YESTERDAY</div>
+          <div id="hud-code-yest" class="hud-counter" style="font-family:'Courier New',monospace;font-size:26px;font-weight:900;color:#ff6b35;line-height:1;text-shadow:0 0 16px rgba(255,107,53,0.8),0 0 32px rgba(255,107,53,0.4);letter-spacing:-1px;">0</div>
+          <div style="font-size:7px;color:rgba(255,107,53,0.4);margin-top:2px;">lines</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据流波形条 -->
+    <div style="position:relative;z-index:1;display:flex;align-items:flex-end;gap:2px;height:32px;padding:0 4px;">
+      <canvas id="hudWaveCanvas" style="width:100%;height:32px;border-radius:4px;opacity:0.7;"></canvas>
+    </div>
+
+    <!-- 底部状态行 -->
+    <div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
+      <div style="font-size:8px;color:rgba(0,212,255,0.5);letter-spacing:1px;">LIVE · <span id="hud-update-time">--:--</span></div>
+      <div style="display:flex;gap:4px;">
+        <span style="width:5px;height:5px;background:#00d4ff;border-radius:50%;animation:hudPulse 1.2s ease-in-out infinite;display:inline-block;"></span>
+        <span style="width:5px;height:5px;background:#7c3aed;border-radius:50%;animation:hudPulse 1.2s ease-in-out infinite 0.4s;display:inline-block;"></span>
+        <span style="width:5px;height:5px;background:#ff6b35;border-radius:50%;animation:hudPulse 1.2s ease-in-out infinite 0.8s;display:inline-block;"></span>
+      </div>
+    </div>
   </div>
 
   <!-- ③ 右列：今日事项 + 语录 -->
@@ -2511,147 +2585,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         if (el) el.textContent = '更新于 ' + d.updatedAt;
       }
 
-        // ===== 能力雷达 =====
-  (function initRadar() {
-    const canvas = document.getElementById('radarCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
-    const cx = W/2, cy = H/2, R = 80;
-    const labels = ['执行力','智  慧','分  析','情  感','创  造','稳  定'];
-    const values = [92, 88, 85, 90, 87, 83]; // 0-100
-    const colors = ['#00d4ff','#7c3aed','#ff6b35','#22c55e','#f472b6','#fbbf24'];
-    const N = labels.length;
-    const angles = labels.map((_,i) => -Math.PI/2 + (2*Math.PI/N)*i);
-    let progress = 0; // 0→1 animation
-    let tooltip = '';
 
-    function drawRadar(prog) {
-      ctx.clearRect(0,0,W,H);
-      // Background rings
-      for (let r=1;r<=5;r++) {
-        ctx.beginPath();
-        for (let i=0;i<N;i++) {
-          const a=angles[i], rr=R*(r/5);
-          i===0 ? ctx.moveTo(cx+rr*Math.cos(a), cy+rr*Math.sin(a))
-                : ctx.lineTo(cx+rr*Math.cos(a), cy+rr*Math.sin(a));
-        }
-        ctx.closePath();
-        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-      // Axis lines
-      for (let i=0;i<N;i++) {
-        ctx.beginPath();
-        ctx.moveTo(cx,cy);
-        ctx.lineTo(cx+R*Math.cos(angles[i]), cy+R*Math.sin(angles[i]));
-        ctx.strokeStyle='rgba(255,255,255,0.1)';
-        ctx.lineWidth=1;
-        ctx.stroke();
-      }
-      // Filled area (animated)
-      const pts = values.map((v,i) => ({
-        x: cx + R*(v/100)*prog*Math.cos(angles[i]),
-        y: cy + R*(v/100)*prog*Math.sin(angles[i]),
-        color: colors[i]
-      }));
-      ctx.beginPath();
-      pts.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
-      ctx.closePath();
-      const grad = ctx.createRadialGradient(cx,cy,0,cx,cy,R);
-      grad.addColorStop(0,'rgba(0,212,255,0.35)');
-      grad.addColorStop(0.5,'rgba(124,58,237,0.2)');
-      grad.addColorStop(1,'rgba(0,212,255,0.05)');
-      ctx.fillStyle = grad;
-      ctx.fill();
-      ctx.strokeStyle='rgba(0,212,255,0.6)';
-      ctx.lineWidth=1.5;
-      ctx.stroke();
-      // Axis dots + laser lines
-      pts.forEach((p,i) => {
-        // Laser line (colored)
-        ctx.beginPath();
-        ctx.moveTo(cx,cy);
-        ctx.lineTo(p.x,p.y);
-        ctx.strokeStyle = colors[i];
-        ctx.lineWidth = 1.5;
-        ctx.globalAlpha = 0.7;
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-        // Dot
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,3.5,0,2*Math.PI);
-        ctx.fillStyle=colors[i];
-        ctx.shadowColor=colors[i];
-        ctx.shadowBlur=8;
-        ctx.fill();
-        ctx.shadowBlur=0;
-      });
-      // Labels
-      labels.forEach((lbl,i) => {
-        const a=angles[i];
-        const isVertical=Math.abs(Math.sin(a))>0.7;
-        const dist=isVertical?R+20:R+14;
-        const lx=cx+dist*Math.cos(a), ly=cy+dist*Math.sin(a);
-        ctx.font='bold 9px sans-serif';
-        ctx.fillStyle=prog>0.95?colors[i]:'rgba(255,255,255,0.4)';
-        ctx.textAlign='center';
-        ctx.textBaseline='middle';
-        ctx.fillText(lbl,lx,ly);
-      });
-      // Pulse after complete
-      if (prog >= 1) {
-        const t = Date.now()/1000;
-        const pulse = 0.03*Math.sin(t*2*Math.PI/2);
-        ctx.beginPath();
-        for (let i=0;i<N;i++){
-          const a=angles[i], rr=(R+pulse*R);
-          i===0 ? ctx.moveTo(cx+(values[i]/100)*rr*Math.cos(a),cy+(values[i]/100)*rr*Math.sin(a))
-                : ctx.lineTo(cx+(values[i]/100)*rr*Math.cos(a),cy+(values[i]/100)*rr*Math.sin(a));
-        }
-        ctx.closePath();
-        ctx.strokeStyle='rgba(0,212,255,0.4)';
-        ctx.lineWidth=1;
-        ctx.stroke();
-      }
-    }
-
-    // Animate 0→1 over 1200ms
-    const startTime = performance.now();
-    function animate(now) {
-      progress = Math.min((now - startTime)/1200, 1);
-      const ease = 1 - Math.pow(1-progress, 3);
-      drawRadar(ease);
-      if (progress < 1) requestAnimationFrame(animate);
-      else {
-        // Keep pulsing
-        function pulse() { drawRadar(1); requestAnimationFrame(pulse); }
-        pulse();
-      }
-    }
-    setTimeout(()=>requestAnimationFrame(animate), 500);
-
-    // Hover tooltip
-    canvas.addEventListener('mousemove', function(e) {
-      const rect = canvas.getBoundingClientRect();
-      const mx = (e.clientX - rect.left)*(W/rect.width);
-      const my = (e.clientY - rect.top)*(H/rect.height);
-      const tt = document.getElementById('radar-tooltip');
-      let found = false;
-      values.forEach((v,i) => {
-        const px=cx+R*(v/100)*Math.cos(angles[i]);
-        const py=cy+R*(v/100)*Math.sin(angles[i]);
-        if (Math.hypot(mx-px,my-py)<16) {
-          tt.textContent = labels[i].replace(/[^ -\u007F]/g,'').trim() + ' · ' + v;
-          tt.style.opacity='1';
-          tt.style.color=colors[i];
-          found=true;
-        }
-      });
-      if (!found) { tt.textContent=''; tt.style.opacity='0'; }
-    });
-  })();
 
   // ===== 今日重要事项 =====
   (function initFocus() {
@@ -2693,5 +2627,133 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     })();
 
 </script>
+
+  <script>
+  // ====== HUD Data (手动更新这里的数值) ======
+  const HUD_DATA = {
+    tokenToday:   287,   // K tokens
+    tokenYest:    341,   // K tokens
+    codeToday:    412,   // lines
+    codeYest:     889,   // lines
+  };
+
+  // ====== Counter Roll Animation ======
+  function hudRollTo(elId, targetVal, suffix) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    const start = parseFloat(el.textContent) || 0;
+    const dur = 1200, fps = 60;
+    const frames = dur / (1000/fps);
+    let frame = 0;
+    const timer = setInterval(() => {
+      frame++;
+      const t = frame / frames;
+      const ease = 1 - Math.pow(1 - t, 3); // cubic ease out
+      const cur = start + (targetVal - start) * ease;
+      el.textContent = Math.round(cur);
+      el.classList.add('rolling');
+      setTimeout(() => el.classList.remove('rolling'), 150);
+      if (frame >= frames) {
+        clearInterval(timer);
+        el.textContent = targetVal;
+      }
+    }, 1000/fps);
+  }
+
+  // ====== Init HUD ======
+  function initHUD() {
+    setTimeout(() => {
+      hudRollTo('hud-token-today', HUD_DATA.tokenToday);
+      hudRollTo('hud-token-yest',  HUD_DATA.tokenYest);
+      hudRollTo('hud-code-today',  HUD_DATA.codeToday);
+      hudRollTo('hud-code-yest',   HUD_DATA.codeYest);
+    }, 800);
+
+    // Update time
+    function tick() {
+      const el = document.getElementById('hud-update-time');
+      if (el) {
+        const now = new Date();
+        el.textContent = now.toTimeString().slice(0,5);
+      }
+    }
+    tick(); setInterval(tick, 60000);
+
+    // ====== Background particle grid canvas ======
+    const bgC = document.getElementById('hudBgCanvas');
+    if (bgC) {
+      const ctx = bgC.getContext('2d');
+      function resizeBg() {
+        bgC.width = bgC.offsetWidth; bgC.height = bgC.offsetHeight;
+      }
+      resizeBg();
+      const dots = Array.from({length:40}, () => ({
+        x: Math.random(), y: Math.random(),
+        vx: (Math.random()-0.5)*0.0008, vy: (Math.random()-0.5)*0.0008,
+      }));
+      function drawBg() {
+        const w = bgC.width, h = bgC.height;
+        ctx.clearRect(0,0,w,h);
+        dots.forEach(d => {
+          d.x = (d.x + d.vx + 1) % 1;
+          d.y = (d.y + d.vy + 1) % 1;
+          ctx.beginPath();
+          ctx.arc(d.x*w, d.y*h, 1.2, 0, Math.PI*2);
+          ctx.fillStyle = '#00d4ff';
+          ctx.fill();
+        });
+        // Connect nearby dots
+        for (let i=0; i<dots.length; i++) for (let j=i+1; j<dots.length; j++) {
+          const dx=(dots[i].x-dots[j].x)*w, dy=(dots[i].y-dots[j].y)*h;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          if (dist < 60) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0,212,255,${0.3*(1-dist/60)})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(dots[i].x*w, dots[i].y*h);
+            ctx.lineTo(dots[j].x*w, dots[j].y*h);
+            ctx.stroke();
+          }
+        }
+        requestAnimationFrame(drawBg);
+      }
+      drawBg();
+    }
+
+    // ====== Wave canvas ======
+    const waveC = document.getElementById('hudWaveCanvas');
+    if (waveC) {
+      const ctx = waveC.getContext('2d');
+      let waveT = 0;
+      function resizeWave() { waveC.width = waveC.offsetWidth; waveC.height = waveC.offsetHeight; }
+      resizeWave();
+      function drawWave() {
+        const w = waveC.width, h = waveC.height;
+        ctx.clearRect(0,0,w,h);
+        const bars = Math.floor(w/4);
+        for (let i=0; i<bars; i++) {
+          const phase = (i/bars)*Math.PI*6 + waveT;
+          const amp = 0.3 + 0.7*Math.abs(Math.sin(phase*0.7));
+          const barH = amp * h;
+          const x = i*4;
+          // color cycle cyan→purple→orange
+          const hue = (i/bars * 240 + waveT*30) % 360;
+          ctx.fillStyle = `hsla(${hue},90%,60%,0.8)`;
+          ctx.fillRect(x, h-barH, 3, barH);
+        }
+        waveT += 0.04;
+        requestAnimationFrame(drawWave);
+      }
+      drawWave();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHUD);
+  } else {
+    initHUD();
+  }
+  </script>
+
 </body>
 </html>
