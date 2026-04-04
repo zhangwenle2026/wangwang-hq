@@ -1222,6 +1222,58 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         align-items: center;
         gap: 4px;
       }
+
+      /* ===== AI 心跳线 ===== */
+      .ai-heartbeat-bar {
+        position: relative;
+        width: 100%;
+        height: 60px;
+        background: linear-gradient(90deg, transparent, rgba(0,212,255,0.03), transparent);
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .ai-ecg-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .ecg-path {
+        stroke-dasharray: 2400;
+        stroke-dashoffset: 2400;
+        animation: ecgDraw 3s linear infinite;
+      }
+      @keyframes ecgDraw {
+        0%   { stroke-dashoffset: 2400; opacity: 0.4; }
+        10%  { opacity: 1; }
+        80%  { opacity: 1; }
+        100% { stroke-dashoffset: 0; opacity: 0.4; }
+      }
+      .ecg-dot {
+        animation: ecgDotMove 3s linear infinite;
+        opacity: 0;
+      }
+      @keyframes ecgDotMove {
+        0%   { cx: 0;    cy: 30; opacity: 0; }
+        5%   { opacity: 1; }
+        50%  { cx: 600;  cy: 30; }
+        95%  { opacity: 1; }
+        100% { cx: 1200; cy: 30; opacity: 0; }
+      }
+      .ai-heartbeat-label {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 11px;
+        color: rgba(0,212,255,0.5);
+        letter-spacing: 0.05em;
+        font-family: 'Courier New', monospace;
+        animation: labelPulse 3s ease-in-out infinite;
+      }
+      @keyframes labelPulse {
+        0%, 100% { opacity: 0.4; }
+        50%       { opacity: 0.9; }
+      }
 </style>
 </head>
 <body>
@@ -1296,6 +1348,39 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="hq-header-title">Eric AI团队工作平台</div>
       <div class="hq-header-subtitle">PAW Patrol AI Command Center</div>
     </div>
+  </div>
+
+  <!-- AI 心跳线 -->
+  <div class="ai-heartbeat-bar">
+    <svg class="ai-ecg-svg" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ecgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#00d4ff" stop-opacity="0"/>
+          <stop offset="30%"  stop-color="#00d4ff" stop-opacity="0.8"/>
+          <stop offset="50%"  stop-color="#ffffff" stop-opacity="1"/>
+          <stop offset="70%"  stop-color="#7c3aed" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="ecgGlow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- 心跳波形路径 (重复单元~300px × 4) -->
+      <path class="ecg-path" filter="url(#ecgGlow)"
+        d="M0,30 L60,30 L80,30 L90,10 L100,50 L110,5 L120,55 L130,30 L150,30
+           L210,30 L230,30 L240,10 L250,50 L260,5 L270,55 L280,30 L300,30
+           L360,30 L380,30 L390,10 L400,50 L410,5 L420,55 L430,30 L450,30
+           L510,30 L530,30 L540,10 L550,50 L560,5 L570,55 L580,30 L600,30
+           L660,30 L680,30 L690,10 L700,50 L710,5 L720,55 L730,30 L750,30
+           L810,30 L830,30 L840,10 L850,50 L860,5 L870,55 L880,30 L900,30
+           L960,30 L980,30 L990,10 L1000,50 L1010,5 L1020,55 L1030,30 L1050,30
+           L1110,30 L1130,30 L1140,10 L1150,50 L1160,5 L1170,55 L1180,30 L1200,30"
+        fill="none" stroke="url(#ecgGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- 扫描高亮点 -->
+      <circle class="ecg-dot" cx="0" cy="30" r="4" fill="#00d4ff" filter="url(#ecgGlow)"/>
+    </svg>
+    <div class="ai-heartbeat-label">❤️ AI 在线 · 系统正常</div>
   </div>
 
 
