@@ -245,6 +245,58 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .rtl-node .rtl-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1565c0;color:#fff;font-size:10px;padding:4px 7px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity 0.2s;pointer-events:none;text-align:center;line-height:1.4}
 .rtl-node:hover .rtl-tip{opacity:1}
 .rtl-node.today{color:#d32f2f}
+
+/* ===== TAB NAVIGATION v2.4.0 ===== */
+.tab-nav{display:flex;gap:4px;padding:0 22px;margin-bottom:18px;border-bottom:2px solid rgba(25,118,210,.15)}
+.tab-btn{padding:10px 18px;border:none;background:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#546e7a;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;border-radius:8px 8px 0 0;white-space:nowrap}
+.tab-btn:hover{color:#1565c0;background:rgba(25,118,210,.06)}
+.tab-btn.active{color:#1565c0;border-bottom:3px solid #1565c0;background:rgba(25,118,210,.08)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+/* Tab2 */
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:16px}
+.mem-card{background:#fff;border-radius:12px;border:1px solid rgba(25,118,210,.15);box-shadow:0 2px 10px rgba(25,118,210,.08);overflow:hidden;transition:transform .2s,box-shadow .2s}
+.mem-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(25,118,210,.16)}
+.mem-card-header{background:linear-gradient(135deg,#1565c0,#1976d2);padding:10px 14px;display:flex;align-items:center;gap:8px}
+.mem-icon{font-size:18px}
+.mem-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:.5px}
+.mem-card-body{padding:12px 14px;font-size:11px;color:#37474f;line-height:1.7}
+.mem-item{margin-bottom:3px}
+.mem-table{width:100%;border-collapse:collapse;font-size:10px}
+.mem-table td{padding:3px 4px;border-bottom:1px solid #e3f2fd}
+.mem-status-item{margin-bottom:6px;display:flex;align-items:flex-start;gap:6px}
+.mem-badge{font-size:9px;padding:2px 6px;border-radius:10px;white-space:nowrap}
+.mem-badge-green{background:#e8f5e9;color:#2e7d32}
+.mem-badge-yellow{background:#fff8e1;color:#f57f17}
+.mem-badge-red{background:#fce4ec;color:#c62828}
+.mem-badge-blue{background:#e3f2fd;color:#1565c0}
+.mem-ui-item{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.mem-ui-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.mem-link-group{font-size:9px;font-weight:700;color:#546e7a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.mem-link{display:inline-block;font-size:10px;color:#1565c0;text-decoration:none;margin-right:6px;margin-bottom:2px}
+.mem-link:hover{text-decoration:underline}
+/* Tab3 */
+.cap-page{padding:16px}
+.cap-section-title{font-size:13px;font-weight:800;color:#1565c0;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #e3f2fd}
+.cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cap-card{background:#fff;border-radius:10px;padding:14px 12px;border:1px solid rgba(25,118,210,.15);box-shadow:0 2px 8px rgba(25,118,210,.06);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.cap-card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(25,118,210,.15)}
+.cap-badge{display:inline-block;background:#1565c0;color:#fff;font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;font-family:'Courier New',monospace;margin-bottom:8px}
+.cap-badge-gray{background:#78909c}
+.cap-name{font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.cap-desc{font-size:10px;color:#546e7a;line-height:1.5;margin-bottom:8px}
+.cap-status{font-size:9px;font-weight:600}
+.cap-status-online{color:#2e7d32}
+.cap-status-verified{color:#1565c0}
+.cap-status-ready{color:#f57f17}
+.cap-cron-list{display:flex;flex-direction:column;gap:10px}
+.cap-cron-item{background:#fff;border-radius:10px;padding:12px 16px;border:1px solid rgba(25,118,210,.12);display:flex;align-items:center;gap:14px}
+.cap-cron-icon{font-size:22px;flex-shrink:0}
+.cap-cron-name{font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:3px}
+.cap-cron-detail{font-size:10px;color:#546e7a}
+.cap-cron-status{font-size:10px;font-weight:700;margin-left:auto;white-space:nowrap}
+.cap-cron-active{color:#2e7d32}
+.cap-cron-pending{color:#78909c}
 </style>
 </head>
 <body>
@@ -358,6 +410,19 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== MAIN ===== -->
 <main class="main">
+  <!-- ===== TAB NAVIGATION ===== -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('tab1', this)">🐾 成长档案</button>
+    <button class="tab-btn" onclick="showTab('tab2', this)">🌌 记忆宇宙</button>
+    <button class="tab-btn" onclick="showTab('tab3', this)">⚡ 能力精进</button>
+    <button class="tab-btn" onclick="showTab('tab4', this)">💓 工作心跳</button>
+    <button class="tab-btn" onclick="showTab('tab5', this)">📋 任务看板</button>
+    <button class="tab-btn" onclick="showTab('tab6', this)">🏆 成就墙</button>
+  </nav>
+
+  <!-- Tab1: 成长档案 -->
+  <div id="tab1" class="tab-panel active">
+
 
   <!-- ===== PANEL 1: 阿奇成长档案 ===== -->
   <div class="panel">
@@ -421,7 +486,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           <div class="rtl-line"></div>
           <span class="rtl-node m3">●<span class="rtl-tip">HQ上线<br>v1.0</span></span>
           <div class="rtl-line"></div>
-          <span class="rtl-node today">📍<span class="rtl-tip">今天<br>v2.2.0</span></span>
+          <span class="rtl-node today">📍<span class="rtl-tip">今天<br>v2.4.0</span></span>
         </div>
       </div>
       </div>
@@ -649,6 +714,229 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
   </div>
 
+  </div>
+
+  <!-- Tab2: 记忆宇宙 -->
+  <div id="tab2" class="tab-panel">
+<div class="mem-grid">
+  <div class="mem-card">
+    <div class="mem-card-header"><span class="mem-icon">📋</span><span class="mem-title">工作准则</span></div>
+    <div class="mem-card-body">
+      <div class="mem-item">⏱ 每3分钟汇报进展（WH-001）</div>
+      <div class="mem-item">🤖 总控模式：复杂任务派子 Agent</div>
+      <div class="mem-item">📝 进度用 ✅/🔄/⏳ Emoji 清单格式</div>
+      <div class="mem-item">🚀 每次改版主动发版本号+链接（WH-004）</div>
+      <div class="mem-item">🗑️ trash &gt; rm（可恢复优先）</div>
+    </div>
+  </div>
+  <div class="mem-card">
+    <div class="mem-card-header"><span class="mem-icon">👤</span><span class="mem-title">关于文乐</span></div>
+    <div class="mem-card-body">
+      <div class="mem-item">🏢 美团 Keeta 巴西圣保罗都市圈业务负责人</div>
+      <div class="mem-item">👥 团队：danielalbuquerque / fengmenglong / jaylin / tianjie</div>
+      <div class="mem-item">🕐 时区：Brazil São Paulo (UTC-3, BRT)</div>
+      <div class="mem-item">💬 语言：中文 + English + Português</div>
+      <div class="mem-item">🎂 为我命名：2026-03-24</div>
+    </div>
+  </div>
+  <div class="mem-card">
+    <div class="mem-card-header"><span class="mem-icon">🐾</span><span class="mem-title">汪汪队成员</span></div>
+    <div class="mem-card-body">
+      <table class="mem-table">
+        <tr><td>🐾 阿奇</td><td>main</td><td>AI Eric</td></tr>
+        <tr><td>🚜 砾石</td><td>exec</td><td>AI Eric</td></tr>
+        <tr><td>✈️ 毛毛</td><td>mentor</td><td>AI Eric</td></tr>
+        <tr><td>🏥 天天</td><td>ada</td><td>天天助理</td></tr>
+        <tr><td>🔍 灰灰</td><td>scout</td><td>灰灰情报官</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="mem-card">
+    <div class="mem-card-header"><span class="mem-icon">📊</span><span class="mem-title">项目状态</span></div>
+    <div class="mem-card-body">
+      <div class="mem-status-item"><span class="mem-badge mem-badge-green">🟢 运行中</span><span>Task-001 DBR 日报 · 每天 07:00 BRT</span></div>
+      <div class="mem-status-item"><span class="mem-badge mem-badge-yellow">🔄 进行中</span><span>Task-002 汪汪队 · Phase 1-4 全员上线</span></div>
+      <div class="mem-status-item"><span class="mem-badge mem-badge-red">⏳ 待解决</span><span>天天/灰灰大象直联（bridge 待开通）</span></div>
+      <div class="mem-status-item"><span class="mem-badge mem-badge-blue">📅 待配置</span><span>每周一技能快照 cron</span></div>
+    </div>
+  </div>
+  <div class="mem-card">
+    <div class="mem-card-header"><span class="mem-icon">🎨</span><span class="mem-title">UI 规范</span></div>
+    <div class="mem-card-body">
+      <div class="mem-ui-item"><span class="mem-ui-dot" style="background:#1565c0"></span><b>海风</b> UI-001</div>
+      <div class="mem-ui-item"><span class="mem-ui-dot" style="background:#546e7a"></span><b>晨报</b> UI-002</div>
+      <div class="mem-ui-item"><span class="mem-ui-dot" style="background:#00695c"></span><b>雨林</b> UI-003</div>
+      <div class="mem-ui-item"><span class="mem-ui-dot" style="background:#e91e63"></span><b>樱花</b> UI-004</div>
+      <div class="mem-ui-item"><span class="mem-ui-dot" style="background:#ff6d00"></span><b>穿越火线</b> UI-005</div>
+      <div class="mem-ui-item"><span class="mem-ui-dot" style="background:#1d6070"></span><b>鲨鱼蓝</b> UI-006</div>
+      <div class="mem-ui-item"><span class="mem-ui-dot" style="background:#2e6fba"></span><b>圣托里尼</b> UI-007</div>
+      <div class="mem-ui-item"><span class="mem-ui-dot" style="background:#00d4ff"></span><b>字节的跳动</b> UI-008</div>
+    </div>
+  </div>
+  <div class="mem-card">
+    <div class="mem-card-header"><span class="mem-icon">🤖</span><span class="mem-title">机器人档案</span></div>
+    <div class="mem-card-body">
+      <div class="mem-item">🤖 <b>AI Eric</b> appkey: 65a6eb395a</div>
+      <div class="mem-item">botId: 139076530784</div>
+      <div class="mem-item" style="margin-top:6px">🏥 <b>天天助理</b> botId: 139083042107</div>
+      <div class="mem-item">🔍 <b>灰灰情报官</b> botId: 139088087467</div>
+      <div class="mem-item" style="margin-top:6px">📨 群 gid: 70415285284</div>
+    </div>
+  </div>
+  <div class="mem-card">
+    <div class="mem-card-header"><span class="mem-icon">🔗</span><span class="mem-title">重要链接</span></div>
+    <div class="mem-card-body">
+      <div class="mem-link-group">🐾 汪汪队</div>
+      <a class="mem-link" href="https://zhangwenle2026.github.io/wangwang-hq/" target="_blank">HQ 指挥中心</a>
+      <a class="mem-link" href="https://km.sankuai.com/collabpage/2754982053" target="_blank">学城看板</a>
+      <div class="mem-link-group" style="margin-top:6px">📚 英语APP</div>
+      <a class="mem-link" href="https://zhangwenle2026.github.io/bec-english/" target="_blank">BEC</a>
+      <a class="mem-link" href="https://zhangwenle2026.github.io/eric-talk/" target="_blank">Eric Talk</a>
+      <a class="mem-link" href="https://zhangwenle2026.github.io/shl-test/" target="_blank">SHL TEST</a>
+      <a class="mem-link" href="https://zhangwenle2026.github.io/eric-shl-svar/" target="_blank">SHL SVAR</a>
+      <div class="mem-link-group" style="margin-top:6px">🌍 生活App</div>
+      <a class="mem-link" href="https://zhangwenle2026.github.io/fortaleza-trip/" target="_blank">Fortaleza</a>
+      <a class="mem-link" href="https://zhangwenle2026.github.io/portuguese-starter/" target="_blank">葡语</a>
+    </div>
+  </div>
+  <div class="mem-card">
+    <div class="mem-card-header"><span class="mem-icon">⚠️</span><span class="mem-title">踩坑档案</span></div>
+    <div class="mem-card-body">
+      <div class="mem-item">📦 总计 <b>25</b> 条，8 个分类</div>
+      <div class="mem-item" style="margin-top:6px;font-weight:700;color:#d32f2f">最近3坑：</div>
+      <div class="mem-item">⚠️ classList.remove('') = SyntaxError</div>
+      <div class="mem-item">⚠️ str.replace() 静默失败（Python）</div>
+      <div class="mem-item">⚠️ 重复函数定义后者覆盖（JS）</div>
+      <div class="mem-item" style="margin-top:6px"><a class="mem-link" href="https://km.sankuai.com/collabpage/2754706447" target="_blank">📖 完整踩坑档案</a></div>
+    </div>
+  </div>
+</div>
+  </div>
+
+  <!-- Tab3: 能力精进 -->
+  <div id="tab3" class="tab-panel">
+<div class="cap-page">
+  <div class="cap-section-title">⚡ 原生能力 · CAP-001 ~ CAP-012</div>
+  <div class="cap-grid">
+    <div class="cap-card" onclick="window.open('https://zhangwenle2026.github.io/wangwang-hq/','_blank')">
+      <div class="cap-badge">CAP-012</div>
+      <div class="cap-name">汪汪队 HQ 指挥中心</div>
+      <div class="cap-desc">AI 团队可视化状态展示，6-Tab 导航</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card" onclick="window.open('https://zhangwenle2026.github.io/eric-talk/','_blank')">
+      <div class="cap-badge">CAP-009</div>
+      <div class="cap-name">Eric Talk 英语口语</div>
+      <div class="cap-desc">PWA 可安装，口语卡片练习</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card" onclick="window.open('https://zhangwenle2026.github.io/shl-test/','_blank')">
+      <div class="cap-badge">CAP-010</div>
+      <div class="cap-name">ERIC SHL TEST</div>
+      <div class="cap-desc">英语模拟测试，邀请码 SMB</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card" onclick="window.open('https://zhangwenle2026.github.io/eric-shl-svar/','_blank')">
+      <div class="cap-badge">CAP-011</div>
+      <div class="cap-name">ERIC SHL SVAR</div>
+      <div class="cap-desc">英语学习练习，答题后显示答案</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card" onclick="window.open('https://zhangwenle2026.github.io/bec-english/','_blank')">
+      <div class="cap-badge">CAP-004</div>
+      <div class="cap-name">BEC 英语学习网站</div>
+      <div class="cap-desc">圣托里尼风格，听说读写四模块</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card" onclick="window.open('https://zhangwenle2026.github.io/fortaleza-trip/','_blank')">
+      <div class="cap-badge">CAP-006</div>
+      <div class="cap-name">Fortaleza 婚礼旅行</div>
+      <div class="cap-desc">蜜月旅行行程规划 App</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card" onclick="window.open('https://zhangwenle2026.github.io/portuguese-starter/','_blank')">
+      <div class="cap-badge">CAP-007</div>
+      <div class="cap-name">巴西葡语学习 APP</div>
+      <div class="cap-desc">葡语日常对话练习，本地生活场景</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card" onclick="window.open('https://tinyurl.com/265ldaee','_blank')">
+      <div class="cap-badge">CAP-002</div>
+      <div class="cap-name">Must Have CRM</div>
+      <div class="cap-desc">商户管理仪表盘，BD 跟进</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card" onclick="window.open('https://tinyurl.com/santos-task-v14','_blank')">
+      <div class="cap-badge">CAP-003</div>
+      <div class="cap-name">作战任务看板</div>
+      <div class="cap-desc">鲨鱼蓝风格，改价/任务追踪</div>
+      <div class="cap-status cap-status-online">✅ 已上线</div>
+    </div>
+    <div class="cap-card">
+      <div class="cap-badge cap-badge-gray">CAP-001</div>
+      <div class="cap-name">AI Eric 群消息发送</div>
+      <div class="cap-desc">自动向大象群发文字/图片，脚本驱动</div>
+      <div class="cap-status cap-status-verified">✅ 已验证</div>
+    </div>
+    <div class="cap-card">
+      <div class="cap-badge cap-badge-gray">CAP-005</div>
+      <div class="cap-name">BEC APP（PWA）</div>
+      <div class="cap-desc">可安装到手机主屏，方案就绪</div>
+      <div class="cap-status cap-status-ready">📋 方案就绪</div>
+    </div>
+    <div class="cap-card">
+      <div class="cap-badge cap-badge-gray">CAP-008</div>
+      <div class="cap-name">学城图文发布</div>
+      <div class="cap-desc">自动生成学城文章</div>
+      <div class="cap-status cap-status-verified">✅ 已验证</div>
+    </div>
+  </div>
+  <div class="cap-section-title" style="margin-top:20px">⏰ 定时任务</div>
+  <div class="cap-cron-list">
+    <div class="cap-cron-item">
+      <div class="cap-cron-icon">📊</div>
+      <div class="cap-cron-info">
+        <div class="cap-cron-name">DBR 日报自动播报</div>
+        <div class="cap-cron-detail">每天 07:00 BRT · 阿奇派砾石执行 · 发 SP Metropolitan CM 群</div>
+      </div>
+      <div class="cap-cron-status cap-cron-active">● 运行中</div>
+    </div>
+    <div class="cap-cron-item">
+      <div class="cap-cron-icon">📈</div>
+      <div class="cap-cron-info">
+        <div class="cap-cron-name">每周技能快照</div>
+        <div class="cap-cron-detail">每周一 · 读取 MEMORY.md 6维度分数 → stats.json</div>
+      </div>
+      <div class="cap-cron-status cap-cron-pending">○ 待配置</div>
+    </div>
+    <div class="cap-cron-item">
+      <div class="cap-cron-icon">🌍</div>
+      <div class="cap-cron-info">
+        <div class="cap-cron-name">毛毛每日葡语推送</div>
+        <div class="cap-cron-detail">每天早晨 · 葡语 + 英语短句推送</div>
+      </div>
+      <div class="cap-cron-status cap-cron-pending">○ 待配置</div>
+    </div>
+    <div class="cap-cron-item">
+      <div class="cap-cron-icon">🔍</div>
+      <div class="cap-cron-info">
+        <div class="cap-cron-name">灰灰情报采集</div>
+        <div class="cap-cron-detail">每天 08:00 BRT · 巴西外卖市场情报采集</div>
+      </div>
+      <div class="cap-cron-status cap-cron-pending">○ 待配置</div>
+    </div>
+  </div>
+</div>
+  </div>
+
+  <!-- Tab4 placeholder -->
+  <div id="tab4" class="tab-panel"><div style="padding:40px;text-align:center;color:#546e7a">💓 工作心跳 · 迁移中...</div></div>
+
+  <!-- Tab5 placeholder -->
+  <div id="tab5" class="tab-panel"><div style="padding:40px;text-align:center;color:#546e7a">📋 任务看板 · 迁移中...</div></div>
+
+  <!-- Tab6 placeholder -->
+  <div id="tab6" class="tab-panel"><div style="padding:40px;text-align:center;color:#546e7a">🏆 成就墙 · 迁移中...</div></div>
 </main>
 </div>
 
@@ -902,6 +1190,18 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     }
   }, 100);
 })();
+</script>
+
+<script>
+function showTab(tabId, btn) {
+  var panels = document.querySelectorAll('.tab-panel');
+  for (var i = 0; i < panels.length; i++) { panels[i].classList.remove('active'); }
+  var btns = document.querySelectorAll('.tab-btn');
+  for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+  var panel = document.getElementById(tabId);
+  if (panel) { panel.classList.add('active'); }
+  if (btn) { btn.classList.add('active'); }
+}
 </script>
 </body>
 </html>
