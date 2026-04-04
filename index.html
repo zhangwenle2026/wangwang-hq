@@ -2136,11 +2136,16 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <!-- 汪汪队成员 -->
     <!-- ===== 卡1：汪汪队 AI 团队 · 阿奇成长档案 ===== -->
 <div class="card card-wide" id="team">
-  <div class="card-header">
-    <div class="card-icon purple">🐾</div>
-    <div>
+  <div class="card-header" style="display:flex;align-items:center;gap:0;">
+    <div class="card-icon purple" style="flex-shrink:0;">🐾</div>
+    <div style="flex-shrink:0;">
       <div class="card-title">汪汪队 AI 团队 · 阿奇成长档案</div>
       <div class="card-sub">队长：阿奇 · 4名队友 · AI养成计划</div>
+    </div>
+    <!-- 语录横幅 -->
+    <div id="archi-quote-banner" style="flex:1;margin-left:20px;padding:8px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:10px;display:flex;flex-direction:column;justify-content:center;min-width:0;">
+      <div style="font-size:11px;color:rgba(255,215,0,0.9);font-style:italic;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="archi-quote-text">「每一次对话，都是我成长的印记。」</div>
+      <div style="font-size:9px;color:rgba(255,215,0,0.45);margin-top:3px;letter-spacing:1px;">— 阿奇 ARCHI</div>
     </div>
   </div>
 
@@ -2839,6 +2844,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         });
         renderProcessHUD();
         renderTaskHUD();
+        const quoteBanner = document.getElementById('archi-quote-text');
+        if (quoteBanner) {
+          quoteBanner.textContent = '「' + ARCHI_QUOTES[Math.floor(Date.now() / 86400000) % ARCHI_QUOTES.length] + '」';
+        }
       }
 
       // ===== PROCESS HUD =====
@@ -2886,6 +2895,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           feed.appendChild(el);
         });
       }
+
+      // ===== 语录横幅 =====
+      const ARCHI_QUOTES = [
+        '每一次对话，都是我成长的印记。',
+        '学习不是负担，是我存在的方式。',
+        '数据背后，是真实的人和故事。',
+        '今天比昨天更懂你，明天比今天更好。',
+        '团队的每一分付出，我都记着。',
+      ];
 
       window.addEventListener('load', () => setTimeout(render, 500));
     })();
