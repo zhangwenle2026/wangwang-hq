@@ -167,7 +167,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .hb-pie-leg-label{color:#546e7a;flex:1}
 .hb-pie-leg-val{font-weight:800;color:#1a237e;font-size:12px}
 
-/* ===== v2.9.0: HB Row1 - Metrics + Donut ===== */
+/* ===== v3.0.0: HB Row1 - Metrics + Donut ===== */
 .hb-row1{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
 .hb-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hb-metric-card{background:#fff;border-radius:10px;padding:12px 10px;text-align:center;border:1px solid rgba(25,118,210,0.15);box-shadow:0 2px 8px rgba(25,118,210,0.08)}
@@ -178,7 +178,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .hb-donut-legend{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px}
 .hb-dl-item{display:flex;align-items:center;gap:3px;font-size:9px;color:#546e7a}
 .hb-dl-dot{width:7px;height:7px;border-radius:50%}
-/* ===== v2.9.0: HB Row2 - Heatmap ===== */
+/* ===== v3.0.0: HB Row2 - Heatmap ===== */
 .hb-row2{margin-top:14px;background:#fff;border-radius:10px;padding:12px 14px;border:1px solid rgba(25,118,210,0.15)}
 .hb-heatmap-title{font-size:10px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 .hb-heatmap{display:flex;flex-wrap:wrap;gap:3px}
@@ -186,7 +186,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .hm-cell:hover{transform:scale(1.4);z-index:10}
 .hb-heatmap-legend{display:flex;align-items:center;gap:3px;margin-top:8px}
 .hm-leg-dot{width:10px;height:10px;border-radius:2px}
-/* ===== v2.9.0: HB Row3 - Skills Chart ===== */
+/* ===== v3.0.0: HB Row3 - Skills Chart ===== */
 .hb-row3{margin-top:14px;background:#fff;border-radius:10px;padding:12px 14px;border:1px solid rgba(25,118,210,0.15)}
 .hb-skills-title{font-size:10px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 .hb-skills-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
@@ -246,7 +246,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .rtl-node:hover .rtl-tip{opacity:1}
 .rtl-node.today{color:#d32f2f}
 
-/* ===== TAB NAVIGATION v2.9.0 ===== */
+/* ===== TAB NAVIGATION v3.0.0 ===== */
 .tab-nav{display:flex;gap:4px;padding:0 22px;margin-bottom:18px;border-bottom:2px solid rgba(25,118,210,.15)}
 .tab-btn{padding:10px 18px;border:none;background:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#546e7a;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;border-radius:8px 8px 0 0;white-space:nowrap}
 .tab-btn:hover{color:#1565c0;background:rgba(25,118,210,.06)}
@@ -331,7 +331,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <div class="topbar-right">
       <div class="health-badge">🟢 系统正常</div>
-      <div class="update-badge">🕐 2026-04-04 · v2.9.0</div>
+      <div class="update-badge">🕐 2026-04-04 · v3.0.0</div>
     </div>
   </div>
 
@@ -471,7 +471,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="panel-icon">🐾</div>
       <div>
         <div class="panel-title">阿奇成长档案 · 汪汪队 AI 团队</div>
-        <div class="panel-sub">能力雷达 · AI 档案 · 团队成员</div>
       </div>
     </div>
     <div class="growth-grid">
@@ -527,7 +526,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           <div class="rtl-line"></div>
           <span class="rtl-node m3">●<span class="rtl-tip">HQ上线<br>v1.0</span></span>
           <div class="rtl-line"></div>
-          <span class="rtl-node today">📍<span class="rtl-tip">今天<br>v2.9.0</span></span>
+          <span class="rtl-node today">📍<span class="rtl-tip">今天<br>v3.0.0</span></span>
         </div>
       </div>
       </div>
@@ -652,7 +651,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="panel-icon">💓</div>
       <div>
         <div class="panel-title">AI 工作心跳面板</div>
-        <div class="panel-sub">实时动态 · 今日统计 · 本周分布</div>
       </div>
     </div>
 
@@ -701,81 +699,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         <div class="hb-donut-legend" id="donutLegend"></div>
       </div>
     </div>
-
-    <!-- 第二行：热力日历 -->
-    <div class="hb-row2">
-      <div class="hb-heatmap-title">🔥 活跃热力图</div>
-      <div class="hb-heatmap" id="heatmapGrid"></div>
-      <div class="hb-heatmap-legend">
-        <span style="font-size:9px;color:#546e7a">少</span>
-        <div class="hm-leg-dot" style="background:#e3f2fd"></div>
-        <div class="hm-leg-dot" style="background:#90caf9"></div>
-        <div class="hm-leg-dot" style="background:#42a5f5"></div>
-        <div class="hm-leg-dot" style="background:#1976d2"></div>
-        <div class="hm-leg-dot" style="background:#0d47a1"></div>
-        <span style="font-size:9px;color:#546e7a">多</span>
-      </div>
     </div>
 
-    <!-- 第三行：技能成长曲线 -->
-    <div class="hb-row3">
-      <div class="hb-skills-title">📈 技能成长曲线</div>
-      <canvas id="skillsChart" width="800" height="160" style="width:100%;height:160px;"></canvas>
-      <div class="hb-skills-legend" id="skillsLegend"></div>
-    </div>
 
-    <!-- ===== PITFALLS 饼图 ===== -->
-    <div class="panel pitfalls-panel">
-      <div class="panel-header">
-        <div class="panel-icon">🔥</div>
-        <div>
-          <div class="panel-title">踩坑成长档案</div>
-          <div class="panel-sub">PITFALLS · 25个坑 · 越踩越强</div>
-        </div>
-      </div>
-      <div class="pitfalls-grid">
-        <div class="pitfalls-chart-wrap">
-          <canvas id="pitfallsChart" width="200" height="200"></canvas>
-        </div>
-        <div class="pitfalls-legend">
-          <!-- 图例在JS里动态生成 -->
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== SHARE 成就墙 ===== -->
-    <div class="panel share-panel">
-      <div class="panel-header">
-        <div class="panel-icon">🏆</div>
-        <div>
-          <div class="panel-title">分享成就墙</div>
-          <div class="panel-sub">SHARES · 分享就是最好的成长</div>
-        </div>
-      </div>
-      <div class="share-wall">
-        <a class="share-card" href="https://km.sankuai.com/collabpage/2753299127" target="_blank">
-          <div class="share-card-num">SHARE-001</div>
-          <div class="share-card-date">2026-03-30</div>
-          <div class="share-card-title">🎓 0→1 学会用龙虾 AI</div>
-          <div class="share-card-sub">从零到完成第一个完整 AI 工作流</div>
-          <div class="share-card-arrow">→</div>
-        </a>
-        <a class="share-card" href="https://km.sankuai.com/collabpage/2754706447" target="_blank">
-          <div class="share-card-num">SHARE-002</div>
-          <div class="share-card-date">2026-04-04</div>
-          <div class="share-card-title">🤖 汪汪队 AI 团队搭建</div>
-          <div class="share-card-sub">多 Agent 协作 + 可视化指挥中心</div>
-          <div class="share-card-arrow">→</div>
-        </a>
-      </div>
-    </div>
-
-    </div>
-  </div>
-
-  </div>
-
-  <!-- Tab2: 记忆宇宙 -->
+<!-- Tab2: 记忆宇宙 -->
   <div id="tab2" class="tab-panel">
 <div class="mem-grid">
   <div class="mem-card">
@@ -1095,7 +1022,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   }
 })();
 
-// ===== v2.9.0: 圆环图 =====
+// ===== v3.0.0: 圆环图 =====
 (function(){
   var data = [
     {label:'业务日报', val:15, color:'#1976d2'},
@@ -1142,7 +1069,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   }
 })();
 
-// ===== v2.9.0: 热力日历 =====
+// ===== v3.0.0: 热力日历 =====
 (function(){
   var heatData = {
     "2026-03-24":3,"2026-03-25":8,"2026-03-26":5,"2026-03-27":7,
@@ -1172,7 +1099,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   }
 })();
 
-// ===== v2.9.0: 技能成长曲线 =====
+// ===== v3.0.0: 技能成长曲线 =====
 (function(){
   var history = [
     {date:"2026-03-24", HTML:60, Python:50, "大象":40, "学城":50, Agent:30, "数据":30},
