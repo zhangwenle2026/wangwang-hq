@@ -167,7 +167,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .hb-pie-leg-label{color:#546e7a;flex:1}
 .hb-pie-leg-val{font-weight:800;color:#1a237e;font-size:12px}
 
-/* ===== v2.3.0: HB Row1 - Metrics + Donut ===== */
+/* ===== v2.9.0: HB Row1 - Metrics + Donut ===== */
 .hb-row1{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
 .hb-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hb-metric-card{background:#fff;border-radius:10px;padding:12px 10px;text-align:center;border:1px solid rgba(25,118,210,0.15);box-shadow:0 2px 8px rgba(25,118,210,0.08)}
@@ -178,7 +178,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .hb-donut-legend{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px}
 .hb-dl-item{display:flex;align-items:center;gap:3px;font-size:9px;color:#546e7a}
 .hb-dl-dot{width:7px;height:7px;border-radius:50%}
-/* ===== v2.3.0: HB Row2 - Heatmap ===== */
+/* ===== v2.9.0: HB Row2 - Heatmap ===== */
 .hb-row2{margin-top:14px;background:#fff;border-radius:10px;padding:12px 14px;border:1px solid rgba(25,118,210,0.15)}
 .hb-heatmap-title{font-size:10px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 .hb-heatmap{display:flex;flex-wrap:wrap;gap:3px}
@@ -186,7 +186,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .hm-cell:hover{transform:scale(1.4);z-index:10}
 .hb-heatmap-legend{display:flex;align-items:center;gap:3px;margin-top:8px}
 .hm-leg-dot{width:10px;height:10px;border-radius:2px}
-/* ===== v2.3.0: HB Row3 - Skills Chart ===== */
+/* ===== v2.9.0: HB Row3 - Skills Chart ===== */
 .hb-row3{margin-top:14px;background:#fff;border-radius:10px;padding:12px 14px;border:1px solid rgba(25,118,210,0.15)}
 .hb-skills-title{font-size:10px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 .hb-skills-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
@@ -246,7 +246,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .rtl-node:hover .rtl-tip{opacity:1}
 .rtl-node.today{color:#d32f2f}
 
-/* ===== TAB NAVIGATION v2.4.0 ===== */
+/* ===== TAB NAVIGATION v2.9.0 ===== */
 .tab-nav{display:flex;gap:4px;padding:0 22px;margin-bottom:18px;border-bottom:2px solid rgba(25,118,210,.15)}
 .tab-btn{padding:10px 18px;border:none;background:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#546e7a;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;border-radius:8px 8px 0 0;white-space:nowrap}
 .tab-btn:hover{color:#1565c0;background:rgba(25,118,210,.06)}
@@ -331,7 +331,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <div class="topbar-right">
       <div class="health-badge">🟢 系统正常</div>
-      <div class="update-badge">🕐 2026-04-04 · v2.8.0</div>
+      <div class="update-badge">🕐 2026-04-04 · v2.9.0</div>
     </div>
   </div>
 
@@ -459,9 +459,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <button class="tab-btn active" onclick="showTab('tab1', this)">🐾 成长档案</button>
     <button class="tab-btn" onclick="showTab('tab2', this)">🌌 记忆宇宙</button>
     <button class="tab-btn" onclick="showTab('tab3', this)">⚡ 能力精进</button>
-    <button class="tab-btn" onclick="showTab('tab4', this)">💓 工作心跳</button>
-    <button class="tab-btn" onclick="showTab('tab5', this)">📋 任务看板</button>
-    <button class="tab-btn" onclick="showTab('tab6', this)">🏆 成就墙</button>
   </nav>
 
   <!-- Tab1: 成长档案 -->
@@ -530,7 +527,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           <div class="rtl-line"></div>
           <span class="rtl-node m3">●<span class="rtl-tip">HQ上线<br>v1.0</span></span>
           <div class="rtl-line"></div>
-          <span class="rtl-node today">📍<span class="rtl-tip">今天<br>v2.4.0</span></span>
+          <span class="rtl-node today">📍<span class="rtl-tip">今天<br>v2.9.0</span></span>
         </div>
       </div>
       </div>
@@ -992,13 +989,13 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
 
   <!-- Tab4 placeholder -->
-  <div id="tab4" class="tab-panel"><div style="padding:40px;text-align:center;color:#546e7a">💓 工作心跳 · 迁移中...</div></div>
+  </div>
 
   <!-- Tab5 placeholder -->
-  <div id="tab5" class="tab-panel"><div style="padding:40px;text-align:center;color:#546e7a">📋 任务看板 · 迁移中...</div></div>
+  </div>
 
   <!-- Tab6 placeholder -->
-  <div id="tab6" class="tab-panel"><div style="padding:40px;text-align:center;color:#546e7a">🏆 成就墙 · 迁移中...</div></div>
+  </div>
 </main>
 </div>
 
@@ -1098,7 +1095,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   }
 })();
 
-// ===== v2.3.0: 圆环图 =====
+// ===== v2.9.0: 圆环图 =====
 (function(){
   var data = [
     {label:'业务日报', val:15, color:'#1976d2'},
@@ -1145,7 +1142,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   }
 })();
 
-// ===== v2.3.0: 热力日历 =====
+// ===== v2.9.0: 热力日历 =====
 (function(){
   var heatData = {
     "2026-03-24":3,"2026-03-25":8,"2026-03-26":5,"2026-03-27":7,
@@ -1175,7 +1172,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   }
 })();
 
-// ===== v2.3.0: 技能成长曲线 =====
+// ===== v2.9.0: 技能成长曲线 =====
 (function(){
   var history = [
     {date:"2026-03-24", HTML:60, Python:50, "大象":40, "学城":50, Agent:30, "数据":30},
