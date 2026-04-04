@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.5">
+<meta name="version" content="5.9.6">
 <title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -1113,6 +1113,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         letter-spacing: 0.05em;
         font-family: 'Courier New', monospace;
         animation: labelPulse 3s ease-in-out infinite;
+      }
+      @keyframes logFadeIn {
+        0%   { opacity: 0; transform: translateY(4px); }
+        100% { opacity: 1; transform: translateY(0); }
       }
       @keyframes labelPulse {
         0%, 100% { opacity: 0.4; }
@@ -2238,7 +2242,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <div id="process-hud" style="background:rgba(5,10,20,0.95);border:1px solid rgba(124,58,237,0.4);border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;align-self:stretch;">
     <div style="position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);pointer-events:none;"></div>
     <div style="font-size:9px;font-weight:700;color:rgba(124,58,237,0.9);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:2px;">⚙ PROCESS HUD · 实时进程</div>
-    <div id="process-feed" style="display:flex;flex-direction:column;gap:6px;flex:1;overflow:hidden;"></div>
+    <div id="process-feed" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:0;font-family:'Courier New',Consolas,monospace;scrollbar-width:none;"></div>
   </div>
 
   <!-- ④ Task HUD -->
@@ -2831,6 +2835,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           el.style.fontSize = len <= 1 ? '38px' : len === 2 ? '34px' : len === 3 ? '28px' : len === 4 ? '24px' : '20px';
         });
         renderProcessHUD();
+        _startLiveFeed();
         renderTaskHUD();
         const quoteBanner = document.getElementById('archi-quote-text');
         if (quoteBanner) {
@@ -2838,38 +2843,97 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         }
       }
 
-      // ===== PROCESS HUD =====
-      const PROCESS_DATA = [
-        { agent: '砾石', icon: '🚜', task: 'DBR取数 · bi.keetapp.com', status: 'running', progress: 72, color: '#fb923c' },
-        { agent: '毛毛', icon: '✈️', task: 'BEC题库更新 · 词汇模块', status: 'running', progress: 45, color: '#a78bfa' },
-        { agent: '阿奇', icon: '🐾', task: 'HQ看板迭代 · v5.9.x', status: 'done', progress: 100, color: '#22c55e' },
-        { agent: '天天', icon: '🏥', task: '用户反馈收集 · 待处理', status: 'idle', progress: 0, color: '#67e8f9' },
-        { agent: '灰灰', icon: '🔍', task: '市场情报 · Santos区域', status: 'queued', progress: 0, color: '#fbbf24' },
-      ];
-      const TASK_DATA = [
-        { id: 'T-001', name: 'DBR日报自动播报', status: 'done', agent: '砾石', urgent: false },
-        { id: 'T-002', name: 'HQ v5.9.x 立绘修复', status: 'done', agent: '阿奇', urgent: false },
-        { id: 'T-003', name: 'Process/Task HUD上线', status: 'running', agent: '阿奇', urgent: false },
-        { id: 'T-004', name: 'BI取数脱离浏览器依赖', status: 'pending', agent: '砾石', urgent: false },
-        { id: 'T-005', name: '天天/灰灰直联打通', status: 'pending', agent: '天天', urgent: true },
-        { id: 'T-006', name: 'BEC题库扩充', status: 'running', agent: '毛毛', urgent: false },
-      ];
-      function renderProcessHUD() {
+      // ===== PROCESS HUD · 信息流 =====
+    const AGENT_META = {
+      '砾石': { icon: '🚜', color: '#fb923c' },
+      '毛毛': { icon: '✈️', color: '#a78bfa' },
+      '阿奇': { icon: '🐾', color: '#22c55e' },
+      '天天': { icon: '🏥', color: '#67e8f9' },
+      '灰灰': { icon: '🔍', color: '#fbbf24' },
+    };
+    // 模拟日志流数据（最新在后）
+    const PROCESS_LOG_SEED = [
+      { t: -1830, agent: '砾石', msg: '启动 DBR 日报任务', type: 'start' },
+      { t: -1740, agent: '砾石', msg: '打开 bi.keetapp.com...', type: 'action' },
+      { t: -1650, agent: '砾石', msg: '筛选 Metropolitan Region ✓', type: 'ok' },
+      { t: -1560, agent: '毛毛', msg: 'BEC 题库更新 · 词汇模块启动', type: 'start' },
+      { t: -1440, agent: '砾石', msg: 'Business Performance tab 取数中...', type: 'action' },
+      { t: -1320, agent: '阿奇', msg: 'HQ v5.9.4 合并 Process/Task HUD', type: 'ok' },
+      { t: -1200, agent: '砾石', msg: 'New Sign tab ✓  Operating tab ✓', type: 'ok' },
+      { t: -1080, agent: '毛毛', msg: '词汇新增 48 条，语法校验通过', type: 'ok' },
+      { t:  -960, agent: '砾石', msg: 'Promotion tab 取数中...', type: 'action' },
+      { t:  -840, agent: '灰灰', msg: 'Santos 区域竞品情报扫描启动', type: 'start' },
+      { t:  -720, agent: '砾石', msg: 'User Experience tab ✓  全部取数完成', type: 'ok' },
+      { t:  -600, agent: '阿奇', msg: 'HQ v5.9.5 语录横幅移至标题行', type: 'ok' },
+      { t:  -480, agent: '砾石', msg: '生成日报卡片 · chromium 渲染中...', type: 'action' },
+      { t:  -360, agent: '灰灰', msg: '发现 3 家新竞品 · 数据整理中', type: 'action' },
+      { t:  -240, agent: '砾石', msg: '日报卡片上传 CDN ✓', type: 'ok' },
+      { t:  -180, agent: '砾石', msg: '发送群消息 · SP Metropolitan CM ✓', type: 'ok' },
+      { t:  -120, agent: '天天', msg: '用户反馈 12 条待处理，优先级排序中', type: 'action' },
+      { t:   -60, agent: '阿奇', msg: 'Process HUD 信息流模式上线', type: 'ok' },
+      { t:    -5, agent: '砾石', msg: '待机中 · 等待下次任务', type: 'idle' },
+    ];
+    // 动态追加的新日志（模拟实时）
+    const LIVE_LOG_POOL = [
+      { agent: '灰灰', msg: '竞品报告草稿生成中...', type: 'action' },
+      { agent: '毛毛', msg: 'BEC 听力模块校验 ✓', type: 'ok' },
+      { agent: '天天', msg: '用户反馈分类完成 · 高优先 3 条', type: 'ok' },
+      { agent: '阿奇', msg: '内存日志写入 memory/2026-04-05.md ✓', type: 'ok' },
+      { agent: '砾石', msg: '检查 BI 看板登录状态...', type: 'action' },
+      { agent: '灰灰', msg: '发现潜在合作商户 2 家 · 待推进', type: 'ok' },
+      { agent: '毛毛', msg: 'SVAR 练习模块题目更新完成', type: 'ok' },
+      { agent: '天天', msg: '健康检查 · 所有系统正常 ✓', type: 'ok' },
+      { agent: '砾石', msg: 'BI 登录状态正常 · 继续待机', type: 'idle' },
+      { agent: '阿奇', msg: 'HEARTBEAT 检查 · 无异常 ✓', type: 'ok' },
+    ];
+    let _liveLogIdx = 0;
+    function _fmtTime(offsetSec) {
+      const d = new Date(Date.now() + offsetSec * 1000);
+      const h = String(d.getHours()).padStart(2,'0');
+      const m = String(d.getMinutes()).padStart(2,'0');
+      const s = String(d.getSeconds()).padStart(2,'0');
+      return h + ':' + m + ':' + s;
+    }
+    function _makeLogLine(agent, msg, type, timeStr) {
+      const am = AGENT_META[agent] || { icon: '🤖', color: '#ffffff' };
+      const typeColor = { start: '#7c3aed', ok: '#22c55e', action: '#00d4ff', idle: '#4b5563', error: '#f87171' };
+      const col = typeColor[type] || '#9ca3af';
+      const el = document.createElement('div');
+      el.style.cssText = 'display:flex;align-items:baseline;gap:5px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);line-height:1.4;';
+      el.innerHTML =
+        '<span style="font-size:9px;color:rgba(255,255,255,0.3);flex-shrink:0;letter-spacing:0;">' + timeStr + '</span>' +
+        '<span style="font-size:11px;flex-shrink:0;">' + am.icon + '</span>' +
+        '<span style="font-size:9px;font-weight:700;color:' + am.color + ';flex-shrink:0;min-width:28px;">' + agent + '</span>' +
+        '<span style="font-size:10px;color:' + col + ';flex:1;white-space:pre-wrap;word-break:break-all;">' + msg + '</span>';
+      return el;
+    }
+    function renderProcessHUD() {
+      const feed = document.getElementById('process-feed');
+      if (!feed) return;
+      feed.innerHTML = '';
+      PROCESS_LOG_SEED.forEach(p => {
+        feed.appendChild(_makeLogLine(p.agent, p.msg, p.type, _fmtTime(p.t)));
+      });
+      // 滚到底
+      feed.scrollTop = feed.scrollHeight;
+    }
+    // 每 8s 追加一条新日志（模拟实时）
+    function _startLiveFeed() {
+      setInterval(() => {
         const feed = document.getElementById('process-feed');
         if (!feed) return;
-        feed.innerHTML = '';
-        const colorRgb = { '#fb923c': '251,146,60', '#a78bfa': '167,139,250', '#22c55e': '34,197,94', '#67e8f9': '103,232,249', '#fbbf24': '251,191,36' };
-        const statusCfg = { running: { label: '运行中', color: '#22c55e' }, done: { label: '已完成', color: '#4ade80' }, idle: { label: '待机', color: '#6b7280' }, queued: { label: '排队中', color: '#fbbf24' } };
-        PROCESS_DATA.forEach(p => {
-          const st = statusCfg[p.status] || statusCfg.idle;
-          const rgb = colorRgb[p.color] || '255,255,255';
-          const el = document.createElement('div');
-          el.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid rgba(' + rgb + ',0.2);border-radius:8px;padding:7px 9px;';
-          el.innerHTML = '<div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;"><span style="font-size:12px;">' + p.icon + '</span><span style="font-size:10px;font-weight:700;color:' + p.color + ';letter-spacing:0.5px;">' + p.agent + '</span><span style="margin-left:auto;font-size:9px;color:' + st.color + ';background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;font-weight:600;">' + st.label + '</span></div><div style="font-size:10px;color:rgba(255,255,255,0.65);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + p.task + '</div><div style="height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;"><div style="height:100%;width:' + p.progress + '%;background:linear-gradient(90deg,' + p.color + ',rgba(255,255,255,0.5));border-radius:2px;"></div></div>';
-          feed.appendChild(el);
-        });
-      }
-      function renderTaskHUD() {
+        const entry = LIVE_LOG_POOL[_liveLogIdx % LIVE_LOG_POOL.length];
+        _liveLogIdx++;
+        const el = _makeLogLine(entry.agent, entry.msg, entry.type, _fmtTime(0));
+        el.style.animation = 'logFadeIn 0.4s ease';
+        feed.appendChild(el);
+        // 超过 30 条删最旧的
+        while (feed.children.length > 30) feed.removeChild(feed.firstChild);
+        feed.scrollTop = feed.scrollHeight;
+      }, 8000);
+    }
+
+        function renderTaskHUD() {
         const feed = document.getElementById('task-feed');
         if (!feed) return;
         feed.innerHTML = '';
