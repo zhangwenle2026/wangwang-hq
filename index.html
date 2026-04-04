@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.4">
+<meta name="version" content="5.9.5">
 <title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -2143,7 +2143,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="card-sub">队长：阿奇 · 4名队友 · AI养成计划</div>
     </div>
     <!-- 语录横幅 -->
-    <div id="archi-quote-banner" style="flex:1;margin-left:20px;padding:8px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:10px;display:flex;flex-direction:column;justify-content:center;min-width:0;">
+    <div id="archi-quote-banner" style="flex:1;margin-left:20px;padding:8px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:10px;display:flex;flex-direction:column;justify-content:center;min-width:0;align-self:stretch;">
       <div style="font-size:11px;color:rgba(255,215,0,0.9);font-style:italic;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="archi-quote-text">「每一次对话，都是我成长的印记。」</div>
       <div style="font-size:9px;color:rgba(255,215,0,0.45);margin-top:3px;letter-spacing:1px;">— 阿奇 ARCHI</div>
     </div>
@@ -2179,18 +2179,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <div style="background:rgba(5,10,20,0.95);border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:16px 14px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;align-self:stretch;">
     <!-- 背景粒子网格 -->
     <canvas id="hudBgCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.18;pointer-events:none;"></canvas>
-    <!-- 语录卡片 -->
-    <div style="position:relative;z-index:1;background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.2);border-left:3px solid #7c3aed;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;">
-      <div style="position:relative;padding-left:14px;">
-        <span style="position:absolute;left:0;top:-4px;font-size:24px;color:#7c3aed;opacity:0.35;line-height:1;font-family:Georgia,serif;">&#10077;</span>
-        <div class="cap-quote-text" style="font-style:italic;font-size:11px;line-height:1.8;color:rgba(255,255,255,0.85);">我正在一点点变得更懂你。今天你和我聊了工作、学习，还有生活。</div>
-      </div>
-      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,0.4),rgba(0,212,255,0.3),transparent);"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div class="cap-companion" style="font-size:9px;color:rgba(255,255,255,0.5);">⏱ <span id="archi-companion">已陪伴 11 天 14 小时 36 分钟</span></div>
-        <span class="cap-born-tag" style="font-size:9px;color:rgba(255,255,255,0.4);">🎂 2026-03-24</span>
-      </div>
-    </div>
     <!-- 标题 -->
     <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.7);letter-spacing:2.5px;text-transform:uppercase;position:relative;z-index:1;">⚡ DATA HUD · 实时看板</div>
 
