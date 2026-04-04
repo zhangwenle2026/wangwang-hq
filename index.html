@@ -1822,6 +1822,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         opacity: 1;
         transform: translateX(-50%) translateY(0) scale(1);
       }
+
+      #tasks-full { display: none !important; }
 </style>
 </head>
 <body>
@@ -1887,7 +1889,37 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
                     </div>
                   </div>
                 </div>
-  <div class="sidebar-footer">v4.0.0 · 2026-04-04</div>
+  
+  <div style="margin-top:14px;padding:0 2px;">
+    <div class="hq-col-title">⏰ 定时任务</div>
+    <div style="display:flex;flex-direction:column;gap:4px;margin-top:6px;">
+      <div style="display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:6px;background:rgba(255,255,255,0.04);">
+        <div style="width:6px;height:6px;border-radius:50%;background:#00d4ff;flex-shrink:0;box-shadow:0 0 4px #00d4ff;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:11px;font-weight:600;color:#e0e0e0;">DBR 日报播报</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:1px;">07:00 BRT · 砾石执行</div>
+        </div>
+        <span style="font-size:9px;color:#22c55e;flex-shrink:0;">● 运行</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:6px;background:rgba(255,255,255,0.04);">
+        <div style="width:6px;height:6px;border-radius:50%;background:#7c3aed;flex-shrink:0;box-shadow:0 0 4px #7c3aed;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:11px;font-weight:600;color:#e0e0e0;">每日存档 & 汇报</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:1px;">18:00 BRT · 阿奇执行</div>
+        </div>
+        <span style="font-size:9px;color:#22c55e;flex-shrink:0;">● 运行</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:6px;background:rgba(255,255,255,0.04);">
+        <div style="width:6px;height:6px;border-radius:50%;background:#ff6b35;flex-shrink:0;box-shadow:0 0 4px #ff6b35;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:11px;font-weight:600;color:#e0e0e0;">访店日报</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:1px;">18:30 BRT · 砾石执行</div>
+        </div>
+        <span style="font-size:9px;color:#22c55e;flex-shrink:0;">● 运行</span>
+      </div>
+    </div>
+  </div>
+<div class="sidebar-footer">v4.0.0 · 2026-04-04</div>
 </aside>
 
 <main class="main">
