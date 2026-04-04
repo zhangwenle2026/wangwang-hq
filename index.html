@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="2.9.27">
-<title>Eric AI团队交互平台</title>
+<meta name="version" content="4.0.1">
+<title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -562,18 +562,14 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         .hq-two-col-row { grid-template-columns: 1fr; }
       }
 
-      /* ====== 右栏：本周日志（mini timeline）====== */
+      /* ====== 右栏：今日日志（mini timeline）====== */
       .hq-col-log {
         min-width: 0;
       }
       .hq-timeline-mini {
         overflow-y: auto;
-        max-height: 200px;
-        padding-right: 4px;
+        max-height: 320px;
       }
-      .hq-timeline-mini::-webkit-scrollbar { width: 3px; }
-      .hq-timeline-mini::-webkit-scrollbar-track { background: transparent; }
-      .hq-timeline-mini::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.3); border-radius: 2px; }
       .hq-timeline-mini .tl {
         display: flex; gap: 8px; margin-bottom: 12px;
       }
@@ -1336,7 +1332,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       }
       .cap-illust-img {
         width: 100%;
-        height: 100%;
+        height: auto;
         max-height: 320px;
         object-fit: cover;
         object-position: top center;
@@ -1833,7 +1829,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="logo-sub">AI COMMAND CENTER</div>
   </div>
         <div class="hq-col-log">
-                  <div class="hq-col-title">📋 本周日志</div>
+                  <div class="hq-col-title">📋 今日日志</div>
                   <div class="hq-timeline-mini">
                     <div class="timeline">
                       <div class="tl">
@@ -1893,7 +1889,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 <main class="main">
   <div class="hq-header">
     <div class="hq-header-overlay" style="flex-direction:column;gap:0">
-      <div class="hq-header-title">Eric AI团队交互平台</div>
+      <div class="hq-header-title">Eric AI团队工作平台</div>
       <div class="hq-header-subtitle">PAW Patrol AI Command Center</div>
     </div>
   </div>
@@ -1943,17 +1939,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           <div class="card-sub">队长：阿奇 · 4名队友 · AI养成计划</div>
         </div>
       </div>
-
-<!-- 定时任务 -->
-    <div class="card card-wide" id="tasks-full">
-      <div class="card-header">
-        <div class="card-icon orange">⏰</div>
-        <div>
-          <div class="card-title">定时任务</div>
-          <div class="card-sub">自动化任务监控 · 3个运行中</div>
-        </div>
-      </div>
-
             <!-- 阿奇队长大卡 + 队友区（v4.1）-->
             <!-- 方案B：左阿奇(60%) + 右队友2×2(40%) -->
       <div style="display:grid;grid-template-columns:1fr 360px;gap:12px;align-items:start;margin-bottom:8px;">
@@ -2088,6 +2073,16 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       </div>
 
 </div>
+
+            <!-- 定时任务 -->
+    <div class="card card-wide" id="tasks-full">
+      <div class="card-header">
+        <div class="card-icon orange">⏰</div>
+        <div>
+          <div class="card-title">定时任务</div>
+          <div class="card-sub">自动化任务监控 · 3个运行中</div>
+        </div>
+      </div>
       <div class="tasks-full-grid">
 <div class="tasks-full-list">
           <div class="inline-task-item">
@@ -2115,7 +2110,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           </div>
       </div>
     </div>
-
 
 
   </div>
