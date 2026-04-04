@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.3">
+<meta name="version" content="5.9.4">
 <title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -2145,7 +2145,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
 
   <!-- 专区一主网格：立绘 + 雷达 + 右列(事项+语录) -->
-<div style="display:grid;grid-template-columns:280px 260px 1fr;gap:18px;align-items:start;margin-bottom:18px;">
+<div style="display:grid;grid-template-columns:240px 220px 1fr 1fr;gap:14px;align-items:start;margin-bottom:18px;">
 
   <!-- ① 立绘列 (原样保留，底部overlay加状态信息) -->
   <div class="cap-illust-col" style="display:flex;flex-direction:column;align-items:center;min-width:0;width:100%;height:100%;">
@@ -2174,6 +2174,18 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <div style="background:rgba(5,10,20,0.95);border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:16px 14px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;align-self:stretch;">
     <!-- 背景粒子网格 -->
     <canvas id="hudBgCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.18;pointer-events:none;"></canvas>
+    <!-- 语录卡片 -->
+    <div style="position:relative;z-index:1;background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.2);border-left:3px solid #7c3aed;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;">
+      <div style="position:relative;padding-left:14px;">
+        <span style="position:absolute;left:0;top:-4px;font-size:24px;color:#7c3aed;opacity:0.35;line-height:1;font-family:Georgia,serif;">&#10077;</span>
+        <div class="cap-quote-text" style="font-style:italic;font-size:11px;line-height:1.8;color:rgba(255,255,255,0.85);">我正在一点点变得更懂你。今天你和我聊了工作、学习，还有生活。</div>
+      </div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,0.4),rgba(0,212,255,0.3),transparent);"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="cap-companion" style="font-size:9px;color:rgba(255,255,255,0.5);">⏱ <span id="archi-companion">已陪伴 11 天 14 小时 36 分钟</span></div>
+        <span class="cap-born-tag" style="font-size:9px;color:rgba(255,255,255,0.4);">🎂 2026-03-24</span>
+      </div>
+    </div>
     <!-- 标题 -->
     <div style="font-size:9px;font-weight:700;color:rgba(0,212,255,0.7);letter-spacing:2.5px;text-transform:uppercase;position:relative;z-index:1;">⚡ DATA HUD · 实时看板</div>
 
@@ -2229,31 +2241,18 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
   </div>
 
-  <!-- ③ 右列：今日事项 + 语录 -->
-  <div style="display:flex;flex-direction:column;gap:12px;align-self:stretch;height:100%;">
+  <!-- ③ Process HUD -->
+  <div id="process-hud" style="background:rgba(5,10,20,0.95);border:1px solid rgba(124,58,237,0.4);border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;align-self:stretch;">
+    <div style="position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="font-size:9px;font-weight:700;color:rgba(124,58,237,0.9);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:2px;">⚙ PROCESS HUD · 实时进程</div>
+    <div id="process-feed" style="display:flex;flex-direction:column;gap:6px;flex:1;overflow:hidden;"></div>
+  </div>
 
-    <!-- 今日重要事项 -->
-    <div style="flex:1.5;background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.2);border-left:3px solid #00d4ff;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;">
-      <div style="font-size:9px;font-weight:700;color:#00d4ff;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:4px;">🎯 TODAY'S FOCUS</div>
-      <div id="focus-list" style="display:flex;flex-direction:column;gap:7px;">
-        <!-- 手动维护 FOCUS_DATA -->
-      </div>
-    </div>
-
-    <!-- 语录 -->
-    <div style="flex:1;background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.2);border-left:3px solid #7c3aed;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;">
-      <div style="position:relative;padding-left:18px;">
-        <span style="position:absolute;left:0;top:-6px;font-size:36px;color:#7c3aed;opacity:0.35;line-height:1;font-family:Georgia,serif;">&#10077;</span>
-        <div class="cap-quote-text" style="font-style:italic;font-size:14px;line-height:2;color:rgba(255,255,255,0.9);">我正在一点点变得更懂你。今天你和我聊了工作、学习，还有生活。</div>
-        <span style="position:absolute;right:0;bottom:-4px;font-size:28px;color:#7c3aed;opacity:0.35;line-height:1;font-family:Georgia,serif;">&#10078;</span>
-      </div>
-      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,0.4),rgba(0,212,255,0.3),transparent);margin:10px 0 8px;"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div class="cap-companion" style="font-size:11px;color:rgba(255,255,255,0.5);">⏱ <span id="archi-companion">已陪伴 11 天 14 小时 36 分钟</span></div>
-        <span class="cap-born-tag" style="font-size:10px;color:rgba(255,255,255,0.4);">🎂 2026-03-24</span>
-      </div>
-    </div>
-
+  <!-- ④ Task HUD -->
+  <div id="task-hud" style="background:rgba(5,10,20,0.95);border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;align-self:stretch;">
+    <div style="position:absolute;bottom:-40px;left:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(0,212,255,0.12) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="font-size:9px;font-weight:700;color:#00d4ff;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:2px;">📋 TASK HUD · 任务状态</div>
+    <div id="task-feed" style="display:flex;flex-direction:column;gap:5px;flex:1;overflow:hidden;"></div>
   </div>
 </div>
 
@@ -2837,6 +2836,54 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         document.querySelectorAll('.cmd-arc-val').forEach(el => {
           const len = el.textContent.trim().length;
           el.style.fontSize = len <= 1 ? '38px' : len === 2 ? '34px' : len === 3 ? '28px' : len === 4 ? '24px' : '20px';
+        });
+        renderProcessHUD();
+        renderTaskHUD();
+      }
+
+      // ===== PROCESS HUD =====
+      const PROCESS_DATA = [
+        { agent: '砾石', icon: '🚜', task: 'DBR取数 · bi.keetapp.com', status: 'running', progress: 72, color: '#fb923c' },
+        { agent: '毛毛', icon: '✈️', task: 'BEC题库更新 · 词汇模块', status: 'running', progress: 45, color: '#a78bfa' },
+        { agent: '阿奇', icon: '🐾', task: 'HQ看板迭代 · v5.9.x', status: 'done', progress: 100, color: '#22c55e' },
+        { agent: '天天', icon: '🏥', task: '用户反馈收集 · 待处理', status: 'idle', progress: 0, color: '#67e8f9' },
+        { agent: '灰灰', icon: '🔍', task: '市场情报 · Santos区域', status: 'queued', progress: 0, color: '#fbbf24' },
+      ];
+      const TASK_DATA = [
+        { id: 'T-001', name: 'DBR日报自动播报', status: 'done', agent: '砾石', urgent: false },
+        { id: 'T-002', name: 'HQ v5.9.x 立绘修复', status: 'done', agent: '阿奇', urgent: false },
+        { id: 'T-003', name: 'Process/Task HUD上线', status: 'running', agent: '阿奇', urgent: false },
+        { id: 'T-004', name: 'BI取数脱离浏览器依赖', status: 'pending', agent: '砾石', urgent: false },
+        { id: 'T-005', name: '天天/灰灰直联打通', status: 'pending', agent: '天天', urgent: true },
+        { id: 'T-006', name: 'BEC题库扩充', status: 'running', agent: '毛毛', urgent: false },
+      ];
+      function renderProcessHUD() {
+        const feed = document.getElementById('process-feed');
+        if (!feed) return;
+        feed.innerHTML = '';
+        const colorRgb = { '#fb923c': '251,146,60', '#a78bfa': '167,139,250', '#22c55e': '34,197,94', '#67e8f9': '103,232,249', '#fbbf24': '251,191,36' };
+        const statusCfg = { running: { label: '运行中', color: '#22c55e' }, done: { label: '已完成', color: '#4ade80' }, idle: { label: '待机', color: '#6b7280' }, queued: { label: '排队中', color: '#fbbf24' } };
+        PROCESS_DATA.forEach(p => {
+          const st = statusCfg[p.status] || statusCfg.idle;
+          const rgb = colorRgb[p.color] || '255,255,255';
+          const el = document.createElement('div');
+          el.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid rgba(' + rgb + ',0.2);border-radius:8px;padding:7px 9px;';
+          el.innerHTML = '<div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;"><span style="font-size:12px;">' + p.icon + '</span><span style="font-size:10px;font-weight:700;color:' + p.color + ';letter-spacing:0.5px;">' + p.agent + '</span><span style="margin-left:auto;font-size:9px;color:' + st.color + ';background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;font-weight:600;">' + st.label + '</span></div><div style="font-size:10px;color:rgba(255,255,255,0.65);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + p.task + '</div><div style="height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;"><div style="height:100%;width:' + p.progress + '%;background:linear-gradient(90deg,' + p.color + ',rgba(255,255,255,0.5));border-radius:2px;"></div></div>';
+          feed.appendChild(el);
+        });
+      }
+      function renderTaskHUD() {
+        const feed = document.getElementById('task-feed');
+        if (!feed) return;
+        feed.innerHTML = '';
+        const statusCfg = { done: { label: '已完成', color: '#4ade80', bg: 'rgba(34,197,94,0.1)' }, running: { label: '进行中', color: '#00d4ff', bg: 'rgba(0,212,255,0.1)' }, pending: { label: '待办', color: '#fbbf24', bg: 'rgba(251,191,36,0.1)' }, urgent: { label: '🔴 紧急', color: '#f87171', bg: 'rgba(248,113,113,0.1)' } };
+        TASK_DATA.forEach(t => {
+          const key = t.urgent ? 'urgent' : t.status;
+          const st = statusCfg[key] || statusCfg.pending;
+          const el = document.createElement('div');
+          el.style.cssText = 'display:flex;align-items:center;gap:6px;padding:5px 8px;background:' + st.bg + ';border-left:2px solid ' + st.color + ';border-radius:0 6px 6px 0;';
+          el.innerHTML = '<span style="font-size:9px;color:rgba(255,255,255,0.35);font-family:\'Courier New\',monospace;flex-shrink:0;">' + t.id + '</span><span style="font-size:10px;color:rgba(255,255,255,0.8);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + t.name + '</span><span style="font-size:9px;color:rgba(255,255,255,0.4);flex-shrink:0;">' + t.agent + '</span><span style="font-size:9px;color:' + st.color + ';font-weight:700;flex-shrink:0;min-width:36px;text-align:right;">' + st.label + '</span>';
+          feed.appendChild(el);
         });
       }
 
