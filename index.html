@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="2.0.0">
+<meta name="version" content="2.3.0">
 <title>汪汪队 HQ — AI 助理指挥中心</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -162,6 +162,32 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#e3f2fd 0
 .hb-pie-leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .hb-pie-leg-label{color:#546e7a;flex:1}
 .hb-pie-leg-val{font-weight:800;color:#1a237e;font-size:12px}
+
+/* ===== v2.3.0: HB Row1 - Metrics + Donut ===== */
+.hb-row1{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.hb-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hb-metric-card{background:#fff;border-radius:10px;padding:12px 10px;text-align:center;border:1px solid rgba(25,118,210,0.15);box-shadow:0 2px 8px rgba(25,118,210,0.08)}
+.hb-metric-val{font-size:26px;font-weight:800;color:#1565c0;font-family:'Courier New',monospace}
+.hb-metric-label{font-size:10px;color:#546e7a;margin-top:3px}
+.hb-donut-wrap{background:#fff;border-radius:10px;padding:12px;text-align:center;border:1px solid rgba(25,118,210,0.15)}
+.hb-donut-title{font-size:10px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.hb-donut-legend{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px}
+.hb-dl-item{display:flex;align-items:center;gap:3px;font-size:9px;color:#546e7a}
+.hb-dl-dot{width:7px;height:7px;border-radius:50%}
+/* ===== v2.3.0: HB Row2 - Heatmap ===== */
+.hb-row2{margin-top:14px;background:#fff;border-radius:10px;padding:12px 14px;border:1px solid rgba(25,118,210,0.15)}
+.hb-heatmap-title{font-size:10px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.hb-heatmap{display:flex;flex-wrap:wrap;gap:3px}
+.hm-cell{width:13px;height:13px;border-radius:2px;background:#e3f2fd;transition:transform 0.15s;cursor:pointer;position:relative}
+.hm-cell:hover{transform:scale(1.4);z-index:10}
+.hb-heatmap-legend{display:flex;align-items:center;gap:3px;margin-top:8px}
+.hm-leg-dot{width:10px;height:10px;border-radius:2px}
+/* ===== v2.3.0: HB Row3 - Skills Chart ===== */
+.hb-row3{margin-top:14px;background:#fff;border-radius:10px;padding:12px 14px;border:1px solid rgba(25,118,210,0.15)}
+.hb-skills-title{font-size:10px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.hb-skills-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.hb-sl-item{display:flex;align-items:center;gap:4px;font-size:10px;color:#546e7a}
+.hb-sl-line{width:16px;height:3px;border-radius:2px}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:1100px){.growth-grid,.hb-grid{grid-template-columns:1fr 1fr}}
@@ -519,65 +545,56 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#e3f2fd 0
 </svg>
     </div>
 
-    <div class="hb-grid">
-
-      <!-- 今日数字卡片 -->
-      <div class="hb-nums-col">
-        <div class="hb-num-card">
-          <div class="hb-num-val cyan">47</div>
-          <div class="hb-num-label">今日任务执行次数</div>
-          <div class="hb-num-change">↑ +12 较昨日</div>
+    <!-- 第一行：指标卡片 + 圆环图 -->
+    <div class="hb-row1">
+      <!-- 左：4个指标卡片 -->
+      <div class="hb-metrics">
+        <div class="hb-metric-card">
+          <div class="hb-metric-val">47</div>
+          <div class="hb-metric-label">累计任务</div>
         </div>
-        <div class="hb-num-card">
-          <div class="hb-num-val purple">3</div>
-          <div class="hb-num-label">运行中定时任务</div>
-          <div class="hb-num-change">↑ +1 新增</div>
+        <div class="hb-metric-card">
+          <div class="hb-metric-val">12</div>
+          <div class="hb-metric-label">本周产出</div>
         </div>
-        <div class="hb-num-card">
-          <div class="hb-num-val orange">98%</div>
-          <div class="hb-num-label">系统稳定性</div>
-          <div class="hb-num-change">↑ 连续 11 天在线</div>
+        <div class="hb-metric-card">
+          <div class="hb-metric-val">11</div>
+          <div class="hb-metric-label">在线天数</div>
         </div>
-      </div>
-
-
-
-      <!-- 本周饼图 -->
-      <div class="hb-pie-col">
-        <div class="hb-pie-title">📈 本周工作分布</div>
-        <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-  <rect width="120" height="120" fill="#e3f2fd"/>
-  <path d="M 60,60 L 60.00,8.00 A 52,52 0 0 1 102.07,90.56 Z" fill="#1976d2" opacity="0.85"/>
-<path d="M 60,60 L 102.07,90.56 A 52,52 0 0 1 29.44,102.07 Z" fill="#d32f2f" opacity="0.85"/>
-<path d="M 60,60 L 29.44,102.07 A 52,52 0 0 1 10.55,43.93 Z" fill="#f9a825" opacity="0.85"/>
-<path d="M 60,60 L 10.55,43.93 A 52,52 0 0 1 60.00,8.00 Z" fill="#2e7d32" opacity="0.85"/>
-
-  <circle cx="60" cy="60" r="22" fill="#1565c0"/>
-  <text x="60" y="60" text-anchor="middle" dominant-baseline="middle" fill="#1976d2" font-size="9" font-family="Nunito" font-weight="800">本周</text>
-</svg>
-        <div class="hb-pie-legend">
-          <div class="hb-pie-leg-item">
-            <div class="hb-pie-leg-dot" style="background:#1976d2"></div>
-            <span class="hb-pie-leg-label">代码开发</span>
-            <span class="hb-pie-leg-val">35%</span>
-          </div>
-          <div class="hb-pie-leg-item">
-            <div class="hb-pie-leg-dot" style="background:#d32f2f"></div>
-            <span class="hb-pie-leg-label">数据分析</span>
-            <span class="hb-pie-leg-val">25%</span>
-          </div>
-          <div class="hb-pie-leg-item">
-            <div class="hb-pie-leg-dot" style="background:#f9a825"></div>
-            <span class="hb-pie-leg-label">通信协作</span>
-            <span class="hb-pie-leg-val">20%</span>
-          </div>
-          <div class="hb-pie-leg-item">
-            <div class="hb-pie-leg-dot" style="background:#2e7d32"></div>
-            <span class="hb-pie-leg-label">学城写作</span>
-            <span class="hb-pie-leg-val">20%</span>
-          </div>
+        <div class="hb-metric-card">
+          <div class="hb-metric-val">38</div>
+          <div class="hb-metric-label">群消息数</div>
         </div>
       </div>
+      <!-- 右：工作类型圆环图 -->
+      <div class="hb-donut-wrap">
+        <div class="hb-donut-title">工作类型占比</div>
+        <canvas id="donutChart" width="160" height="160"></canvas>
+        <div class="hb-donut-legend" id="donutLegend"></div>
+      </div>
+    </div>
+
+    <!-- 第二行：热力日历 -->
+    <div class="hb-row2">
+      <div class="hb-heatmap-title">🔥 活跃热力图</div>
+      <div class="hb-heatmap" id="heatmapGrid"></div>
+      <div class="hb-heatmap-legend">
+        <span style="font-size:9px;color:#546e7a">少</span>
+        <div class="hm-leg-dot" style="background:#e3f2fd"></div>
+        <div class="hm-leg-dot" style="background:#90caf9"></div>
+        <div class="hm-leg-dot" style="background:#42a5f5"></div>
+        <div class="hm-leg-dot" style="background:#1976d2"></div>
+        <div class="hm-leg-dot" style="background:#0d47a1"></div>
+        <span style="font-size:9px;color:#546e7a">多</span>
+      </div>
+    </div>
+
+    <!-- 第三行：技能成长曲线 -->
+    <div class="hb-row3">
+      <div class="hb-skills-title">📈 技能成长曲线</div>
+      <canvas id="skillsChart" width="800" height="160" style="width:100%;height:160px;"></canvas>
+      <div class="hb-skills-legend" id="skillsLegend"></div>
+    </div>
 
     <!-- ===== PITFALLS 饼图 ===== -->
     <div class="panel pitfalls-panel">
@@ -725,6 +742,161 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#e3f2fd 0
       legend.appendChild(item);
     });
   }
+})();
+
+// ===== v2.3.0: 圆环图 =====
+(function(){
+  var data = [
+    {label:'业务日报', val:15, color:'#1976d2'},
+    {label:'页面开发', val:8, color:'#42a5f5'},
+    {label:'数据分析', val:6, color:'#f9a825'},
+    {label:'其他', val:12, color:'#546e7a'},
+    {label:'情报调研', val:4, color:'#2e7d32'},
+    {label:'学城文章', val:2, color:'#d32f2f'}
+  ];
+  var total = data.reduce(function(s,d){return s+d.val},0);
+  var canvas = document.getElementById('donutChart');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var cx=80, cy=80, outerR=70, innerR=45, start=-Math.PI/2;
+  data.forEach(function(d){
+    var angle = (d.val/total)*Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,outerR,start,start+angle);
+    ctx.closePath();
+    ctx.fillStyle = d.color;
+    ctx.fill();
+    start += angle;
+  });
+  ctx.beginPath();
+  ctx.arc(cx,cy,innerR,0,Math.PI*2);
+  ctx.fillStyle = '#f0f7ff';
+  ctx.fill();
+  ctx.fillStyle = '#1565c0';
+  ctx.font = 'bold 18px Courier New';
+  ctx.textAlign = 'center';
+  ctx.fillText(total, cx, cy+4);
+  ctx.font = '9px Nunito,sans-serif';
+  ctx.fillStyle = '#546e7a';
+  ctx.fillText('任务', cx, cy+17);
+  var legend = document.getElementById('donutLegend');
+  if(legend){
+    data.forEach(function(d){
+      var item = document.createElement('div');
+      item.className = 'hb-dl-item';
+      item.innerHTML = '<div class="hb-dl-dot" style="background:'+d.color+'"></div>'+d.label;
+      legend.appendChild(item);
+    });
+  }
+})();
+
+// ===== v2.3.0: 热力日历 =====
+(function(){
+  var heatData = {
+    "2026-03-24":3,"2026-03-25":8,"2026-03-26":5,"2026-03-27":7,
+    "2026-03-28":4,"2026-03-29":2,"2026-03-30":6,"2026-03-31":9,
+    "2026-04-01":5,"2026-04-02":8,"2026-04-03":11,"2026-04-04":7
+  };
+  var colors = ['#e3f2fd','#90caf9','#42a5f5','#1976d2','#0d47a1'];
+  function getColor(v) {
+    if(!v||v===0) return colors[0];
+    if(v<=2) return colors[1];
+    if(v<=5) return colors[2];
+    if(v<=8) return colors[3];
+    return colors[4];
+  }
+  var grid = document.getElementById('heatmapGrid');
+  if(!grid) return;
+  var start = new Date('2026-03-24');
+  var today = new Date();
+  for(var d = new Date(start); d <= today; d.setDate(d.getDate()+1)){
+    var key = d.toISOString().slice(0,10);
+    var val = heatData[key] || 0;
+    var cell = document.createElement('div');
+    cell.className = 'hm-cell';
+    cell.style.background = getColor(val);
+    cell.title = key + ': ' + val + '个任务';
+    grid.appendChild(cell);
+  }
+})();
+
+// ===== v2.3.0: 技能成长曲线 =====
+(function(){
+  var history = [
+    {date:"2026-03-24", HTML:60, Python:50, "大象":40, "学城":50, Agent:30, "数据":30},
+    {date:"2026-03-31", HTML:80, Python:70, "大象":70, "学城":80, Agent:60, "数据":55},
+    {date:"2026-04-04", HTML:90, Python:80, "大象":75, "学城":85, Agent:70, "数据":65}
+  ];
+  var skills = [
+    {key:'HTML',   color:'#00d4ff'},
+    {key:'Python', color:'#7c3aed'},
+    {key:'大象',   color:'#ff6b35'},
+    {key:'学城',   color:'#22c55e'},
+    {key:'Agent',  color:'#f59e0b'},
+    {key:'数据',   color:'#ec4899'}
+  ];
+  var canvas = document.getElementById('skillsChart');
+  if(!canvas) return;
+  setTimeout(function(){
+    var W = canvas.offsetWidth || 800;
+    var H = 160;
+    canvas.width = W;
+    canvas.height = H;
+    var ctx = canvas.getContext('2d');
+    var pad = {l:30, r:10, t:10, b:30};
+    var chartW = W - pad.l - pad.r;
+    var chartH = H - pad.t - pad.b;
+    var n = history.length;
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0,0,W,H);
+    for(var i=0;i<=5;i++){
+      var y = pad.t + chartH - (i/5)*chartH;
+      ctx.strokeStyle = 'rgba(25,118,210,0.1)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l+chartW, y); ctx.stroke();
+      ctx.fillStyle = '#546e7a';
+      ctx.font = '9px Nunito,sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(i*20, pad.l-4, y+3);
+    }
+    history.forEach(function(h,i){
+      var x = pad.l + (i/(n-1))*chartW;
+      ctx.fillStyle = '#546e7a';
+      ctx.font = '9px Nunito,sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(h.date.slice(5), x, H-8);
+    });
+    skills.forEach(function(s){
+      ctx.strokeStyle = s.color;
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      history.forEach(function(h,i){
+        var x = pad.l + (i/(n-1))*chartW;
+        var y = pad.t + chartH - (h[s.key]/100)*chartH;
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      });
+      ctx.stroke();
+      history.forEach(function(h,i){
+        var x = pad.l + (i/(n-1))*chartW;
+        var y = pad.t + chartH - (h[s.key]/100)*chartH;
+        ctx.beginPath();
+        ctx.arc(x,y,3,0,Math.PI*2);
+        ctx.fillStyle = s.color;
+        ctx.fill();
+      });
+    });
+    var legend = document.getElementById('skillsLegend');
+    if(legend){
+      skills.forEach(function(s){
+        var item = document.createElement('div');
+        item.className = 'hb-sl-item';
+        item.innerHTML = '<div class="hb-sl-line" style="background:'+s.color+'"></div>'+s.key;
+        legend.appendChild(item);
+      });
+    }
+  }, 100);
 })();
 </script>
 </body>
