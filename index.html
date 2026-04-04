@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.2">
+<meta name="version" content="5.9.3">
 <title>Eric AI团队工作平台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -1976,18 +1976,21 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       .cmd-arc { display: block; flex-shrink: 0; }
       .cmd-arc-body { text-align: center; width: 100%; }
       .cmd-arc-val {
-        font-size: 22px;
+        font-size: 26px;
         font-weight: 900;
         font-family: 'Courier New', monospace;
         line-height: 1.1;
         letter-spacing: -0.5px;
+        min-width: 80px;
+        text-align: center;
+        display: block;
       }
       .cmd-arc-lbl {
-        font-size: 11px;
-        color: rgba(255,255,255,0.65);
+        font-size: 12px;
+        color: rgba(255,255,255,0.8);
         letter-spacing: 0.3px;
         margin-top: 2px;
-        font-weight: 600;
+        font-weight: 700;
       }
       .cmd-spark { display: block; margin: 3px auto 0; opacity: 0.8; }
 
@@ -2560,15 +2563,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
 
   <!-- 成就墙 -->
-  <div style="border-top:1px solid rgba(0,212,255,0.1);padding-top:14px;">
-    <div style="font-size:11px;font-weight:700;color:rgba(0,212,255,0.8);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🏆 成就墙</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;" id="achievement-wall">
-      <div class="achv-badge gold"><span class="achv-icon">🚀</span><div class="achv-info"><div class="achv-name">首次 DBR 自动播报</div><div class="achv-date">2026-03-25</div></div></div>
-      <div class="achv-badge cyan"><span class="achv-icon">🌐</span><div class="achv-info"><div class="achv-name">BEC 英语 APP 上线</div><div class="achv-date">2026-03-29</div></div></div>
-      <div class="achv-badge purple"><span class="achv-icon">🤝</span><div class="achv-info"><div class="achv-name">A2A 通信打通</div><div class="achv-date">2026-04-02</div></div></div>
-      <div class="achv-badge green"><span class="achv-icon">👥</span><div class="achv-info"><div class="achv-name">五名成员全员上线</div><div class="achv-date">2026-04-03</div></div></div>
-      <div class="achv-badge orange"><span class="achv-icon">🏠</span><div class="achv-info"><div class="achv-name">汪汪队 HQ 指挥中心</div><div class="achv-date">2026-04-03</div></div></div>
-    </div>
+  
   </div>
 
 </div>
@@ -2837,6 +2832,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           ['spark-tools',         SPARKS['tools'],         '#67e8f9'],
         ];
         sparks.forEach(([id, data, color]) => drawSpark(id, data, color));
+
+        // 自适应字号：短数字更大，视觉重量统一
+        document.querySelectorAll('.cmd-arc-val').forEach(el => {
+          const len = el.textContent.trim().length;
+          el.style.fontSize = len <= 1 ? '38px' : len === 2 ? '34px' : len === 3 ? '28px' : len === 4 ? '24px' : '20px';
+        });
       }
 
       window.addEventListener('load', () => setTimeout(render, 500));
