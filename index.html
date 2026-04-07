@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.24">
+<meta name="version" content="5.9.25">
 <title>Eric AI团队数据中台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -2718,8 +2718,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
       // 每个弧的配置：[颜色, 最大值(100%对应)]
       const ARC_CFG = {
-        'token-today':   ['#fb923c', 500000],
-        'token-total':   ['#fdba74', 5000000],
+        'token-today':   ['#fb923c', 10000000],
+        'token-total':   ['#fdba74', 20000000],
         'tasks-week':    ['#a78bfa', 30],
         'team-days':     ['#fbbf24', 90],
         'commits-today': ['#22c55e', 20],
@@ -3394,6 +3394,18 @@ window.addEventListener('DOMContentLoaded', () => {
       if(h.tokenYest !==undefined) hudRollTo('hud-token-yest', h.tokenYest);
       if(h.codeToday !==undefined) hudRollTo('hud-code-today', h.codeToday);
       if(h.codeYest  !==undefined) hudRollTo('hud-code-yest',  h.codeYest);
+      // 同步更新 AI 指挥中枢 token 弧形圈
+      if(h.tokenToday!==undefined && typeof rollTo==='function') {
+        CMD_DATA.tokens.today = h.tokenToday;
+        CMD_DATA.tokens.total = (h.tokenToday||0) + (h.tokenYest||0);
+        rollTo('cmd-token-today', CMD_DATA.tokens.today, 900);
+        rollTo('cmd-token-total', CMD_DATA.tokens.total, 1100);
+        // 更新弧形圈进度
+        if(typeof drawArc==='function') {
+          drawArc('arc-token-today', CMD_DATA.tokens.today / ARC_CFG['token-today'][1], ARC_CFG['token-today'][0]);
+          drawArc('arc-token-total', CMD_DATA.tokens.total / ARC_CFG['token-total'][1], ARC_CFG['token-total'][0]);
+        }
+      }
     }
   }
 
