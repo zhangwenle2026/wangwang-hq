@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.25">
+<meta name="version" content="5.9.26">
 <title>Eric AI团队数据中台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -2471,39 +2471,40 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <!-- 左侧：4个弧形进度卡 -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
       <!-- Token今日 -->
+      <!-- 记忆文件 -->
       <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-token-today" width="80" height="80"></canvas>
+        <canvas class="cmd-arc" id="arc-memory-files" width="80" height="80"></canvas>
         <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-token-today" style="color:#fb923c;">--</div>
-          <div class="cmd-arc-lbl">Token今日</div>
-          <canvas class="cmd-spark" id="spark-token-today" width="70" height="18"></canvas>
+          <div class="cmd-arc-val" id="cmd-memory-files" style="color:#fb923c;">--</div>
+          <div class="cmd-arc-lbl">🧠 记忆文件</div>
+          <canvas class="cmd-spark" id="spark-memory-files" width="70" height="18"></canvas>
         </div>
       </div>
-      <!-- Token累计 -->
+      <!-- Skills -->
       <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-token-total" width="80" height="80"></canvas>
+        <canvas class="cmd-arc" id="arc-skills" width="80" height="80"></canvas>
         <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-token-total" style="color:#fdba74;">--</div>
-          <div class="cmd-arc-lbl">Token累计</div>
-          <canvas class="cmd-spark" id="spark-token-total" width="70" height="18"></canvas>
+          <div class="cmd-arc-val" id="cmd-skills" style="color:#fdba74;">--</div>
+          <div class="cmd-arc-lbl">📚 Skills</div>
+          <canvas class="cmd-spark" id="spark-skills" width="70" height="18"></canvas>
         </div>
       </div>
-      <!-- 本周任务 -->
+      <!-- 原生能力 CAP -->
       <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-tasks-week" width="80" height="80"></canvas>
+        <canvas class="cmd-arc" id="arc-caps" width="80" height="80"></canvas>
         <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-tasks-week" style="color:#a78bfa;">--</div>
-          <div class="cmd-arc-lbl">本周任务数</div>
-          <canvas class="cmd-spark" id="spark-tasks-week" width="70" height="18"></canvas>
+          <div class="cmd-arc-val" id="cmd-caps" style="color:#a78bfa;">--</div>
+          <div class="cmd-arc-lbl">⚡ 原生能力</div>
+          <canvas class="cmd-spark" id="spark-caps" width="70" height="18"></canvas>
         </div>
       </div>
-      <!-- 团队天数 -->
+      <!-- 线上 Apps -->
       <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-team-days" width="80" height="80"></canvas>
+        <canvas class="cmd-arc" id="arc-apps" width="80" height="80"></canvas>
         <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-team-days" style="color:#fbbf24;">--</div>
-          <div class="cmd-arc-lbl">成立天数</div>
-          <canvas class="cmd-spark" id="spark-team-days" width="70" height="18"></canvas>
+          <div class="cmd-arc-val" id="cmd-apps" style="color:#fbbf24;">--</div>
+          <div class="cmd-arc-lbl">🌐 线上Apps</div>
+          <canvas class="cmd-spark" id="spark-apps" width="70" height="18"></canvas>
         </div>
       </div>
     </div>
@@ -2564,40 +2565,40 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
     <!-- 右侧：4个弧形进度卡 -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <!-- Commits今日 -->
+      <!-- 任务规划 -->
       <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-commits-today" width="80" height="80"></canvas>
+        <canvas class="cmd-arc" id="arc-tasks-plan" width="80" height="80"></canvas>
         <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-commits-today" style="color:#22c55e;">--</div>
-          <div class="cmd-arc-lbl">Commits今日</div>
-          <canvas class="cmd-spark" id="spark-commits-today" width="70" height="18"></canvas>
+          <div class="cmd-arc-val" id="cmd-tasks-plan" style="color:#22c55e;">--</div>
+          <div class="cmd-arc-lbl">📋 任务规划</div>
+          <canvas class="cmd-spark" id="spark-tasks-plan" width="70" height="18"></canvas>
         </div>
       </div>
-      <!-- Commits累计 -->
+      <!-- 团队成员 -->
       <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-commits-total" width="80" height="80"></canvas>
+        <canvas class="cmd-arc" id="arc-members" width="80" height="80"></canvas>
         <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-commits-total" style="color:#4ade80;">--</div>
-          <div class="cmd-arc-lbl">Commits累计</div>
-          <canvas class="cmd-spark" id="spark-commits-total" width="70" height="18"></canvas>
+          <div class="cmd-arc-val" id="cmd-members" style="color:#4ade80;">--</div>
+          <div class="cmd-arc-lbl">🐾 团队成员</div>
+          <canvas class="cmd-spark" id="spark-members" width="70" height="18"></canvas>
         </div>
       </div>
-      <!-- DBR播报率 -->
+      <!-- 定时任务 -->
       <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-dbr-rate" width="80" height="80"></canvas>
+        <canvas class="cmd-arc" id="arc-cron-jobs" width="80" height="80"></canvas>
         <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-dbr-rate" style="color:#f472b6;">--%</div>
-          <div class="cmd-arc-lbl">DBR播报率</div>
-          <canvas class="cmd-spark" id="spark-dbr-rate" width="70" height="18"></canvas>
+          <div class="cmd-arc-val" id="cmd-cron-jobs" style="color:#f472b6;">--</div>
+          <div class="cmd-arc-lbl">⚙️ 定时任务</div>
+          <canvas class="cmd-spark" id="spark-cron-jobs" width="70" height="18"></canvas>
         </div>
       </div>
-      <!-- 工具上线 -->
+      <!-- 知识库 -->
       <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-tools-count" width="80" height="80"></canvas>
+        <canvas class="cmd-arc" id="arc-pitfalls" width="80" height="80"></canvas>
         <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-tools-count" style="color:#67e8f9;">--</div>
-          <div class="cmd-arc-lbl">工具上线数</div>
-          <canvas class="cmd-spark" id="spark-tools" width="70" height="18"></canvas>
+          <div class="cmd-arc-val" id="cmd-pitfalls" style="color:#67e8f9;">--</div>
+          <div class="cmd-arc-lbl">📖 知识库</div>
+          <canvas class="cmd-spark" id="spark-pitfalls" width="70" height="18"></canvas>
         </div>
       </div>
     </div>
@@ -2697,35 +2698,40 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     (function() {
       // ===== 手动更新这里的数据 =====
       const CMD_DATA = {
-        tasks:   { today: 3, week: 18, month: 47 },
-        commits: { today: 5, total: 108 },
-        tokens:  { today: 287000, total: 2850000 },
-        dbr:     { rate: 92 },
-        tools:   { count: 9 },
+        assets: {
+          memoryFiles: 16,
+          skills:      37,
+          caps:        12,
+          apps:        7,
+          tasks:       16,
+          members:     6,
+          cronJobs:    5,
+          pitfalls:    27,
+        },
       };
 
       // 每个指标的历史sparkline数据（最近7天，最新在右）
       const SPARKS = {
-        'token-today':   [180,220,310,260,340,295,287],
-        'token-total':   [2200,2380,2510,2610,2700,2780,2850],
-        'tasks-week':    [8,11,10,14,12,15,18],
-        'team-days':     [5,6,7,8,9,10,11],
-        'commits-today': [2,4,6,3,7,5,5],
-        'commits-total': [60,70,78,85,92,101,108],
-        'dbr-rate':      [85,88,90,88,92,91,92],
-        'tools':         [5,6,6,7,7,8,9],
+        'memory-files':  [8,10,11,12,13,14,16],
+        'skills':        [28,30,32,33,34,36,37],
+        'caps':          [7,8,9,10,11,12,12],
+        'apps':          [4,5,5,6,6,7,7],
+        'tasks-plan':    [6,8,10,11,13,15,16],
+        'members':       [2,3,3,4,5,5,6],
+        'cron-jobs':     [1,2,2,3,4,5,5],
+        'pitfalls':      [10,14,17,20,23,25,27],
       };
 
       // 每个弧的配置：[颜色, 最大值(100%对应)]
       const ARC_CFG = {
-        'token-today':   ['#fb923c', 10000000],
-        'token-total':   ['#fdba74', 20000000],
-        'tasks-week':    ['#a78bfa', 30],
-        'team-days':     ['#fbbf24', 90],
-        'commits-today': ['#22c55e', 20],
-        'commits-total': ['#4ade80', 200],
-        'dbr-rate':      ['#f472b6', 100],
-        'tools':         ['#67e8f9', 15],
+        'memory-files':  ['#fb923c', 30],
+        'skills':        ['#fdba74', 60],
+        'caps':          ['#a78bfa', 20],
+        'apps':          ['#fbbf24', 15],
+        'tasks-plan':    ['#22c55e', 30],
+        'members':       ['#4ade80', 10],
+        'cron-jobs':     ['#f472b6', 10],
+        'pitfalls':      ['#67e8f9', 50],
       };
 
       function fmt(n) {
@@ -2828,49 +2834,49 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
       function render() {
         const d = CMD_DATA;
-        const days = teamDays();
+        const a = d.assets;
 
-        // 中央数字
-        rollTo('cmd-tasks-today', d.tasks.today, 900, String);
+        // 中央数字（今日完成任务）
+        rollTo('cmd-tasks-today', d.tasksToday || 0, 900, String);
 
-        // 左侧
-        rollTo('cmd-token-today', d.tokens.today, 900);
-        rollTo('cmd-token-total', d.tokens.total, 1100);
-        rollTo('cmd-tasks-week',  d.tasks.week, 800, String);
-        rollTo('cmd-team-days',   days, 700, String);
-        // 右侧
-        rollTo('cmd-commits-today', d.commits.today, 800, String);
-        rollTo('cmd-commits-total', d.commits.total, 1000, String);
-        const dbrEl = document.getElementById('cmd-dbr-rate');
-        if (dbrEl) rollTo('cmd-dbr-rate', d.dbr.rate, 900, v => v+'%');
-        rollTo('cmd-tools-count', d.tools.count, 700, String);
+        // 左侧：记忆/Skills/原生能力/Apps
+        rollTo('cmd-memory-files', a.memoryFiles, 700, String);
+        rollTo('cmd-skills',       a.skills,      800, String);
+        rollTo('cmd-caps',         a.caps,        900, String);
+        rollTo('cmd-apps',         a.apps,        700, String);
+
+        // 右侧：任务规划/团队成员/定时任务/知识库
+        rollTo('cmd-tasks-plan',   a.tasks,       800, String);
+        rollTo('cmd-members',      a.members,     700, String);
+        rollTo('cmd-cron-jobs',    a.cronJobs,    700, String);
+        rollTo('cmd-pitfalls',     a.pitfalls,    900, String);
 
         // 顶部天数
         const tds = document.getElementById('team-days');
-        if (tds) tds.textContent = days;
+        if (tds) tds.textContent = teamDays();
 
         // 弧形进度圈 + Sparkline
         const arcs = [
-          ['arc-token-today',   d.tokens.today   / ARC_CFG['token-today'][1],   ARC_CFG['token-today'][0]],
-          ['arc-token-total',   d.tokens.total   / ARC_CFG['token-total'][1],   ARC_CFG['token-total'][0]],
-          ['arc-tasks-week',    d.tasks.week     / ARC_CFG['tasks-week'][1],    ARC_CFG['tasks-week'][0]],
-          ['arc-team-days',     days             / ARC_CFG['team-days'][1],     ARC_CFG['team-days'][0]],
-          ['arc-commits-today', d.commits.today  / ARC_CFG['commits-today'][1], ARC_CFG['commits-today'][0]],
-          ['arc-commits-total', d.commits.total  / ARC_CFG['commits-total'][1], ARC_CFG['commits-total'][0]],
-          ['arc-dbr-rate',      d.dbr.rate       / 100,                         ARC_CFG['dbr-rate'][0]],
-          ['arc-tools-count',   d.tools.count    / ARC_CFG['tools'][1],         ARC_CFG['tools'][0]],
+          ['arc-memory-files', a.memoryFiles / ARC_CFG['memory-files'][1], ARC_CFG['memory-files'][0]],
+          ['arc-skills',       a.skills      / ARC_CFG['skills'][1],       ARC_CFG['skills'][0]],
+          ['arc-caps',         a.caps        / ARC_CFG['caps'][1],         ARC_CFG['caps'][0]],
+          ['arc-apps',         a.apps        / ARC_CFG['apps'][1],         ARC_CFG['apps'][0]],
+          ['arc-tasks-plan',   a.tasks       / ARC_CFG['tasks-plan'][1],   ARC_CFG['tasks-plan'][0]],
+          ['arc-members',      a.members     / ARC_CFG['members'][1],      ARC_CFG['members'][0]],
+          ['arc-cron-jobs',    a.cronJobs    / ARC_CFG['cron-jobs'][1],    ARC_CFG['cron-jobs'][0]],
+          ['arc-pitfalls',     a.pitfalls    / ARC_CFG['pitfalls'][1],     ARC_CFG['pitfalls'][0]],
         ];
         arcs.forEach(([id, pct, color]) => drawArc(id, pct, color));
 
         const sparks = [
-          ['spark-token-today',   SPARKS['token-today'],   '#fb923c'],
-          ['spark-token-total',   SPARKS['token-total'],   '#fdba74'],
-          ['spark-tasks-week',    SPARKS['tasks-week'],    '#a78bfa'],
-          ['spark-team-days',     SPARKS['team-days'],     '#fbbf24'],
-          ['spark-commits-today', SPARKS['commits-today'], '#22c55e'],
-          ['spark-commits-total', SPARKS['commits-total'], '#4ade80'],
-          ['spark-dbr-rate',      SPARKS['dbr-rate'],      '#f472b6'],
-          ['spark-tools',         SPARKS['tools'],         '#67e8f9'],
+          ['spark-memory-files', SPARKS['memory-files'], '#fb923c'],
+          ['spark-skills',       SPARKS['skills'],       '#fdba74'],
+          ['spark-caps',         SPARKS['caps'],         '#a78bfa'],
+          ['spark-apps',         SPARKS['apps'],         '#fbbf24'],
+          ['spark-tasks-plan',   SPARKS['tasks-plan'],   '#22c55e'],
+          ['spark-members',      SPARKS['members'],      '#4ade80'],
+          ['spark-cron-jobs',    SPARKS['cron-jobs'],    '#f472b6'],
+          ['spark-pitfalls',     SPARKS['pitfalls'],     '#67e8f9'],
         ];
         sparks.forEach(([id, data, color]) => drawSpark(id, data, color));
 
@@ -3394,17 +3400,11 @@ window.addEventListener('DOMContentLoaded', () => {
       if(h.tokenYest !==undefined) hudRollTo('hud-token-yest', h.tokenYest);
       if(h.codeToday !==undefined) hudRollTo('hud-code-today', h.codeToday);
       if(h.codeYest  !==undefined) hudRollTo('hud-code-yest',  h.codeYest);
-      // 同步更新 AI 指挥中枢 token 弧形圈
-      if(h.tokenToday!==undefined && typeof rollTo==='function') {
-        CMD_DATA.tokens.today = h.tokenToday;
-        CMD_DATA.tokens.total = (h.tokenToday||0) + (h.tokenYest||0);
-        rollTo('cmd-token-today', CMD_DATA.tokens.today, 900);
-        rollTo('cmd-token-total', CMD_DATA.tokens.total, 1100);
-        // 更新弧形圈进度
-        if(typeof drawArc==='function') {
-          drawArc('arc-token-today', CMD_DATA.tokens.today / ARC_CFG['token-today'][1], ARC_CFG['token-today'][0]);
-          drawArc('arc-token-total', CMD_DATA.tokens.total / ARC_CFG['token-total'][1], ARC_CFG['token-total'][0]);
-        }
+      // 同步更新 AI 指挥中枢知识资产弧形圈
+      if(data.assets && typeof rollTo==='function') {
+        CMD_DATA.assets = Object.assign(CMD_DATA.assets, data.assets);
+        CMD_DATA.tasksToday = (data.hud && data.hud.tasksToday) || 0;
+        if(typeof render === 'function') render();
       }
     }
   }
