@@ -2228,14 +2228,14 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div style="display:flex;gap:8px;align-items:flex-end;">
         <div style="flex:1;text-align:center;">
           <div style="font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:2px;">TODAY</div>
-          <div id="hud-token-today" class="hud-counter" style="font-family:'Courier New',monospace;font-size:20px;font-weight:900;color:#00d4ff;line-height:1;text-shadow:0 0 16px rgba(0,212,255,0.8),0 0 32px rgba(0,212,255,0.4);letter-spacing:-1px;">0</div>
-          <div style="font-size:7px;color:rgba(0,212,255,0.4);margin-top:2px;">K tokens</div>
+          <div id="hud-token-today" class="hud-counter" style="font-family:'Courier New',monospace;font-size:16px;font-weight:900;color:#00d4ff;line-height:1;text-shadow:0 0 16px rgba(0,212,255,0.8),0 0 32px rgba(0,212,255,0.4);letter-spacing:0px;">0</div>
+          <div style="font-size:7px;color:rgba(0,212,255,0.4);margin-top:2px;">tokens</div>
         </div>
         <div style="width:1px;background:linear-gradient(180deg,transparent,rgba(0,212,255,0.4),transparent);align-self:stretch;"></div>
         <div style="flex:1;text-align:center;">
           <div style="font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:2px;">YESTERDAY</div>
-          <div id="hud-token-yest" class="hud-counter" style="font-family:'Courier New',monospace;font-size:20px;font-weight:900;color:#7c3aed;line-height:1;text-shadow:0 0 16px rgba(124,58,237,0.8),0 0 32px rgba(124,58,237,0.4);letter-spacing:-1px;">0</div>
-          <div style="font-size:7px;color:rgba(124,58,237,0.4);margin-top:2px;">K tokens</div>
+          <div id="hud-token-yest" class="hud-counter" style="font-family:'Courier New',monospace;font-size:16px;font-weight:900;color:#7c3aed;line-height:1;text-shadow:0 0 16px rgba(124,58,237,0.8),0 0 32px rgba(124,58,237,0.4);letter-spacing:0px;">0</div>
+          <div style="font-size:7px;color:rgba(124,58,237,0.4);margin-top:2px;">tokens</div>
         </div>
       </div>
     </div>
@@ -2246,13 +2246,13 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div style="display:flex;gap:8px;align-items:flex-end;">
         <div style="flex:1;text-align:center;">
           <div style="font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:2px;">TODAY</div>
-          <div id="hud-code-today" class="hud-counter" style="font-family:'Courier New',monospace;font-size:20px;font-weight:900;color:#7c3aed;line-height:1;text-shadow:0 0 16px rgba(124,58,237,0.8),0 0 32px rgba(124,58,237,0.4);letter-spacing:-1px;">0</div>
+          <div id="hud-code-today" class="hud-counter" style="font-family:'Courier New',monospace;font-size:16px;font-weight:900;color:#7c3aed;line-height:1;text-shadow:0 0 16px rgba(124,58,237,0.8),0 0 32px rgba(124,58,237,0.4);letter-spacing:0px;">0</div>
           <div style="font-size:7px;color:rgba(124,58,237,0.4);margin-top:2px;">lines</div>
         </div>
         <div style="width:1px;background:linear-gradient(180deg,transparent,rgba(124,58,237,0.4),transparent);align-self:stretch;"></div>
         <div style="flex:1;text-align:center;">
           <div style="font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:2px;">YESTERDAY</div>
-          <div id="hud-code-yest" class="hud-counter" style="font-family:'Courier New',monospace;font-size:20px;font-weight:900;color:#ff6b35;line-height:1;text-shadow:0 0 16px rgba(255,107,53,0.8),0 0 32px rgba(255,107,53,0.4);letter-spacing:-1px;">0</div>
+          <div id="hud-code-yest" class="hud-counter" style="font-family:'Courier New',monospace;font-size:16px;font-weight:900;color:#ff6b35;line-height:1;text-shadow:0 0 16px rgba(255,107,53,0.8),0 0 32px rgba(255,107,53,0.4);letter-spacing:0px;">0</div>
           <div style="font-size:7px;color:rgba(255,107,53,0.4);margin-top:2px;">lines</div>
         </div>
       </div>
@@ -3067,24 +3067,31 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   };
 
   // ====== Counter Roll Animation ======
+  function hudFmt(val) {
+    // val is in K tokens or raw lines
+    if (val >= 1000) return (val / 1000).toFixed(1) + 'M';
+    return val + 'K';
+  }
   function hudRollTo(elId, targetVal, suffix) {
     const el = document.getElementById(elId);
     if (!el) return;
-    const start = parseFloat(el.textContent) || 0;
+    const start = parseFloat(el.dataset.raw) || 0;
+    el.dataset.raw = targetVal;
     const dur = 1200, fps = 60;
     const frames = dur / (1000/fps);
     let frame = 0;
+    const isToken = elId.startsWith('hud-token');
     const timer = setInterval(() => {
       frame++;
       const t = frame / frames;
-      const ease = 1 - Math.pow(1 - t, 3); // cubic ease out
+      const ease = 1 - Math.pow(1 - t, 3);
       const cur = start + (targetVal - start) * ease;
-      el.textContent = Math.round(cur);
+      el.textContent = isToken ? hudFmt(Math.round(cur)) : Math.round(cur);
       el.classList.add('rolling');
       setTimeout(() => el.classList.remove('rolling'), 150);
       if (frame >= frames) {
         clearInterval(timer);
-        el.textContent = targetVal;
+        el.textContent = isToken ? hudFmt(targetVal) : targetVal;
       }
     }, 1000/fps);
   }
