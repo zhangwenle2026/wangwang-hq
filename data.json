@@ -1,0 +1,46 @@
+{
+  "updated": "2026-04-07T07:00:00-03:00",
+  "hud": {
+    "tokenToday": 287,
+    "tokenTotal": 2850,
+    "codeToday": 412,
+    "codeYest": 889,
+    "tokenYest": 341,
+    "tasksWeek": 18,
+    "teamDays": 14
+  },
+  "tasks": [
+    { "id": "T-001", "name": "DBR日报自动播报", "status": "done", "agent": "砾石", "urgent": false },
+    { "id": "T-002", "name": "HQ 立绘修复", "status": "done", "agent": "阿奇", "urgent": false },
+    { "id": "T-003", "name": "Process HUD 信息流", "status": "done", "agent": "阿奇", "urgent": false },
+    { "id": "T-004", "name": "Task HUD 任务状态", "status": "done", "agent": "阿奇", "urgent": false },
+    { "id": "T-005", "name": "BI取数脱离浏览器", "status": "pending", "agent": "砾石", "urgent": false },
+    { "id": "T-006", "name": "天天/灰灰直联打通", "status": "pending", "agent": "天天", "urgent": true },
+    { "id": "T-007", "name": "BEC题库扩充·词汇", "status": "running", "agent": "毛毛", "urgent": false },
+    { "id": "T-008", "name": "SHL SVAR题库更新", "status": "done", "agent": "毛毛", "urgent": false },
+    { "id": "T-009", "name": "Santos竞品情报", "status": "running", "agent": "灰灰", "urgent": false },
+    { "id": "T-010", "name": "用户反馈高优处理", "status": "pending", "agent": "天天", "urgent": false },
+    { "id": "T-011", "name": "HQ 真实数据驱动", "status": "done", "agent": "阿奇", "urgent": false }
+  ],
+  "log": [
+    { "time": "07:02", "agent": "砾石", "msg": "DBR日报发送成功 ✅ gid:70415285284", "type": "ok" },
+    { "time": "07:00", "agent": "砾石", "msg": "04-06 数据取数完成", "type": "ok" },
+    { "time": "06:58", "agent": "砾石", "msg": "BI 看板登录状态正常", "type": "ok" },
+    { "time": "06:55", "agent": "砾石", "msg": "启动 DBR 日报任务", "type": "start" },
+    { "time": "06:00", "agent": "阿奇", "msg": "HEARTBEAT 检查 · 无异常 ✓", "type": "ok" }
+  ],
+  "focus": [
+    { "status": "follow", "text": "BI取数脱离浏览器（Hive SQL方案）", "pct": 40 },
+    { "status": "follow", "text": "天天/灰灰直联打通", "pct": 10 },
+    { "status": "done", "text": "HQ 真实数据驱动上线", "pct": 100 },
+    { "status": "done", "text": "SHARE-002 学城文章更新完成", "pct": 100 }
+  ],
+  "dbr": {
+    "lastDate": "2026-04-06",
+    "orders": 48070,
+    "operatingRate": 66.15,
+    "cancelRate": 1.76,
+    "newSignTop": 1,
+    "newSignMid": 1
+  }
+}
