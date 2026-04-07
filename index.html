@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.18">
+<meta name="version" content="5.9.19">
 <title>Eric AI团队数据中台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -3055,8 +3055,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <script>
   // ====== HUD Data (手动更新这里的数值) ======
   const HUD_DATA = {
-    tokenToday:   287,   // K tokens
-    tokenYest:    341,   // K tokens
+    tokenToday:   0,   // raw tokens (loaded from data.json)
+    tokenYest:    0,   // raw tokens (loaded from data.json)
     codeToday:    412,   // lines
     codeYest:     889,   // lines
   };
@@ -3069,7 +3069,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     const start = parseFloat(el.dataset.raw) || 0;
     el.dataset.raw = targetVal;
     const isToken = elId.startsWith('hud-token');
-    const fmt = v => isToken ? v.toFixed(1) + 'M' : Math.round(v);
+    const fmt = v => isToken ? Math.round(v).toLocaleString('en-US') : Math.round(v);
     const dur = 1200, fps = 60, frames = dur / (1000/fps);
     let frame = 0;
     const timer = setInterval(() => {
