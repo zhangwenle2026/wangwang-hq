@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="version" content="5.9.26">
+<meta name="version" content="5.9.27">
 <title>Eric AI团队数据中台</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -1974,7 +1974,39 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       #ring-inner { animation: ring-ccw  8s linear infinite; transform-origin: 100px 100px; }
 
       
-      /* ── 指挥中枢弧形卡 ── */
+
+      /* ── 知识资产看板卡片 ── */
+      .kas-card {
+        display:flex; align-items:center; gap:8px;
+        background: rgba(0,212,255,0.04);
+        border: 1px solid rgba(0,212,255,0.15);
+        border-radius:10px; padding:8px 10px;
+        position:relative; overflow:hidden;
+        transition: all 0.3s ease;
+      }
+      .kas-card::before {
+        content:''; position:absolute; top:0; left:-100%;
+        width:100%; height:2px;
+        background: linear-gradient(90deg, transparent, rgba(0,212,255,0.6), transparent);
+        animation: kas-shine 4s ease-in-out infinite;
+      }
+      @keyframes kas-shine { 0%{left:-100%} 60%{left:100%} 100%{left:100%} }
+      .kas-card:hover {
+        border-color:rgba(0,212,255,0.45);
+        box-shadow:0 0 18px rgba(0,212,255,0.18), inset 0 0 12px rgba(0,212,255,0.04);
+        transform:translateY(-2px);
+      }
+      .kas-arc { flex-shrink:0; display:block; }
+      .kas-body { flex:1; min-width:0; }
+      .kas-val {
+        font-family:'Courier New',monospace;
+        font-size:30px; font-weight:900; line-height:1;
+        text-shadow:0 0 18px currentColor;
+      }
+      .kas-lbl { font-size:10px; color:rgba(255,255,255,0.45); letter-spacing:1px; margin-top:3px; }
+      .kas-spark { display:block; margin-top:4px; }
+
+      /* ── 指挥中枢弧形卡（legacy）── */
       .cmd-arc-card {
         background: rgba(0,10,26,0.7);
         border: 1px solid rgba(255,255,255,0.07);
@@ -2452,8 +2484,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <div style="display:flex;align-items:center;gap:10px;">
       <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#00d4ff22,#7c3aed22);border:1px solid rgba(0,212,255,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;">🛸</div>
       <div>
-        <div style="font-size:16px;font-weight:800;color:#fff;letter-spacing:1px;">汪汪队 AI 指挥中枢</div>
-        <div style="font-size:11px;color:rgba(0,212,255,0.8);letter-spacing:0.5px;">COMMAND HQ · 实时产出追踪</div>
+        <div style="font-size:16px;font-weight:800;color:#00d4ff;letter-spacing:2px;text-shadow:0 0 16px rgba(0,212,255,0.8);">汪汪队 AI 知识资产看板</div>
+        <div style="font-size:11px;color:rgba(0,212,255,0.6);letter-spacing:1.5px;">◈ KNOWLEDGE ASSET CENTER · AUTO SYNC</div>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
@@ -2471,46 +2503,46 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <!-- 左侧：4个弧形进度卡 -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
       <!-- Token今日 -->
-      <!-- 记忆文件 -->
-      <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-memory-files" width="80" height="80"></canvas>
-        <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-memory-files" style="color:#fb923c;">--</div>
-          <div class="cmd-arc-lbl">🧠 记忆文件</div>
-          <canvas class="cmd-spark" id="spark-memory-files" width="70" height="18"></canvas>
+      <!-- 🧠 记忆文件 -->
+      <div class="kas-card">
+        <canvas class="kas-arc" id="arc-memory-files" width="72" height="72"></canvas>
+        <div class="kas-body">
+          <div class="kas-val" id="cmd-memory-files" style="color:#ff6b35;">--</div>
+          <div class="kas-lbl">🧠 记忆文件</div>
+          <canvas class="kas-spark" id="spark-memory-files" width="60" height="14"></canvas>
         </div>
       </div>
-      <!-- Skills -->
-      <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-skills" width="80" height="80"></canvas>
-        <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-skills" style="color:#fdba74;">--</div>
-          <div class="cmd-arc-lbl">📚 Skills</div>
-          <canvas class="cmd-spark" id="spark-skills" width="70" height="18"></canvas>
+      <!-- 📚 Skills -->
+      <div class="kas-card">
+        <canvas class="kas-arc" id="arc-skills" width="72" height="72"></canvas>
+        <div class="kas-body">
+          <div class="kas-val" id="cmd-skills" style="color:#fbbf24;">--</div>
+          <div class="kas-lbl">📚 Skills</div>
+          <canvas class="kas-spark" id="spark-skills" width="60" height="14"></canvas>
         </div>
       </div>
-      <!-- 原生能力 CAP -->
-      <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-caps" width="80" height="80"></canvas>
-        <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-caps" style="color:#a78bfa;">--</div>
-          <div class="cmd-arc-lbl">⚡ 原生能力</div>
-          <canvas class="cmd-spark" id="spark-caps" width="70" height="18"></canvas>
+      <!-- ⚡ 原生能力 -->
+      <div class="kas-card">
+        <canvas class="kas-arc" id="arc-caps" width="72" height="72"></canvas>
+        <div class="kas-body">
+          <div class="kas-val" id="cmd-caps" style="color:#a855f7;">--</div>
+          <div class="kas-lbl">⚡ 原生能力</div>
+          <canvas class="kas-spark" id="spark-caps" width="60" height="14"></canvas>
         </div>
       </div>
-      <!-- 线上 Apps -->
-      <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-apps" width="80" height="80"></canvas>
-        <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-apps" style="color:#fbbf24;">--</div>
-          <div class="cmd-arc-lbl">🌐 线上Apps</div>
-          <canvas class="cmd-spark" id="spark-apps" width="70" height="18"></canvas>
+      <!-- 🌐 线上Apps -->
+      <div class="kas-card">
+        <canvas class="kas-arc" id="arc-apps" width="72" height="72"></canvas>
+        <div class="kas-body">
+          <div class="kas-val" id="cmd-apps" style="color:#00d4ff;">--</div>
+          <div class="kas-lbl">🌐 线上Apps</div>
+          <canvas class="kas-spark" id="spark-apps" width="60" height="14"></canvas>
         </div>
       </div>
     </div>
 
     <!-- 中央圆环 -->
-    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;" id="kas-center-wrap">
       <svg id="cmd-ring-svg" width="220" height="220" viewBox="0 0 220 220" style="display:block;overflow:visible;">
         <defs>
           <linearGradient id="ringGradOuter" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2555,50 +2587,52 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           <line x1="198" y1="110" x2="206" y2="110"/>
         </g>
       </svg>
+      <!-- 公转光点 canvas -->
+      <canvas id="kas-orbit" width="220" height="220" style="position:absolute;top:0;left:50%;transform:translateX(-50%);pointer-events:none;z-index:2;"></canvas>
       <!-- 中心数字 overlay -->
       <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);text-align:center;pointer-events:none;">
         <div id="cmd-tasks-today" style="font-size:56px;font-weight:900;color:#00d4ff;font-family:'Courier New',monospace;line-height:1;text-shadow:0 0 24px rgba(0,212,255,0.9),0 0 48px rgba(0,212,255,0.4);">--</div>
-        <div style="font-size:8px;font-weight:700;color:rgba(0,212,255,0.55);letter-spacing:2.5px;margin-top:5px;">MISSIONS TODAY</div>
+        <div style="font-size:8px;font-weight:700;color:rgba(0,212,255,0.55);letter-spacing:2.5px;margin-top:5px;">TOTAL ASSETS</div>
       </div>
-      <div style="font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-top:-4px;">今日任务完成数</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-top:-4px;">知识资产总量</div>
     </div>
 
     <!-- 右侧：4个弧形进度卡 -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <!-- 任务规划 -->
-      <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-tasks-plan" width="80" height="80"></canvas>
-        <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-tasks-plan" style="color:#22c55e;">--</div>
-          <div class="cmd-arc-lbl">📋 任务规划</div>
-          <canvas class="cmd-spark" id="spark-tasks-plan" width="70" height="18"></canvas>
+      <!-- 📋 任务规划 -->
+      <div class="kas-card">
+        <canvas class="kas-arc" id="arc-tasks-plan" width="72" height="72"></canvas>
+        <div class="kas-body">
+          <div class="kas-val" id="cmd-tasks-plan" style="color:#22c55e;">--</div>
+          <div class="kas-lbl">📋 任务规划</div>
+          <canvas class="kas-spark" id="spark-tasks-plan" width="60" height="14"></canvas>
         </div>
       </div>
-      <!-- 团队成员 -->
-      <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-members" width="80" height="80"></canvas>
-        <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-members" style="color:#4ade80;">--</div>
-          <div class="cmd-arc-lbl">🐾 团队成员</div>
-          <canvas class="cmd-spark" id="spark-members" width="70" height="18"></canvas>
+      <!-- 🐾 团队成员 -->
+      <div class="kas-card">
+        <canvas class="kas-arc" id="arc-members" width="72" height="72"></canvas>
+        <div class="kas-body">
+          <div class="kas-val" id="cmd-members" style="color:#4ade80;">--</div>
+          <div class="kas-lbl">🐾 团队成员</div>
+          <canvas class="kas-spark" id="spark-members" width="60" height="14"></canvas>
         </div>
       </div>
-      <!-- 定时任务 -->
-      <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-cron-jobs" width="80" height="80"></canvas>
-        <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-cron-jobs" style="color:#f472b6;">--</div>
-          <div class="cmd-arc-lbl">⚙️ 定时任务</div>
-          <canvas class="cmd-spark" id="spark-cron-jobs" width="70" height="18"></canvas>
+      <!-- ⚙️ 定时任务 -->
+      <div class="kas-card">
+        <canvas class="kas-arc" id="arc-cron-jobs" width="72" height="72"></canvas>
+        <div class="kas-body">
+          <div class="kas-val" id="cmd-cron-jobs" style="color:#f472b6;">--</div>
+          <div class="kas-lbl">⚙️ 定时任务</div>
+          <canvas class="kas-spark" id="spark-cron-jobs" width="60" height="14"></canvas>
         </div>
       </div>
-      <!-- 知识库 -->
-      <div class="cmd-arc-card">
-        <canvas class="cmd-arc" id="arc-pitfalls" width="80" height="80"></canvas>
-        <div class="cmd-arc-body">
-          <div class="cmd-arc-val" id="cmd-pitfalls" style="color:#67e8f9;">--</div>
-          <div class="cmd-arc-lbl">📖 知识库</div>
-          <canvas class="cmd-spark" id="spark-pitfalls" width="70" height="18"></canvas>
+      <!-- 📖 知识库 -->
+      <div class="kas-card">
+        <canvas class="kas-arc" id="arc-pitfalls" width="72" height="72"></canvas>
+        <div class="kas-body">
+          <div class="kas-val" id="cmd-pitfalls" style="color:#67e8f9;">--</div>
+          <div class="kas-lbl">📖 知识库</div>
+          <canvas class="kas-spark" id="spark-pitfalls" width="60" height="14"></canvas>
         </div>
       </div>
     </div>
@@ -2836,8 +2870,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         const d = CMD_DATA;
         const a = d.assets;
 
-        // 中央数字（今日完成任务）
-        rollTo('cmd-tasks-today', d.tasksToday || 0, 900, String);
+        // 中央数字：总资产数
+        const totalAssets = Object.values(a).reduce((s,v)=>s+(typeof v==='number'?v:0), 0);
+        rollTo('cmd-tasks-today', totalAssets, 900, String);
 
         // 左侧：记忆/Skills/原生能力/Apps
         rollTo('cmd-memory-files', a.memoryFiles, 700, String);
@@ -2892,6 +2927,29 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
           var _el = document.getElementById('archi-days-tag');
           if (_el) _el.textContent = '⭐ 出道第 ' + _days + ' 天';
         })();
+        // 启动公转光点（只启动一次）
+        if(!window._kasOrbitStarted){
+          window._kasOrbitStarted = true;
+          (function startOrbit(){
+            const cv=document.getElementById('kas-orbit');
+            if(!cv) return;
+            const colors=['#ff6b35','#fbbf24','#a855f7','#00d4ff','#22c55e','#4ade80','#f472b6','#67e8f9'];
+            function draw(t){
+              const ctx=cv.getContext('2d');
+              ctx.clearRect(0,0,220,220);
+              const cx=110,cy=110,r=92;
+              colors.forEach((c,i)=>{
+                const angle=(t/20000*Math.PI*2)+(i*Math.PI*2/8)-Math.PI/2;
+                const x=cx+r*Math.cos(angle), y=cy+r*Math.sin(angle);
+                ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+                ctx.fillStyle=c; ctx.shadowColor=c; ctx.shadowBlur=14;
+                ctx.fill(); ctx.shadowBlur=0;
+              });
+              requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+          })();
+        }
         renderProcessHUD();
         _startLiveFeed();
         renderTaskHUD();
