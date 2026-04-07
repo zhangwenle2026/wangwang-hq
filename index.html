@@ -3062,32 +3062,24 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   };
 
   // ====== Counter Roll Animation ======
-  function hudFmt(val) {
-    // val is in K tokens or raw lines
-    if (val >= 1000) return (val / 1000).toFixed(1) + 'M';
-    return val + 'K';
-  }
   function hudRollTo(elId, targetVal, suffix) {
+    // targetVal: token 单位已是 M（如 3.6），code 单位是行数
     const el = document.getElementById(elId);
     if (!el) return;
     const start = parseFloat(el.dataset.raw) || 0;
     el.dataset.raw = targetVal;
-    const dur = 1200, fps = 60;
-    const frames = dur / (1000/fps);
-    let frame = 0;
     const isToken = elId.startsWith('hud-token');
+    const fmt = v => isToken ? v.toFixed(1) + 'M' : Math.round(v);
+    const dur = 1200, fps = 60, frames = dur / (1000/fps);
+    let frame = 0;
     const timer = setInterval(() => {
       frame++;
-      const t = frame / frames;
-      const ease = 1 - Math.pow(1 - t, 3);
+      const ease = 1 - Math.pow(1 - frame/frames, 3);
       const cur = start + (targetVal - start) * ease;
-      el.textContent = isToken ? hudFmt(Math.round(cur)) : Math.round(cur);
+      el.textContent = fmt(cur);
       el.classList.add('rolling');
       setTimeout(() => el.classList.remove('rolling'), 150);
-      if (frame >= frames) {
-        clearInterval(timer);
-        el.textContent = isToken ? hudFmt(targetVal) : targetVal;
-      }
+      if (frame >= frames) { clearInterval(timer); el.textContent = fmt(targetVal); }
     }, 1000/fps);
   }
 
