@@ -2,499 +2,508 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>BDM Promotion · Candidate Matrix</title>
+<title>BDM Promotion · Candidate Assessment Matrix</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  background:#f0f2f5; padding:36px 40px 48px; width:1200px;
+}
+.header { margin-bottom:22px; }
+.header h1 { font-size:21px; font-weight:700; color:#1d1d1f; letter-spacing:-0.3px; }
+.header h1 span { font-size:13px; font-weight:400; color:#86868b; margin-left:10px; }
+.header-meta { display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
+.header-meta p { font-size:12px; color:#86868b; }
+.pending-badge { font-size:11px; font-weight:600; background:#fff3cd; color:#856404; padding:3px 10px; border-radius:20px; border:1px solid #ffc107; }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-    background: #f5f5f7;
-    padding: 36px 40px 48px;
-    width: 1100px;
-  }
+/* Champion bar */
+.champion-bar { display:flex; gap:10px; margin-bottom:18px; }
+.champ-card {
+  background:white; border-radius:10px; padding:10px 14px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.08); flex:1;
+}
+.champ-card:nth-child(1){border-top:3px solid #FF6B35;}
+.champ-card:nth-child(2){border-top:3px solid #4CAF50;}
+.champ-card:nth-child(3){border-top:3px solid #2196F3;}
+.champ-card:nth-child(4){border-top:3px solid #9C27B0;}
+.champ-card:nth-child(5){border-top:3px solid #FF5722;}
+.champ-dim { font-size:10px; font-weight:600; color:#86868b; text-transform:uppercase; letter-spacing:0.4px; }
+.champ-dim-cn { font-size:9px; color:#bbb; margin-bottom:4px; }
+.champ-row-inner { display:flex; justify-content:space-between; align-items:flex-end; }
+.champ-name { font-size:12px; font-weight:700; color:#1d1d1f; }
+.champ-score { font-size:20px; font-weight:800; color:#1d1d1f; }
 
-  /* ── Header ── */
-  .header {
-    margin-bottom: 28px;
-  }
-  .header h1 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1d1d1f;
-    letter-spacing: -0.3px;
-  }
-  .header-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 6px;
-  }
-  .header-meta p {
-    font-size: 13px;
-    color: #86868b;
-  }
-  .pending-badge {
-    font-size: 11px;
-    font-weight: 600;
-    background: #fff3cd;
-    color: #856404;
-    padding: 3px 10px;
-    border-radius: 20px;
-    border: 1px solid #ffc107;
-  }
+/* Table */
+.table-wrap { background:white; border-radius:16px; overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.08); }
+table { width:100%; border-collapse:collapse; }
+thead tr.main-header { background:#1d1d1f; }
+thead th {
+  padding:12px 12px; text-align:center;
+  font-size:10px; font-weight:600; color:#f5f5f7;
+  letter-spacing:0.4px; text-transform:uppercase;
+  border-right:1px solid #333; line-height:1.4;
+}
+thead th.left { text-align:left; width:185px; }
+thead th.total-head { background:#2d2d2f; border-right:none; width:90px; }
+.sub-header th {
+  background:#2c2c2e; font-size:9px; color:#aeaeb2;
+  padding:4px 12px 7px; font-weight:400;
+  border-right:1px solid #333; text-transform:none; line-height:1.5;
+}
+.sub-header th.left { text-align:left; }
+.sub-header th:last-child { border-right:none; }
 
-  /* ── Dimension legend ── */
-  .dim-legend {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .dim-legend-item {
-    font-size: 11px;
-    color: #555;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .dim-legend-item strong {
-    color: #1d1d1f;
-    font-weight: 600;
-  }
+tbody tr { border-bottom:1px solid #f0f0f0; }
+tbody tr:last-child { border-bottom:none; }
+tbody tr.data-row:hover { background:#fafafa; }
 
-  /* ── Table ── */
-  .table-wrap {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  }
+/* Name cell */
+.name-cell { padding:13px 13px; border-right:1px solid #e8e8e8; vertical-align:middle; }
+.candidate-id {
+  display:inline-flex; width:24px; height:24px; border-radius:6px;
+  background:#1d1d1f; color:white; font-size:12px; font-weight:700;
+  align-items:center; justify-content:center; margin-right:8px;
+  float:left; margin-top:2px;
+}
+.name-block { overflow:hidden; }
+.candidate-name { font-size:13px; font-weight:600; color:#1d1d1f; display:block; }
+.candidate-aor { font-size:10px; color:#86868b; margin-top:1px; }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+/* Score cell */
+.score-cell {
+  padding:9px 9px; text-align:center;
+  border-right:1px solid #e8e8e8; vertical-align:middle; position:relative;
+}
+.score-cell.champion {
+  outline:2px solid #FFB300; outline-offset:-2px; background:#fffdf0;
+}
+.score-pill {
+  display:inline-flex; flex-direction:column; align-items:center; justify-content:center;
+  width:54px; height:48px; border-radius:10px;
+  font-size:18px; font-weight:800; line-height:1; position:relative;
+}
+.score-note { font-size:8.5px; font-weight:500; margin-top:3px; opacity:0.75; }
+.rank-badge {
+  position:absolute; top:-5px; right:-5px;
+  width:15px; height:15px; border-radius:50%;
+  background:#8E8E93; color:white;
+  font-size:8px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  border:1.5px solid white; z-index:1;
+}
+.rank-badge.r1 { background:#FFB300; color:#1d1d1f; }
+.rank-badge.r2 { background:#9E9E9E; }
+.rank-badge.r3 { background:#CD7F32; }
 
-  /* Header row */
-  thead tr {
-    background: #1d1d1f;
-  }
-  thead th {
-    padding: 14px 16px;
-    text-align: center;
-    font-size: 11px;
-    font-weight: 600;
-    color: #f5f5f7;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    border-right: 1px solid #333;
-  }
-  thead th:first-child {
-    text-align: left;
-    width: 200px;
-  }
-  thead th:last-child {
-    border-right: none;
-    background: #2d2d2f;
-  }
+/* Heat */
+.h5{background:#d1fae5;color:#065f46;}
+.h4{background:#dcfce7;color:#166534;}
+.h3{background:#fef9c3;color:#854d0e;}
+.h2{background:#ffedd5;color:#9a3412;}
+.h1{background:#fee2e2;color:#991b1b;}
 
-  /* Sub-header */
-  .sub-header th {
-    background: #2c2c2e;
-    font-size: 10px;
-    color: #aeaeb2;
-    padding: 5px 16px 8px;
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    border-right: 1px solid #333;
-  }
-  .sub-header th:first-child { text-align: left; }
-  .sub-header th:last-child { border-right: none; }
+/* Total */
+.total-cell { padding:9px 12px; text-align:center; vertical-align:middle; background:#f8f8f8; border-left:2px solid #e0e0e0; }
+.total-score { font-size:21px; font-weight:800; color:#1d1d1f; line-height:1; }
+.total-bar-track { height:4px; background:#e8e8e8; border-radius:2px; margin-top:6px; overflow:hidden; }
+.total-bar-fill { height:100%; border-radius:2px; }
 
-  /* Body rows */
-  tbody tr {
-    border-bottom: 1px solid #f0f0f0;
-  }
-  tbody tr:last-child {
-    border-bottom: none;
-  }
-  tbody tr:hover {
-    background: #fafafa;
-  }
+/* Evidence row */
+.evidence-row td {
+  padding:4px 12px 11px; font-size:10px; color:#86868b;
+  border-right:1px solid #e8e8e8; vertical-align:top; text-align:center;
+  line-height:1.5; background:#fcfcfc; border-bottom:2px solid #e8e8e8;
+}
+.evidence-row td.left { text-align:left; font-style:italic; color:#bbb; font-size:9px; }
+.evidence-row td:last-child { border-right:none; }
+.ev-en { color:#444; display:block; font-size:10px; }
+.ev-cn { color:#aaa; display:block; font-size:9px; margin-top:2px; }
 
-  /* Name cell */
-  .name-cell {
-    padding: 14px 16px;
-    border-right: 1px solid #e8e8e8;
-  }
-  .candidate-rank {
-    display: inline-flex;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #1d1d1f;
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-    flex-shrink: 0;
-  }
-  .r1 .candidate-rank { background: #FFB300; color: #1d1d1f; }
-  .r2 .candidate-rank { background: #5AC8FA; color: #1d1d1f; }
-  .r3 .candidate-rank { background: #34C759; color: white; }
-  .r4 .candidate-rank { background: #BF5AF2; color: white; }
-  .r5 .candidate-rank { background: #FF9F0A; color: white; }
-  .r6 .candidate-rank { background: #FF453A; color: white; }
-  .r7 .candidate-rank { background: #8E8E93; color: white; }
+/* Dim champion row */
+.dim-champ-row { background:#1d1d1f; }
+.dim-champ-row td {
+  padding:9px 10px; text-align:center; border-right:1px solid #333;
+  font-size:10px; color:#f5f5f7; vertical-align:middle; line-height:1.4;
+}
+.dim-champ-row td.left { text-align:left; font-weight:600; font-size:11px; padding-left:13px; }
+.dim-champ-row td:last-child { border-right:none; }
+.champ-winner { font-weight:700; color:#FFB300; font-size:11px; display:block; }
+.champ-score-sm { font-size:9px; color:#aeaeb2; display:block; }
 
-  .candidate-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1d1d1f;
-    display: inline;
-  }
-  .candidate-aor {
-    font-size: 11px;
-    color: #86868b;
-    margin-top: 2px;
-  }
-
-  /* Score cell */
-  .score-cell {
-    padding: 10px 12px;
-    text-align: center;
-    border-right: 1px solid #e8e8e8;
-    vertical-align: middle;
-  }
-
-  .score-pill {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 48px;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .score-note {
-    font-size: 9px;
-    font-weight: 500;
-    margin-top: 3px;
-    opacity: 0.8;
-  }
-
-  /* Heat colors */
-  .h5  { background: #d1fae5; color: #065f46; }  /* 9-10 */
-  .h4  { background: #dcfce7; color: #166534; }  /* 8-8.9 */
-  .h3  { background: #fef9c3; color: #854d0e; }  /* 7-7.9 */
-  .h2  { background: #ffedd5; color: #9a3412; }  /* 6-6.9 */
-  .h1  { background: #fee2e2; color: #991b1b; }  /* <6 */
-
-  /* Total score cell */
-  .total-cell {
-    padding: 10px 16px;
-    text-align: center;
-    vertical-align: middle;
-    background: #fafafa;
-    border-left: 2px solid #e0e0e0;
-  }
-  .total-score {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1d1d1f;
-    line-height: 1;
-  }
-  .total-bar-track {
-    height: 4px;
-    background: #e8e8e8;
-    border-radius: 2px;
-    margin-top: 6px;
-    overflow: hidden;
-  }
-  .total-bar-fill {
-    height: 100%;
-    border-radius: 2px;
-  }
-  .r1 .total-bar-fill { background: #FFB300; }
-  .r2 .total-bar-fill { background: #5AC8FA; }
-  .r3 .total-bar-fill { background: #34C759; }
-  .r4 .total-bar-fill { background: #BF5AF2; }
-  .r5 .total-bar-fill { background: #FF9F0A; }
-  .r6 .total-bar-fill { background: #FF453A; }
-  .r7 .total-bar-fill { background: #8E8E93; }
-
-  /* Key evidence row */
-  .evidence-row td {
-    padding: 5px 16px 12px;
-    font-size: 11px;
-    color: #86868b;
-    border-right: 1px solid #e8e8e8;
-    vertical-align: top;
-    text-align: center;
-    line-height: 1.4;
-    background: #fcfcfc;
-    border-bottom: 1px solid #efefef;
-  }
-  .evidence-row td:first-child {
-    text-align: left;
-    font-style: italic;
-    color: #aaa;
-  }
-  .evidence-row td:last-child {
-    border-right: none;
-  }
-
-  /* Footer */
-  .footer {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .color-scale {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    color: #86868b;
-  }
-  .cs-block {
-    width: 28px;
-    height: 14px;
-    border-radius: 3px;
-    font-size: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-  }
-  .footer-note {
-    font-size: 11px;
-    color: #aaa;
-  }
+/* Footer */
+.footer { margin-top:16px; display:flex; justify-content:space-between; align-items:center; }
+.color-scale { display:flex; align-items:center; gap:5px; font-size:11px; color:#86868b; }
+.cs-block { width:26px; height:13px; border-radius:3px; font-size:8px; display:flex; align-items:center; justify-content:center; font-weight:700; }
+.footer-note { font-size:11px; color:#aaa; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>BDM Promotion · Candidate Assessment Matrix</h1>
+  <h1>BDM Promotion · Candidate Assessment Matrix <span>晋升评审 · 多维横向对比</span></h1>
   <div class="header-meta">
-    <p>Keeta Brazil · SP Metropolitan Region · April 2026 · Panel Review</p>
-    <span class="pending-badge">Candidate #8 Pending</span>
+    <p>Keeta Brazil · SP Metropolitan Region · April 2026 · Panel Review &nbsp;|&nbsp; 巴西圣保罗都市圈 · 2026年4月</p>
+    <span class="pending-badge">Candidate #8 Pending · 第8位候选人待定</span>
+  </div>
+</div>
+
+<!-- Dimension Champions -->
+<div class="champion-bar">
+  <div class="champ-card">
+    <div class="champ-dim">D1 · Personal KPIs</div>
+    <div class="champ-dim-cn">个人业绩维度最强</div>
+    <div class="champ-row-inner">
+      <div class="champ-name">E · Leonardo<br><span style="font-size:10px;font-weight:400;color:#aaa">A · Adriana (tied)</span></div>
+      <div class="champ-score">9.5</div>
+    </div>
+  </div>
+  <div class="champ-card">
+    <div class="champ-dim">D2 · AOR Strategy</div>
+    <div class="champ-dim-cn">AOR策略维度最强</div>
+    <div class="champ-row-inner">
+      <div class="champ-name">B · Thiago<br><span style="font-size:10px;font-weight:400;color:#aaa">E · Leonardo (tied)</span></div>
+      <div class="champ-score">8.5</div>
+    </div>
+  </div>
+  <div class="champ-card">
+    <div class="champ-dim">D3 · Team Leadership</div>
+    <div class="champ-dim-cn">团队领导力维度最强</div>
+    <div class="champ-row-inner">
+      <div class="champ-name">A · Adriana<br><span style="font-size:10px;font-weight:400;color:#aaa">B · Thiago (tied)</span></div>
+      <div class="champ-score">9.5</div>
+    </div>
+  </div>
+  <div class="champ-card">
+    <div class="champ-dim">D4 · BDM Readiness</div>
+    <div class="champ-dim-cn">BDM准备度维度最强</div>
+    <div class="champ-row-inner">
+      <div class="champ-name">A · Adriana<br><span style="font-size:10px;font-weight:400;color:#aaa">E · Leonardo (tied)</span></div>
+      <div class="champ-score">9.0</div>
+    </div>
+  </div>
+  <div class="champ-card">
+    <div class="champ-dim">D5 · Material Quality</div>
+    <div class="champ-dim-cn">材料质量维度最强</div>
+    <div class="champ-row-inner">
+      <div class="champ-name">E · Leonardo</div>
+      <div class="champ-score">9.0</div>
+    </div>
   </div>
 </div>
 
 <div class="table-wrap">
 <table>
   <thead>
-    <tr>
-      <th style="text-align:left">Candidate</th>
-      <th>D1<br>Personal KPIs</th>
-      <th>D2<br>AOR Strategy</th>
-      <th>D3<br>Team Leadership</th>
-      <th>D4<br>BDM Readiness</th>
-      <th>D5<br>Material Quality</th>
-      <th style="background:#2d2d2f">Total</th>
+    <tr class="main-header">
+      <th class="left">Candidate · 候选人</th>
+      <th>D1 · Personal KPIs<br><span style="font-weight:400;opacity:0.6;font-size:9px">个人业绩</span></th>
+      <th>D2 · AOR Strategy<br><span style="font-weight:400;opacity:0.6;font-size:9px">AOR策略</span></th>
+      <th>D3 · Team Leadership<br><span style="font-weight:400;opacity:0.6;font-size:9px">团队领导力</span></th>
+      <th>D4 · BDM Readiness<br><span style="font-weight:400;opacity:0.6;font-size:9px">BDM准备度</span></th>
+      <th>D5 · Material Quality<br><span style="font-weight:400;opacity:0.6;font-size:9px">材料质量</span></th>
+      <th class="total-head">Total<br>综合</th>
     </tr>
     <tr class="sub-header">
-      <th>Name · AOR</th>
-      <th>数字完整 · 量级</th>
-      <th>诊断深度 · 执行力</th>
-      <th>带教 · 影响力</th>
-      <th>Acting经验 · 90天</th>
-      <th>逻辑 · 数据密度</th>
-      <th>综合评分</th>
+      <th class="left">ID · Name · AOR</th>
+      <th>Data completeness · Scale<br><span style="color:#666">数字完整 · 量级</span></th>
+      <th>Diagnosis depth · Execution<br><span style="color:#666">诊断深度 · 执行力</span></th>
+      <th>Coaching · Influence evidence<br><span style="color:#666">带教 · 影响力证据</span></th>
+      <th>Acting exp · 90-day plan<br><span style="color:#666">Acting经历 · 90天计划</span></th>
+      <th>Logic · Data density<br><span style="color:#666">逻辑清晰 · 数据密度</span></th>
+      <th>Avg</th>
     </tr>
   </thead>
   <tbody>
 
-    <!-- Leonardo Mello -->
-    <tr class="r1">
+    <!-- A: Adriana Naves -->
+    <tr class="data-row">
       <td class="name-cell">
-        <span class="candidate-rank">1</span>
-        <span class="candidate-name">Leonardo Mello</span>
-        <div class="candidate-aor">Southern (ABCD) · BD → BDM</div>
+        <span class="candidate-id">A</span>
+        <div class="name-block">
+          <span class="candidate-name">Adriana Naves</span>
+          <span class="candidate-aor">District A · Santo André</span>
+        </div>
       </td>
-      <td class="score-cell"><div class="score-pill h5">9.5<div class="score-note">Q1 R$1.72mi</div></div></td>
-      <td class="score-cell"><div class="score-pill h4">8.5<div class="score-note">3段成长</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.5<div class="score-note">描述为主</div></div></td>
-      <td class="score-cell"><div class="score-pill h5">9.0<div class="score-note">完整90天</div></div></td>
-      <td class="score-cell"><div class="score-pill h5">9.0<div class="score-note">数据最密</div></div></td>
-      <td class="total-cell">
-        <div class="total-score">8.5</div>
-        <div class="total-bar-track"><div class="total-bar-fill" style="width:85%"></div></div>
+      <td class="score-cell champion">
+        <div class="score-pill h4" style="position:relative">8.5<div class="score-note">14.8k orders</div></div>
+        <span class="rank-badge r1">1</span>
       </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.0<div class="score-note">诊断强执行弱</div></div>
+        <span class="rank-badge">4</span>
+      </td>
+      <td class="score-cell champion">
+        <div class="score-pill h5" style="position:relative">9.5<div class="score-note">带教有数据</div></div>
+        <span class="rank-badge r1">1</span>
+      </td>
+      <td class="score-cell champion">
+        <div class="score-pill h5" style="position:relative">9.0<div class="score-note">Acting BDM</div></div>
+        <span class="rank-badge r1">1</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h4" style="position:relative">8.0<div class="score-note">结构清晰</div></div>
+        <span class="rank-badge r2">2</span>
+      </td>
+      <td class="total-cell"><div class="total-score">8.2</div><div class="total-bar-track"><div class="total-bar-fill" style="width:82%;background:#5AC8FA"></div></div></td>
     </tr>
     <tr class="evidence-row">
-      <td>Key evidence</td>
-      <td>102%→105%→186%<br>完成率连升3期</td>
-      <td>GMV结构分析清晰<br>竞争策略有层次</td>
-      <td>团队协作有提及<br>缺before/after</td>
-      <td>90天详细分阶段<br>数字锚点完整</td>
-      <td>全篇数字驱动<br>STAR结构完整</td>
+      <td class="left">Key evidence<br>关键证据</td>
+      <td><span class="ev-en">R$745.5k GMV · +40.2% MoM · Top-tier volume</span><span class="ev-cn">月GMV量级高，增速显著；个人KPI全组第一梯队</span></td>
+      <td><span class="ev-en">CXR/CTR/CVR full diagnosis · 570 mid-tier supply gap identified</span><span class="ev-cn">诊断维度最全；执行路径细化不足，行动计划较粗</span></td>
+      <td><span class="ev-en">Otávio 67→89 · Daniela 81→114 · Murilo 77→93</span><span class="ev-cn">全组唯一有完整before/after带教量化数据，领导力最可信</span></td>
+      <td><span class="ev-en">Acting BDM · Daily KPI meetings · CM-level coordination</span><span class="ev-cn">Acting经历最正式，有CM层级实战经验，准备度最充分</span></td>
+      <td><span class="ev-en">Global Awards 2025 Champion's Heart · English operational risk</span><span class="ev-cn">材料逻辑清晰，荣誉背书强；英语为唯一明确短板</span></td>
     </tr>
 
-    <!-- Adriana Naves -->
-    <tr class="r2">
+    <!-- B: Thiago Dalaqua -->
+    <tr class="data-row">
       <td class="name-cell">
-        <span class="candidate-rank">2</span>
-        <span class="candidate-name">Adriana Naves</span>
-        <div class="candidate-aor">District A · Santo André · BD → BDM</div>
+        <span class="candidate-id">B</span>
+        <div class="name-block">
+          <span class="candidate-name">Thiago Dalaqua</span>
+          <span class="candidate-aor">Guarulhos North</span>
+        </div>
       </td>
-      <td class="score-cell"><div class="score-pill h4">8.5<div class="score-note">14.8k orders</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.0<div class="score-note">诊断强执行弱</div></div></td>
-      <td class="score-cell"><div class="score-pill h5">9.5<div class="score-note">带教有数据</div></div></td>
-      <td class="score-cell"><div class="score-pill h5">9.0<div class="score-note">Acting BDM</div></div></td>
-      <td class="score-cell"><div class="score-pill h4">8.0<div class="score-note">结构清晰</div></div></td>
-      <td class="total-cell">
-        <div class="total-score">8.2</div>
-        <div class="total-bar-track"><div class="total-bar-fill" style="width:82%"></div></div>
+      <td class="score-cell">
+        <div class="score-pill h1" style="position:relative">4.0<div class="score-note">零个人KPI</div></div>
+        <span class="rank-badge">7</span>
       </td>
+      <td class="score-cell champion">
+        <div class="score-pill h4" style="position:relative">8.5<div class="score-note">9区风险图谱</div></div>
+        <span class="rank-badge r1">1</span>
+      </td>
+      <td class="score-cell champion">
+        <div class="score-pill h5" style="position:relative">9.5<div class="score-note">5份培训材料</div></div>
+        <span class="rank-badge r1">1</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.5<div class="score-note">BD Captain</div></div>
+        <span class="rank-badge r3">3</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h4" style="position:relative">8.5<div class="score-note">全英文清晰</div></div>
+        <span class="rank-badge r2">2</span>
+      </td>
+      <td class="total-cell"><div class="total-score">7.6</div><div class="total-bar-track"><div class="total-bar-fill" style="width:76%;background:#34C759"></div></div></td>
     </tr>
     <tr class="evidence-row">
-      <td>Key evidence</td>
-      <td>R$745.5k GMV<br>+40.2% MoM</td>
-      <td>CXR/CTR/CVR诊断<br>供给缺口570家</td>
-      <td>Otávio 67→89<br>Daniela 81→114</td>
-      <td>Daily KPI mtg<br>CM对接经验</td>
-      <td>Global Awards 2025<br>英语是风险项</td>
+      <td class="left">Key evidence<br>关键证据</td>
+      <td><span class="ev-en">No orders / GMV / active rate disclosed · Weakest in group</span><span class="ev-cn">个人KPI完全缺失，为全组最弱项，无法量化个人贡献</span></td>
+      <td><span class="ev-en">9-region risk map · Differentiated merchant framework · Strongest strategic depth</span><span class="ev-cn">战略视野最宽，邻区竞争分析在全组最系统</span></td>
+      <td><span class="ev-en">5 structured training materials · Clean AOR +50% · Team 100% commission</span><span class="ev-cn">带教材料化程度最高，团队成果有量化，唯一non-formal path但成效实</span></td>
+      <td><span class="ev-en">BD Captain (informal) · Influence-based · No formal Acting title</span><span class="ev-cn">非正式Acting，管理权威性不如A/E；影响力靠感召而非职权</span></td>
+      <td><span class="ev-en">English-first · Ireland exchange · B2B enterprise background</span><span class="ev-cn">材料全英文，表达全组最清晰；国际背景是差异化亮点</span></td>
     </tr>
 
-    <!-- Thiago Dalaqua -->
-    <tr class="r3">
+    <!-- C: Cleiton Santos -->
+    <tr class="data-row">
       <td class="name-cell">
-        <span class="candidate-rank">3</span>
-        <span class="candidate-name">Thiago Dalaqua</span>
-        <div class="candidate-aor">Guarulhos North · BD → BDM</div>
+        <span class="candidate-id">C</span>
+        <div class="name-block">
+          <span class="candidate-name">Cleiton Santos</span>
+          <span class="candidate-aor">GB District</span>
+        </div>
       </td>
-      <td class="score-cell"><div class="score-pill h1">4.0<div class="score-note">零个人KPI</div></div></td>
-      <td class="score-cell"><div class="score-pill h4">8.5<div class="score-note">地图风险分级</div></div></td>
-      <td class="score-cell"><div class="score-pill h5">9.5<div class="score-note">5份培训材料</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.5<div class="score-note">BD Captain</div></div></td>
-      <td class="score-cell"><div class="score-pill h4">8.5<div class="score-note">全英文清晰</div></div></td>
-      <td class="total-cell">
-        <div class="total-score">7.6</div>
-        <div class="total-bar-track"><div class="total-bar-fill" style="width:76%"></div></div>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.5<div class="score-note">GMV+79%</div></div>
+        <span class="rank-badge r3">3</span>
       </td>
+      <td class="score-cell">
+        <div class="score-pill h4" style="position:relative">8.0<div class="score-note">精简策略</div></div>
+        <span class="rank-badge r3">3</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.0<div class="score-note">无具体案例</div></div>
+        <span class="rank-badge">5</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.0<div class="score-note">方向性计划</div></div>
+        <span class="rank-badge">5</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.5<div class="score-note">逻辑清晰</div></div>
+        <span class="rank-badge r3">3</span>
+      </td>
+      <td class="total-cell"><div class="total-score">7.4</div><div class="total-bar-track"><div class="total-bar-fill" style="width:74%;background:#BF5AF2"></div></div></td>
     </tr>
     <tr class="evidence-row">
-      <td>Key evidence</td>
-      <td>无订单/GMV/活跃率<br>个人贡献无法量化</td>
-      <td>9邻区风险图谱<br>差异化经营框架</td>
-      <td>Clean AOR +50%<br>团队100%佣金达成</td>
-      <td>非formal管理<br>influence-based</td>
-      <td>爱尔兰交流经历<br>企业B2B背景</td>
+      <td class="left">Key evidence<br>关键证据</td>
+      <td><span class="ev-en">Merchants -40% but orders +77% · GMV +79% · Quality over volume</span><span class="ev-cn">以少胜多，质量优化策略有效；但绝对规模低于A/E</span></td>
+      <td><span class="ev-en">AOR restructuring logic solid · Competitive differentiation noted but shallower than B</span><span class="ev-cn">策略完整有亮点，但深度和系统性不及B候选人</span></td>
+      <td><span class="ev-en">Team collaboration mentioned · No coaching before/after data</span><span class="ev-cn">团队描述停留在协作层面，无量化，为D3最大差距之一</span></td>
+      <td><span class="ev-en">Directional 90-day plan · No numeric anchors · No Acting exp</span><span class="ev-cn">计划有方向但无数字锚点；无Acting经历，D4全组偏低</span></td>
+      <td><span class="ev-en">Structure standard · Core data complete · Fewer standout moments</span><span class="ev-cn">材料规范合格，但与A/B相比缺记忆点</span></td>
     </tr>
 
-    <!-- Cleiton Santos -->
-    <tr class="r4">
+    <!-- D: Igor Feitosa -->
+    <tr class="data-row">
       <td class="name-cell">
-        <span class="candidate-rank">4</span>
-        <span class="candidate-name">Cleiton Santos</span>
-        <div class="candidate-aor">GB District · BD → BDM</div>
+        <span class="candidate-id">D</span>
+        <div class="name-block">
+          <span class="candidate-name">Igor Feitosa</span>
+          <span class="candidate-aor">Guarulhos</span>
+        </div>
       </td>
-      <td class="score-cell"><div class="score-pill h3">7.5<div class="score-note">GMV+79%</div></div></td>
-      <td class="score-cell"><div class="score-pill h4">8.0<div class="score-note">精简策略</div></div></td>
-      <td class="score-cell"><div class="score-pill h2">6.0<div class="score-note">证据薄弱</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.0<div class="score-note">计划完整</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.5<div class="score-note">逻辑清晰</div></div></td>
-      <td class="total-cell">
-        <div class="total-score">7.4</div>
-        <div class="total-bar-track"><div class="total-bar-fill" style="width:74%"></div></div>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.0<div class="score-note">无GMV绝对值</div></div>
+        <span class="rank-badge">5</span>
       </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.5<div class="score-note">四大策略</div></div>
+        <span class="rank-badge">4</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.5<div class="score-note">软性描述</div></div>
+        <span class="rank-badge">4</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.5<div class="score-note">13周计划</div></div>
+        <span class="rank-badge r3">3</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.5<div class="score-note">STAR框架</div></div>
+        <span class="rank-badge r3">3</span>
+      </td>
+      <td class="total-cell"><div class="total-score">7.2</div><div class="total-bar-track"><div class="total-bar-fill" style="width:72%;background:#FF9F0A"></div></div></td>
     </tr>
     <tr class="evidence-row">
-      <td>Key evidence</td>
-      <td>商户-40%但订单+77%<br>质量优化策略清晰</td>
-      <td>AOR重组逻辑强<br>竞争分析有亮点</td>
-      <td>团队贡献描述少<br>无具体带教案例</td>
-      <td>方向性计划为主<br>数字锚点不足</td>
-      <td>核心数据完整<br>材料结构规范</td>
+      <td class="left">Key evidence<br>关键证据</td>
+      <td><span class="ev-en">Op rate 50%→83% · Cancel rate 3-month consecutive decline · No GMV absolute</span><span class="ev-cn">趋势向好，但无GMV/订单绝对值；量级不明，说服力受限</span></td>
+      <td><span class="ev-en">4-strategy matrix complete · Lacks competitive differentiation vs B/E</span><span class="ev-cn">策略框架完整，但竞争差异化视角弱于B和E候选人</span></td>
+      <td><span class="ev-en">Team collaboration self-reported · No before/after coaching data</span><span class="ev-cn">领导力全靠自述，无量化证明；与A候选人差距最显著</span></td>
+      <td><span class="ev-en">90-day 13-week phased · Key Review milestones all qualitative</span><span class="ev-cn">计划分阶详细，但里程碑均定性，考核难度高</span></td>
+      <td><span class="ev-en">STAR structure complete · Data density moderate · No standout hook</span><span class="ev-cn">框架规范，但密度中等，面试中无突出记忆点</span></td>
     </tr>
 
-    <!-- Igor Feitosa -->
-    <tr class="r5">
+    <!-- E: Leonardo Mello -->
+    <tr class="data-row">
       <td class="name-cell">
-        <span class="candidate-rank">5</span>
-        <span class="candidate-name">Igor Feitosa</span>
-        <div class="candidate-aor">Guarulhos · BD → BDM</div>
+        <span class="candidate-id">E</span>
+        <div class="name-block">
+          <span class="candidate-name">Leonardo Mello</span>
+          <span class="candidate-aor">Southern (ABCD)</span>
+        </div>
       </td>
-      <td class="score-cell"><div class="score-pill h2">6.0<div class="score-note">无GMV绝对值</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.5<div class="score-note">四大策略矩阵</div></div></td>
-      <td class="score-cell"><div class="score-pill h2">6.5<div class="score-note">偏软描述</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.5<div class="score-note">13周计划</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.5<div class="score-note">STAR框架</div></div></td>
-      <td class="total-cell">
-        <div class="total-score">7.2</div>
-        <div class="total-bar-track"><div class="total-bar-fill" style="width:72%"></div></div>
+      <td class="score-cell champion">
+        <div class="score-pill h5" style="position:relative">9.5<div class="score-note">Q1 R$1.72mi</div></div>
+        <span class="rank-badge r1">1</span>
       </td>
+      <td class="score-cell champion">
+        <div class="score-pill h4" style="position:relative">8.5<div class="score-note">3段成长</div></div>
+        <span class="rank-badge r1">1</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.5<div class="score-note">描述为主</div></div>
+        <span class="rank-badge r3">3</span>
+      </td>
+      <td class="score-cell champion">
+        <div class="score-pill h5" style="position:relative">9.0<div class="score-note">完整90天</div></div>
+        <span class="rank-badge r1">1</span>
+      </td>
+      <td class="score-cell champion">
+        <div class="score-pill h5" style="position:relative">9.0<div class="score-note">数据最密</div></div>
+        <span class="rank-badge r1">1</span>
+      </td>
+      <td class="total-cell"><div class="total-score">8.5</div><div class="total-bar-track"><div class="total-bar-fill" style="width:85%;background:#FFB300"></div></div></td>
     </tr>
     <tr class="evidence-row">
-      <td>Key evidence</td>
-      <td>运营率50%→83%<br>取消率连续3月↓</td>
-      <td>策略有层次感<br>缺竞争差异化方案</td>
-      <td>协作提及为主<br>无before/after数据</td>
-      <td>90天13周分阶<br>Key Review全定性</td>
-      <td>STAR完整<br>数字密度中等</td>
+      <td class="left">Key evidence<br>关键证据</td>
+      <td><span class="ev-en">Q1 GMV R$1.72mi · Completion rate 102%→105%→186% · 3 consecutive periods</span><span class="ev-cn">绝对GMV量级全组最高，完成率连续3期提升，业绩一致性最强</span></td>
+      <td><span class="ev-en">3-phase growth arc · GMV structure analysis clear · Competitive layers</span><span class="ev-cn">成长叙事结构最完整，策略有层次；与B相比邻区分析稍浅</span></td>
+      <td><span class="ev-en">Team collaboration mentioned · No specific before/after coaching data</span><span class="ev-cn">团队协作有提及，但无带教量化；D3是与A差距最大的维度</span></td>
+      <td><span class="ev-en">Detailed 90-day phased plan · Numeric anchors throughout · Strongest plan</span><span class="ev-cn">90天计划最详细，数字锚点完整，可考核性全组最高</span></td>
+      <td><span class="ev-en">Data-driven throughout · STAR complete · Highest data density in group</span><span class="ev-cn">全篇数字驱动，密度全组最高；材料完成度最佳</span></td>
     </tr>
 
-    <!-- Lucas Nada -->
-    <tr class="r6">
+    <!-- F: Lucas Nada -->
+    <tr class="data-row">
       <td class="name-cell">
-        <span class="candidate-rank">6</span>
-        <span class="candidate-name">Lucas Nada</span>
-        <div class="candidate-aor">— · BD → BDM</div>
+        <span class="candidate-id">F</span>
+        <div class="name-block">
+          <span class="candidate-name">Lucas Nada</span>
+          <span class="candidate-aor">—</span>
+        </div>
       </td>
-      <td class="score-cell"><div class="score-pill h3">7.0<div class="score-note">基础完整</div></div></td>
-      <td class="score-cell"><div class="score-pill h2">6.5<div class="score-note">策略平淡</div></div></td>
-      <td class="score-cell"><div class="score-pill h2">6.5<div class="score-note">无突出点</div></div></td>
-      <td class="score-cell"><div class="score-pill h2">6.5<div class="score-note">方向性计划</div></div></td>
-      <td class="score-cell"><div class="score-pill h3">7.0<div class="score-note">中规中矩</div></div></td>
-      <td class="total-cell">
-        <div class="total-score">7.0</div>
-        <div class="total-bar-track"><div class="total-bar-fill" style="width:70%"></div></div>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.0<div class="score-note">基础完整</div></div>
+        <span class="rank-badge">4</span>
       </td>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.5<div class="score-note">策略平淡</div></div>
+        <span class="rank-badge">6</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.5<div class="score-note">无突出点</div></div>
+        <span class="rank-badge">4</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.5<div class="score-note">方向性计划</div></div>
+        <span class="rank-badge">6</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h3" style="position:relative">7.0<div class="score-note">中规中矩</div></div>
+        <span class="rank-badge">5</span>
+      </td>
+      <td class="total-cell"><div class="total-score">7.0</div><div class="total-bar-track"><div class="total-bar-fill" style="width:70%;background:#FF453A"></div></div></td>
     </tr>
     <tr class="evidence-row">
-      <td>Key evidence</td>
-      <td>数字有但量级不突出<br>无MoM/WoW对比</td>
-      <td>AOR分析完整<br>差异化不明显</td>
-      <td>团队协作一般<br>无带教具体案例</td>
-      <td>计划完整但平淡<br>无acting经验</td>
-      <td>结构完整<br>无记忆点</td>
+      <td class="left">Key evidence<br>关键证据</td>
+      <td><span class="ev-en">Numbers present but scale not outstanding · No MoM/WoW comparison</span><span class="ev-cn">数字有但量级不突出；缺增速对比，说服力弱于C/E</span></td>
+      <td><span class="ev-en">AOR analysis complete · Differentiation not clear · Below group average</span><span class="ev-cn">AOR分析完整但差异化模糊；为D2全组最低之一</span></td>
+      <td><span class="ev-en">Team collaboration general · No specific coaching evidence</span><span class="ev-cn">团队协作描述一般，无具体带教案例；D3缺支撑</span></td>
+      <td><span class="ev-en">Plan complete but flat · No Acting experience</span><span class="ev-cn">计划有完整性，但平淡；无Acting经历，D4全组最低之一</span></td>
+      <td><span class="ev-en">Structure complete · No memorable hooks</span><span class="ev-cn">结构完整，但无记忆点；数据密度处于全组下游</span></td>
     </tr>
 
-    <!-- Karina Colomina -->
-    <tr class="r7">
+    <!-- G: Karina Colomina -->
+    <tr class="data-row">
       <td class="name-cell">
-        <span class="candidate-rank">7</span>
-        <span class="candidate-name">Karina Colomina</span>
-        <div class="candidate-aor">Western F · Osasco · BD → BDM</div>
+        <span class="candidate-id">G</span>
+        <div class="name-block">
+          <span class="candidate-name">Karina Colomina</span>
+          <span class="candidate-aor">Western F · Osasco</span>
+        </div>
       </td>
-      <td class="score-cell"><div class="score-pill h2">6.0<div class="score-note">传统销售</div></div></td>
-      <td class="score-cell"><div class="score-pill h2">6.0<div class="score-note">经验驱动</div></div></td>
-      <td class="score-cell"><div class="score-pill h1">5.0<div class="score-note">几乎无证据</div></div></td>
-      <td class="score-cell"><div class="score-pill h1">5.0<div class="score-note">转型不清晰</div></div></td>
-      <td class="score-cell"><div class="score-pill h2">6.0<div class="score-note">叙述性为主</div></div></td>
-      <td class="total-cell">
-        <div class="total-score">6.8</div>
-        <div class="total-bar-track"><div class="total-bar-fill" style="width:68%"></div></div>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.0<div class="score-note">传统销售</div></div>
+        <span class="rank-badge">5</span>
       </td>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.0<div class="score-note">经验驱动</div></div>
+        <span class="rank-badge">7</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h1" style="position:relative">5.0<div class="score-note">几乎无证据</div></div>
+        <span class="rank-badge">7</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h1" style="position:relative">5.0<div class="score-note">转型不清晰</div></div>
+        <span class="rank-badge">7</span>
+      </td>
+      <td class="score-cell">
+        <div class="score-pill h2" style="position:relative">6.0<div class="score-note">叙述性为主</div></div>
+        <span class="rank-badge">7</span>
+      </td>
+      <td class="total-cell"><div class="total-score">6.8</div><div class="total-bar-track"><div class="total-bar-fill" style="width:68%;background:#8E8E93"></div></div></td>
     </tr>
     <tr class="evidence-row">
-      <td>Key evidence</td>
-      <td>30年销售经验<br>互联网数字思维弱</td>
-      <td>经验直觉驱动<br>数据化策略缺失</td>
-      <td>无团队带教记录<br>Leadership gap最大</td>
-      <td>BDM角色认知模糊<br>无acting经历</td>
-      <td>材料叙述流畅<br>数据密度最低</td>
+      <td class="left">Key evidence<br>关键证据</td>
+      <td><span class="ev-en">30 years of sales experience · Weak internet-era data thinking</span><span class="ev-cn">经验丰富，但互联网指标思维弱，数字化程度全组最低</span></td>
+      <td><span class="ev-en">Experience-intuition driven · Data-driven strategy largely absent</span><span class="ev-cn">策略靠直觉，数据化框架缺失；D2全组最弱</span></td>
+      <td><span class="ev-en">No team coaching records · Largest leadership gap in group</span><span class="ev-cn">无任何带教记录；团队领导力证据全组缺口最大</span></td>
+      <td><span class="ev-en">BDM role understanding unclear · No Acting experience</span><span class="ev-cn">对BDM角色认知模糊；无Acting经历；D4全组最低</span></td>
+      <td><span class="ev-en">Narrative-style materials · Data density lowest in group</span><span class="ev-cn">材料以经历叙述为主；数据密度全组最低</span></td>
+    </tr>
+
+    <!-- Dimension Champion Summary Row -->
+    <tr class="dim-champ-row">
+      <td class="left">★ Dimension Champion<br>各维度最强候选人</td>
+      <td><span class="champ-winner">E · Leonardo</span><span class="champ-score-sm">9.5 · A · Adriana tied 8.5</span></td>
+      <td><span class="champ-winner">B · Thiago</span><span class="champ-score-sm">8.5 · E · Leonardo tied 8.5</span></td>
+      <td><span class="champ-winner">A · Adriana</span><span class="champ-score-sm">9.5 · B · Thiago tied 9.5</span></td>
+      <td><span class="champ-winner">A · Adriana</span><span class="champ-score-sm">9.0 · E · Leonardo tied 9.0</span></td>
+      <td><span class="champ-winner">E · Leonardo</span><span class="champ-score-sm">9.0 (sole champion)</span></td>
+      <td style="background:#2d2d2f"><span class="champ-winner">E · Leonardo</span><span class="champ-score-sm">8.5 overall</span></td>
     </tr>
 
   </tbody>
@@ -503,15 +512,15 @@
 
 <div class="footer">
   <div class="color-scale">
-    Color scale:
+    Color scale · 色阶：
     <span class="cs-block h5">9+</span>
     <span class="cs-block h4">8+</span>
     <span class="cs-block h3">7+</span>
     <span class="cs-block h2">6+</span>
     <span class="cs-block h1">&lt;6</span>
-    &nbsp;· D1 Personal KPIs &nbsp;· D2 AOR Strategy &nbsp;· D3 Team Leadership &nbsp;· D4 BDM Readiness &nbsp;· D5 Material Quality
+    &nbsp;· Badge = rank within dimension · 徽章 = 维度内名次 · ★ = dimension champion · 金边 = 维度第一
   </div>
-  <div class="footer-note">Candidate #8 pending · For panel reference only</div>
+  <div class="footer-note">Candidate #8 pending · 7 of 8 analyzed · For panel reference only</div>
 </div>
 
 </body>
