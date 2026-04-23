@@ -35,8 +35,9 @@ body {
 .champ-score { font-size:20px; font-weight:800; color:#1d1d1f; }
 
 /* Table */
-.table-wrap { background:white; border-radius:16px; overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.08); }
+.table-wrap { background:white; border-radius:16px; overflow-x:auto; box-shadow:0 2px 16px rgba(0,0,0,0.08); }
 table { width:100%; border-collapse:collapse; }
+thead { position:sticky; top:0; z-index:10; }
 thead tr.main-header { background:#1d1d1f; }
 thead th {
   padding:12px 12px; text-align:center;
