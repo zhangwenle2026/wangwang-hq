@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BDM Promotion — Candidate Ranking</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    padding: 32px;
+    width: 960px;
+  }
+
+  .header {
+    background: #1a1a2e;
+    color: white;
+    border-radius: 16px;
+    padding: 28px 36px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-left h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+  }
+
+  .header-left p {
+    font-size: 13px;
+    color: #aab0c0;
+    margin-top: 4px;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-right .badge {
+    background: #FFB300;
+    color: #1a1a2e;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .header-right .sub {
+    font-size: 12px;
+    color: #aab0c0;
+    margin-top: 6px;
+  }
+
+  /* Score Legend */
+  .legend {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* Cards */
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 5px solid #ddd;
+    transition: box-shadow 0.2s;
+  }
+
+  .card.rank-1 { border-left-color: #FFB300; }
+  .card.rank-2 { border-left-color: #90CAF9; }
+  .card.rank-3 { border-left-color: #A5D6A7; }
+  .card.rank-4 { border-left-color: #CE93D8; }
+  .card.rank-5 { border-left-color: #FFCC80; }
+  .card.rank-6 { border-left-color: #EF9A9A; }
+  .card.rank-7 { border-left-color: #B0BEC5; }
+
+  .rank-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    flex-shrink: 0;
+    color: white;
+  }
+
+  .rank-1 .rank-badge { background: #FFB300; color: #1a1a2e; }
+  .rank-2 .rank-badge { background: #90CAF9; color: #1a1a2e; }
+  .rank-3 .rank-badge { background: #A5D6A7; color: #1a1a2e; }
+  .rank-4 .rank-badge { background: #CE93D8; color: #1a1a2e; }
+  .rank-5 .rank-badge { background: #FFCC80; color: #1a1a2e; }
+  .rank-6 .rank-badge { background: #EF9A9A; color: #fff; }
+  .rank-7 .rank-badge { background: #B0BEC5; color: #fff; }
+
+  .info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .name-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  .aor {
+    font-size: 12px;
+    color: #888;
+    background: #f5f5f5;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .highlight {
+    font-size: 12px;
+    color: #555;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Score block */
+  .score-block {
+    text-align: center;
+    flex-shrink: 0;
+    width: 64px;
+  }
+
+  .score-num {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    color: #1a1a2e;
+  }
+
+  .score-label {
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Bar */
+  .bar-block {
+    flex: 0 0 200px;
+  }
+
+  .bar-track {
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .rank-1 .bar-fill { background: linear-gradient(90deg, #FFB300, #FF8F00); }
+  .rank-2 .bar-fill { background: linear-gradient(90deg, #64B5F6, #1E88E5); }
+  .rank-3 .bar-fill { background: linear-gradient(90deg, #81C784, #388E3C); }
+  .rank-4 .bar-fill { background: linear-gradient(90deg, #CE93D8, #8E24AA); }
+  .rank-5 .bar-fill { background: linear-gradient(90deg, #FFCC80, #FB8C00); }
+  .rank-6 .bar-fill { background: linear-gradient(90deg, #EF9A9A, #E53935); }
+  .rank-7 .bar-fill { background: linear-gradient(90deg, #CFD8DC, #90A4AE); }
+
+  .bar-pct {
+    font-size: 11px;
+    color: #aaa;
+    text-align: right;
+  }
+
+  /* Tags */
+  .tags {
+    display: flex;
+    gap: 5px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+
+  .tag.strength { background: #E8F5E9; color: #2E7D32; }
+  .tag.risk { background: #FFF3E0; color: #E65100; }
+  .tag.note { background: #E3F2FD; color: #1565C0; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>BDM Promotion · Candidate Ranking</h1>
+    <p>Keeta Brazil · SP Metropolitan Region · April 2026</p>
+  </div>
+  <div class="header-right">
+    <div class="badge">7 Candidates · Final Review</div>
+    <div class="sub">Scoring: 10-point scale · Panel Assessment</div>
+  </div>
+</div>
+
+<!-- Rank 1 -->
+<div class="card rank-1">
+  <div class="rank-badge">1</div>
+  <div class="info">
+    <div class="name-row">
+      <span class="name">Leonardo Mello</span>
+      <span class="aor">AOR: Southern (ABCD)</span>
+    </div>
+    <div class="highlight">Q1 GMV R$1.72mi · Completion rate 102% → 105% → 186%</div>
+    <div class="tags">
+      <span class="tag strength">Numbers complete</span>
+      <span class="tag strength">3-month growth trajectory</span>
+      <span class="tag note">Strongest data story</span>
+    </div>
+  </div>
+  <div class="bar-block">
+    <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+    <div class="bar-pct">85%</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num">8.5</div>
+    <div class="score-label">Score</div>
+  </div>
+</div>
+
+<!-- Rank 2 -->
+<div class="card rank-2">
+  <div class="rank-badge">2</div>
+  <div class="info">
+    <div class="name-row">
+      <span class="name">Adriana Naves</span>
+      <span class="aor">AOR: District A · Santo André</span>
+    </div>
+    <div class="highlight">14.8k orders · R$745.5k GMV · +40.2% MoM · Keeta Global Awards 2025</div>
+    <div class="tags">
+      <span class="tag strength">Acting BDM experience</span>
+      <span class="tag strength">Team coaching data</span>
+      <span class="tag risk">English gap</span>
+    </div>
+  </div>
+  <div class="bar-block">
+    <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+    <div class="bar-pct">82%</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num">8.2</div>
+    <div class="score-label">Score</div>
+  </div>
+</div>
+
+<!-- Rank 3 -->
+<div class="card rank-3">
+  <div class="rank-badge">3</div>
+  <div class="info">
+    <div class="name-row">
+      <span class="name">Thiago Dalaqua</span>
+      <span class="aor">AOR: Guarulhos North</span>
+    </div>
+    <div class="highlight">BD Captain · 5 training materials · Clean AOR +50% · Team 100% commission</div>
+    <div class="tags">
+      <span class="tag strength">Enterprise B2B background</span>
+      <span class="tag strength">Team influence proven</span>
+      <span class="tag risk">Zero personal KPIs</span>
+    </div>
+  </div>
+  <div class="bar-block">
+    <div class="bar-track"><div class="bar-fill" style="width:76%"></div></div>
+    <div class="bar-pct">76%</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num">7.6</div>
+    <div class="score-label">Score</div>
+  </div>
+</div>
+
+<!-- Rank 4 -->
+<div class="card rank-4">
+  <div class="rank-badge">4</div>
+  <div class="info">
+    <div class="name-row">
+      <span class="name">Cleiton Santos</span>
+      <span class="aor">AOR: GB District</span>
+    </div>
+    <div class="highlight">Merchants -40% but Orders +77% / GMV +79% — quality over quantity</div>
+    <div class="tags">
+      <span class="tag strength">AOR restructuring story</span>
+      <span class="tag risk">Leadership evidence thin</span>
+    </div>
+  </div>
+  <div class="bar-block">
+    <div class="bar-track"><div class="bar-fill" style="width:74%"></div></div>
+    <div class="bar-pct">74%</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num">7.4</div>
+    <div class="score-label">Score</div>
+  </div>
+</div>
+
+<!-- Rank 5 -->
+<div class="card rank-5">
+  <div class="rank-badge">5</div>
+  <div class="info">
+    <div class="name-row">
+      <span class="name">Igor Feitosa</span>
+      <span class="aor">AOR: Guarulhos</span>
+    </div>
+    <div class="highlight">Op rate 50% → 83% (regional best) · Cancel rate 3-month consecutive decline</div>
+    <div class="tags">
+      <span class="tag strength">Operational turnaround</span>
+      <span class="tag risk">No GMV / order absolutes</span>
+    </div>
+  </div>
+  <div class="bar-block">
+    <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
+    <div class="bar-pct">72%</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num">7.2</div>
+    <div class="score-label">Score</div>
+  </div>
+</div>
+
+<!-- Rank 6 -->
+<div class="card rank-6">
+  <div class="rank-badge">6</div>
+  <div class="info">
+    <div class="name-row">
+      <span class="name">Lucas Nada</span>
+      <span class="aor">AOR: —</span>
+    </div>
+    <div class="highlight">Balanced profile · No standout dimension in any category</div>
+    <div class="tags">
+      <span class="tag note">Consistent execution</span>
+      <span class="tag risk">No differentiation</span>
+    </div>
+  </div>
+  <div class="bar-block">
+    <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+    <div class="bar-pct">70%</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num">7.0</div>
+    <div class="score-label">Score</div>
+  </div>
+</div>
+
+<!-- Rank 7 -->
+<div class="card rank-7">
+  <div class="rank-badge">7</div>
+  <div class="info">
+    <div class="name-row">
+      <span class="name">Karina Colomina</span>
+      <span class="aor">AOR: Western F · Osasco</span>
+    </div>
+    <div class="highlight">30-year sales veteran · Traditional background · BDM mindset transition unclear</div>
+    <div class="tags">
+      <span class="tag note">Sales experience depth</span>
+      <span class="tag risk">BDM readiness weakest</span>
+      <span class="tag risk">Leadership evidence missing</span>
+    </div>
+  </div>
+  <div class="bar-block">
+    <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+    <div class="bar-pct">68%</div>
+  </div>
+  <div class="score-block">
+    <div class="score-num">6.8</div>
+    <div class="score-label">Score</div>
+  </div>
+</div>
+
+<div class="footer">Candidate #8 pending · Ranking subject to update · For panel reference only · Keeta Brazil SP Metropolitan 2026</div>
+
+</body>
+</html>
