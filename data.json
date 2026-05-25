@@ -1,10 +1,10 @@
 {
-  "updated": "2026-05-25T08:05:05Z",
+  "updated": "2026-05-25T09:05:05Z",
   "hud": {
     "_comment": "AI 工作量统计 — 阿奇每次完成任务后手动/自动更新",
-    "tokenToday": 594942,
+    "tokenToday": 643978,
     "tokenYest": 27588068,
-    "codeToday": 44,
+    "codeToday": 47,
     "codeYest": 68,
     "tasksToday": 0,
     "tasksTotal": 6
