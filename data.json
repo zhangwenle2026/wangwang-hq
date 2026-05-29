@@ -1,153 +1,53 @@
 {
-  "updated": "2026-05-29T14:05:08.480878+00:00",
+  "updated": "2026-05-29T22:18:00.000000+08:00",
   "hud": {
     "_comment": "AI 工作量统计 — 阿奇每次完成任务后手动/自动更新",
-    "tokenToday": 35000000,
+    "tokenToday": 45000,
     "tokenYest": 35000000,
     "codeToday": 11074,
     "codeYest": 11074,
-    "tasksToday": 1,
-    "tasksTotal": 6
+    "tasksToday": 2,
+    "tasksTotal": 14
   },
   "tasks": [
-    {
-      "id": "T-001",
-      "name": "DBR 日报自动播报",
-      "agent": "砾石",
-      "status": "running"
-    },
-    {
-      "id": "T-002",
-      "name": "汪汪队多 Agent 联通",
-      "agent": "阿奇",
-      "status": "running"
-    },
-    {
-      "id": "T-003",
-      "name": "访店日报定时任务",
-      "agent": "砾石",
-      "status": "done"
-    },
-    {
-      "id": "T-004",
-      "name": "HQ 方案B 数据驱动",
-      "agent": "阿奇",
-      "status": "done"
-    },
-    {
-      "id": "T-005",
-      "name": "天天/灰灰直联打通",
-      "agent": "阿奇",
-      "status": "pending"
-    },
-    {
-      "id": "T-006",
-      "name": "Hive SQL 底层取数",
-      "agent": "砾石",
-      "status": "pending"
-    },
-    {
-      "id": "T-007",
-      "name": "月报 3月数据补全",
-      "agent": "阿奇",
-      "status": "done"
-    },
-    {
-      "id": "T-008",
-      "name": "CM 会议材料 v2",
-      "agent": "阿奇",
-      "status": "running"
-    },
-    {
-      "id": "T-009",
-      "name": "Eric Talk 口语 APP",
-      "agent": "毛毛",
-      "status": "done"
-    },
-    {
-      "id": "T-010",
-      "name": "SHL TEST 模拟测试 APP",
-      "agent": "毛毛",
-      "status": "done"
-    },
-    {
-      "id": "T-011",
-      "name": "BEC 英语学习网站",
-      "agent": "毛毛",
-      "status": "done"
-    }
+    { "id": "T-001", "name": "DBR 日报自动生成", "agent": "砾石", "status": "running" },
+    { "id": "T-002", "name": "访店日报定时任务", "agent": "砾石", "status": "running" },
+    { "id": "T-003", "name": "DD深折扣日报", "agent": "砾石", "status": "running" },
+    { "id": "T-004", "name": "BD深折扣日报", "agent": "砾石", "status": "running" },
+    { "id": "T-005", "name": "Business Platform 看板更新", "agent": "阿奇", "status": "running" },
+    { "id": "T-006", "name": "灰灰每日情报简报", "agent": "灰灰", "status": "running" },
+    { "id": "T-007", "name": "天天AI团队日报", "agent": "天天", "status": "running" },
+    { "id": "T-008", "name": "New Signing Daily Report", "agent": "砾石", "status": "error" },
+    { "id": "T-009", "name": "AI看板项目-周五更新", "agent": "阿奇", "status": "error" },
+    { "id": "T-010", "name": "HQ 每日数据更新", "agent": "阿奇", "status": "running" },
+    { "id": "T-011", "name": "汪汪队每日例行存档", "agent": "阿奇", "status": "running" },
+    { "id": "T-012", "name": "每日协作账单", "agent": "阿奇", "status": "running" },
+    { "id": "T-013", "name": "SK-Worker Watchdog", "agent": "砾石", "status": "running" },
+    { "id": "T-014", "name": "shop-api-keepalive", "agent": "砾石", "status": "running" }
   ],
   "log": [
-    {
-      "time": "11:09",
-      "agent": "阿奇",
-      "type": "ok",
-      "msg": "HQ 方案B v5.9.15 上线，data.json 驱动全部 HUD"
-    },
-    {
-      "time": "06:28",
-      "agent": "砾石",
-      "type": "ok",
-      "msg": "Task-003 访店日报 Skill + Cron 封装完成"
-    },
-    {
-      "time": "04:53",
-      "agent": "砾石",
-      "type": "ok",
-      "msg": "DBR 04-05 日报发群完成，消息 ID: 1735415513352495104"
-    },
-    {
-      "time": "02:00",
-      "agent": "阿奇",
-      "type": "ok",
-      "msg": "汪汪队 HQ 指挥中心 v1.0 上线 GitHub Pages"
-    },
-    {
-      "time": "01:52",
-      "agent": "砾石",
-      "type": "ok",
-      "msg": "A2A 连通性测试通过，与毛毛/天天/灰灰均正常响应"
-    },
-    {
-      "time": "00:14",
-      "agent": "天天",
-      "type": "idle",
-      "msg": "直联排查进行中，等待 Agent 连通方案"
-    }
+    { "time": "22:05", "agent": "阿奇", "type": "ok", "msg": "HQ 数据自动更新 commit 推送" },
+    { "time": "21:08", "agent": "阿奇", "type": "action", "msg": "用户请求 HQ 优化，开始分析" },
+    { "time": "18:00", "agent": "阿奇", "type": "ok", "msg": "汪汪队每日例行存档完成" },
+    { "time": "14:00", "agent": "灰灰", "type": "ok", "msg": "每日情报简报已推送" },
+    { "time": "11:00", "agent": "砾石", "type": "ok", "msg": "DBR 日报生成并发群完成" },
+    { "time": "11:30", "agent": "砾石", "type": "ok", "msg": "DD/BD 深折扣日报完成" },
+    { "time": "10:00", "agent": "天天", "type": "ok", "msg": "AI团队日报发送完成" },
+    { "time": "07:30", "agent": "阿奇", "type": "ok", "msg": "Business Platform 看板数据更新" }
   ],
   "focus": [
-    {
-      "text": "CM 会议材料 v2 完成",
-      "status": "follow",
-      "pct": 60
-    },
-    {
-      "text": "天天/灰灰直联打通",
-      "status": "pending",
-      "pct": 20
-    },
-    {
-      "text": "Hive SQL 取数方案调研",
-      "status": "pending",
-      "pct": 5
-    },
-    {
-      "text": "HQ 方案B 数据驱动上线",
-      "status": "done",
-      "pct": 100
-    },
-    {
-      "text": "月报 3月数据补全",
-      "status": "done",
-      "pct": 100
-    }
+    { "status": "urgent", "text": "New Signing Report 报错修复", "pct": 10 },
+    { "status": "follow", "text": "HQ 数据实时化改造", "pct": 30 },
+    { "status": "follow", "text": "AI看板周五更新修复", "pct": 20 },
+    { "status": "done", "text": "DBR 日报稳定运行", "pct": 100 },
+    { "status": "done", "text": "访店/深折扣日报全线上线", "pct": 100 }
   ],
   "assets": {
     "memoryFiles": 5,
-    "skills": 67,
-    "caps": 2,
-    "apps": 1,
-    "tasks": 1,
+    "skills": 69,
+    "caps": 5,
+    "apps": 5,
+    "tasks": 14,
     "members": 6,
     "cronJobs": 14,
     "pitfalls": 3
