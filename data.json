@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-29T22:18:00.000000+08:00",
+  "updated": "2026-05-29T23:06:10.206884+08:00",
   "hud": {
     "_comment": "AI 工作量统计 — 阿奇每次完成任务后手动/自动更新",
     "tokenToday": 45000,
@@ -10,37 +10,167 @@
     "tasksTotal": 14
   },
   "tasks": [
-    { "id": "T-001", "name": "DBR 日报自动生成", "agent": "砾石", "status": "running" },
-    { "id": "T-002", "name": "访店日报定时任务", "agent": "砾石", "status": "running" },
-    { "id": "T-003", "name": "DD深折扣日报", "agent": "砾石", "status": "running" },
-    { "id": "T-004", "name": "BD深折扣日报", "agent": "砾石", "status": "running" },
-    { "id": "T-005", "name": "Business Platform 看板更新", "agent": "阿奇", "status": "running" },
-    { "id": "T-006", "name": "灰灰每日情报简报", "agent": "灰灰", "status": "running" },
-    { "id": "T-007", "name": "天天AI团队日报", "agent": "天天", "status": "running" },
-    { "id": "T-008", "name": "New Signing Daily Report", "agent": "砾石", "status": "error" },
-    { "id": "T-009", "name": "AI看板项目-周五更新", "agent": "阿奇", "status": "error" },
-    { "id": "T-010", "name": "HQ 每日数据更新", "agent": "阿奇", "status": "running" },
-    { "id": "T-011", "name": "汪汪队每日例行存档", "agent": "阿奇", "status": "running" },
-    { "id": "T-012", "name": "每日协作账单", "agent": "阿奇", "status": "running" },
-    { "id": "T-013", "name": "SK-Worker Watchdog", "agent": "砾石", "status": "running" },
-    { "id": "T-014", "name": "shop-api-keepalive", "agent": "砾石", "status": "running" }
+    {
+      "id": "T-001",
+      "name": "DBR 日报自动生成",
+      "agent": "砾石",
+      "status": "running"
+    },
+    {
+      "id": "T-002",
+      "name": "访店日报定时任务",
+      "agent": "砾石",
+      "status": "running"
+    },
+    {
+      "id": "T-003",
+      "name": "DD深折扣日报",
+      "agent": "砾石",
+      "status": "running"
+    },
+    {
+      "id": "T-004",
+      "name": "BD深折扣日报",
+      "agent": "砾石",
+      "status": "running"
+    },
+    {
+      "id": "T-005",
+      "name": "Business Platform 看板更新",
+      "agent": "阿奇",
+      "status": "running"
+    },
+    {
+      "id": "T-006",
+      "name": "灰灰每日情报简报",
+      "agent": "灰灰",
+      "status": "running"
+    },
+    {
+      "id": "T-007",
+      "name": "天天AI团队日报",
+      "agent": "天天",
+      "status": "running"
+    },
+    {
+      "id": "T-008",
+      "name": "New Signing Daily Report",
+      "agent": "砾石",
+      "status": "error"
+    },
+    {
+      "id": "T-009",
+      "name": "AI看板项目-周五更新",
+      "agent": "阿奇",
+      "status": "error"
+    },
+    {
+      "id": "T-010",
+      "name": "HQ 每日数据更新",
+      "agent": "阿奇",
+      "status": "running"
+    },
+    {
+      "id": "T-011",
+      "name": "汪汪队每日例行存档",
+      "agent": "阿奇",
+      "status": "running"
+    },
+    {
+      "id": "T-012",
+      "name": "每日协作账单",
+      "agent": "阿奇",
+      "status": "running"
+    },
+    {
+      "id": "T-013",
+      "name": "SK-Worker Watchdog",
+      "agent": "砾石",
+      "status": "running"
+    },
+    {
+      "id": "T-014",
+      "name": "shop-api-keepalive",
+      "agent": "砾石",
+      "status": "running"
+    }
   ],
   "log": [
-    { "time": "22:05", "agent": "阿奇", "type": "ok", "msg": "HQ 数据自动更新 commit 推送" },
-    { "time": "21:08", "agent": "阿奇", "type": "action", "msg": "用户请求 HQ 优化，开始分析" },
-    { "time": "18:00", "agent": "阿奇", "type": "ok", "msg": "汪汪队每日例行存档完成" },
-    { "time": "14:00", "agent": "灰灰", "type": "ok", "msg": "每日情报简报已推送" },
-    { "time": "11:00", "agent": "砾石", "type": "ok", "msg": "DBR 日报生成并发群完成" },
-    { "time": "11:30", "agent": "砾石", "type": "ok", "msg": "DD/BD 深折扣日报完成" },
-    { "time": "10:00", "agent": "天天", "type": "ok", "msg": "AI团队日报发送完成" },
-    { "time": "07:30", "agent": "阿奇", "type": "ok", "msg": "Business Platform 看板数据更新" }
+    {
+      "time": "22:05",
+      "agent": "阿奇",
+      "type": "ok",
+      "msg": "HQ 数据自动更新 commit 推送"
+    },
+    {
+      "time": "21:08",
+      "agent": "阿奇",
+      "type": "action",
+      "msg": "用户请求 HQ 优化，开始分析"
+    },
+    {
+      "time": "18:00",
+      "agent": "阿奇",
+      "type": "ok",
+      "msg": "汪汪队每日例行存档完成"
+    },
+    {
+      "time": "14:00",
+      "agent": "灰灰",
+      "type": "ok",
+      "msg": "每日情报简报已推送"
+    },
+    {
+      "time": "11:00",
+      "agent": "砾石",
+      "type": "ok",
+      "msg": "DBR 日报生成并发群完成"
+    },
+    {
+      "time": "11:30",
+      "agent": "砾石",
+      "type": "ok",
+      "msg": "DD/BD 深折扣日报完成"
+    },
+    {
+      "time": "10:00",
+      "agent": "天天",
+      "type": "ok",
+      "msg": "AI团队日报发送完成"
+    },
+    {
+      "time": "07:30",
+      "agent": "阿奇",
+      "type": "ok",
+      "msg": "Business Platform 看板数据更新"
+    }
   ],
   "focus": [
-    { "status": "urgent", "text": "New Signing Report 报错修复", "pct": 10 },
-    { "status": "follow", "text": "HQ 数据实时化改造", "pct": 30 },
-    { "status": "follow", "text": "AI看板周五更新修复", "pct": 20 },
-    { "status": "done", "text": "DBR 日报稳定运行", "pct": 100 },
-    { "status": "done", "text": "访店/深折扣日报全线上线", "pct": 100 }
+    {
+      "status": "urgent",
+      "text": "New Signing Report 报错修复",
+      "pct": 10
+    },
+    {
+      "status": "follow",
+      "text": "HQ 数据实时化改造",
+      "pct": 30
+    },
+    {
+      "status": "follow",
+      "text": "AI看板周五更新修复",
+      "pct": 20
+    },
+    {
+      "status": "done",
+      "text": "DBR 日报稳定运行",
+      "pct": 100
+    },
+    {
+      "status": "done",
+      "text": "访店/深折扣日报全线上线",
+      "pct": 100
+    }
   ],
   "assets": {
     "memoryFiles": 5,
