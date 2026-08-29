@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-29T18:05:13.045548+08:00",
+  "updated": "2026-08-29T19:05:08.404341+08:00",
   "hud": {
     "_comment": "AI 工作量统计 — 阿奇每次完成任务后手动/自动更新",
     "tokenToday": 50000,
@@ -183,7 +183,7 @@
     }
   ],
   "assets": {
-    "memoryFiles": 98,
+    "memoryFiles": 99,
     "skills": 82,
     "caps": 5,
     "apps": 5,
