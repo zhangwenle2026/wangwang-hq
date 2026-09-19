@@ -65,3 +65,7 @@
 
 ---
 *最后更新: 2026-09-15 BRT*
+22. **独家跟踪分析系统** (Exclusivity Tracking Analysis) - 天天 — 83家商家数据抓取(Supabase REST+agent-browser翻页)+风险分类(🔴HIGH/🟡MEDIUM/🟢LOW/⚫CLOSED)+三语Wiki创建+英文化+城市分区合并
+
+---
+*最后更新: 2026-09-18 BRT*
