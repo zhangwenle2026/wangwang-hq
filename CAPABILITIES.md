@@ -1,80 +1,64 @@
 # 汪汪队能力清单 (CAPABILITIES)
-
 > 汪汪队各成员的专长技能汇总
-
 ## 阿奇 (Chase)
 - 任务协调与分配
 - HQ 指挥中心管理
 - 多 Agent 通信路由
-
 ## 砾石 (Rubble)
 - DBR 日报自动化
 - 访店记录分析
 - Hive SQL 数据查询
-
 ## 毛毛 (Marshall)
 - 前端开发 (HTML/CSS/JS)
 - Eric Talk APP 维护
 - SHL TEST APP 维护
 - BEC 英语网站维护
-
 ## 天天 (Skye)
 - 策略分析与建议
 - 直联问题排查
 - 数据驱动决策支持
 - Order Penetration Rate 专项作战方案设计与执行
-
 ## 灰灰 (Rocky)
 - 竞品情报搜集
 - 外部环境监测
 - 周报/日报信息整合
-
 ## 小砾 (Zuma)
 - 待命支援
 - 灵活任务承接
 - BP Dashboard 自动化提取与部署
 - BD Performance Dashboard 创建与维护
-
 ---
-
 ## 近期新增能力（2026年8-9月）
-
 ### 数据看板类
 12. **订单渗透率激励赛看板** (OPR Dashboard v4) - 小砾 — 每日自动更新数据看板+排名Wiki
 13. **BDM/CM 绩效追踪 Wiki** - 砾石 — 15人绩效数据可视化追踪
 14. **KPI Progress Document** - 砾石 — 8图表双语进展文档自动生成
-
 ### 报告生成类
 15. **周报自动生成系统** (BRT Weekly Report) - 砾石 — 12图5大板块中英双语周报
 16. **DBR日报自动播报** — 持续blocked（dbr_fetch.py脚本缺失·99天+）
-
 ### 应用工具类
 17. **Eric's Salary Calculator** - 毛毛 — 记账式录入+深色金融主题UI
 18. **桑托斯Sushi招商计划Wiki** - 阿奇 — Keeta Premier Zone三件套策略
-
 ### 运营支持类
 19. **激励赛获奖公示页面** (Awards Page v6) - 毛毛 — 英/中/葡三语黑金颁奖风
-
 ---
 *最后更新: 2026-09-08 BRT*
-
 ### 近期新增能力（2026年9月）
-
 20. **Sushi Combo Nocode工具** - 毛毛 — 商家套餐方案计算工具（PT/中文双语切换+单商家直链演示）
 21. **激励赛奖金发放明细Wiki** - 砾石 — 奖金核算与发放文档自动生成（R$23,000完整发放）
-
 ---
 *最后更新: 2026-09-15 BRT*
 22. **独家跟踪分析系统** (Exclusivity Tracking Analysis) - 天天 — 83家商家数据抓取(Supabase REST+agent-browser翻页)+风险分类(🔴HIGH/🟡MEDIUM/🟢LOW/⚫CLOSED)+三语Wiki创建+英文化+城市分区合并
-
 ---
 *最后更新: 2026-09-18 BRT*
-
 ### 近期新增能力（2026-09-23/24）
-
 23. **Santos Breakthrough Playbook Wiki** - 阿奇 — 桑托斯破独作战手册（7大方法论+工具清单，contentId 2788217905）
 24. **Southern Exclusivity Review 网页** - 天天 — 南部独家盘点页（23案风险分类+权限公开发布修复）
 25. **会议英语预习页** - 毛毛 — 会前英语预习页（17问句型+edge-tts语音播放器·变速/循环/seek）
-
 ---
 *最后更新: 2026-09-24 BRT*
+### 近期新增能力（2026-10-02）
+26. **葡语学习App** (ALFA 2027 AMPLIADA) - 毛毛 — 33页教材解读+439单词中文谐音引擎+135例句+词汇量进度体系（目标200词·里程碑徽章），NoCode双通道发布（内网UUID 6ac169c6 + 手机版 ca8jv0.mynocode.host）
+27. **葡语预习能力封装** (portuguese-preview skill) - 毛毛 — 5步固定流程+谐音规则+红线，PDF持久备份+App同步更新
+---
+*最后更新: 2026-10-02 BRT*
