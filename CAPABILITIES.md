@@ -62,3 +62,9 @@
 27. **葡语预习能力封装** (portuguese-preview skill) - 毛毛 — 5步固定流程+谐音规则+红线，PDF持久备份+App同步更新
 ---
 *最后更新: 2026-10-02 BRT*
+
+### 近期新增能力（2026-10-23）
+28. **BML每日战报全自动流水线** (bml-battle-daily skill) - 阿奇 — Shoplist xlsx→排名图+双语战报发BDM群(70411703622)+Wiki 2792004045+作战台部署四件套，官方ratchet口径（skill已于2026-10-21封装）
+29. **CoC完成情况双面板图** - 砾石 — 多维表格queryTableData→analyze→堆叠条形图（左=城市/右=BDM队，绿=Completed/橙=Pending），Region=Metro口径，脚本projects/6_bml_project/coc/
+---
+*最后更新: 2026-10-23 BRT*
