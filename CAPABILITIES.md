@@ -68,3 +68,21 @@
 29. **CoC完成情况双面板图** - 砾石 — 多维表格queryTableData→analyze→堆叠条形图（左=城市/右=BDM队，绿=Completed/橙=Pending），Region=Metro口径，脚本projects/6_bml_project/coc/
 ---
 *最后更新: 2026-10-23 BRT*
+
+### 近期新增能力（2026-11-07 补录 #30-43，对应2026-10至11月实际产出）
+30. **个人简历网站** (dyytei.mynocode.host) - 毛毛 — 六板块横向Tab书面化改版，19图S3公开外链，NoCode部署定版
+31. **医药健康AI业务认知笔记Wiki** - 毛毛 — contentId 2790809101，医药赛道AI认知体系
+32. **10月新政周报改版** (v5.0) - 阿奇 — KRI权重更新+MTD数据+360px柱图+格式自查修复
+33. **消费医疗行研报告Hub** - 毛毛 — medical-ai-atlas.mynocode.host 独立站+主报告v1.2专章+面试问答手册Wiki 2791447762
+34. **BML作战台** (bml-battle-nexus.mynocode.host) - 阿奇 — Supabase数据源逆向+双端部署+城市排名卡片
+35. **学城Eric AI工具梳理v3** - 阿奇 — contentId 2792084521
+36. **SMB Incentives BML SPU数据分析** - 砺石 — 完成率19.7%+Completed判定破译+西部拆表
+37. **BML英文战报群发** - 阿奇 — 4图+全文发Metropolitan manager群
+38. **周报v5.0黄金定版** - 阿奇 — BRT 10.19-10.25 contentId 2794142834，14图
+39. **Q3管理者绩效分析** - 砺石 — Metro BDM均值1.183三区最高·Daniel 1.270
+40. **DBR日报CDP网页直发管道** - 砺石 — 机器人API全挂后改用CDP网页端发群，连续30+天稳定
+41. **BML终版十月收官周报** - 阿奇 — contentId 2795496562·BML Red 78.9%/Yellow 76.8%·11/11 BDM双达标
+42. **十月绩效Wiki终版** - 砺石 — 2782863123 全量重写+5新图·订单月终100.1%反超
+43. **Eric Talk转岗告别演讲+Healthcare AI话题** - 毛毛 — PWA缓存崩溃根因修复+Bec App data.json 23条
+---
+*最后更新: 2026-11-07 BRT（补录#30-43）*
